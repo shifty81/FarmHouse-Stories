@@ -1,0 +1,101 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://addons/godot_ai_hook/test/test.gd" id="1_test"]
+[ext_resource type="PackedScene" path="res://addons/godot_ai_hook/ai_manage/ai_manage.tscn" id="2_ai_manage"]
+
+[node name="Test" type="PanelContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_test")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "AI Hook Test Panel"
+horizontal_alignment = 1
+
+[node name="GridContainer" type="GridContainer" parent="VBoxContainer"]
+layout_mode = 2
+columns = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Model"
+
+[node name="LineEdit" type="LineEdit" parent="VBoxContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "gpt-4o-mini"
+alignment = 1
+
+[node name="Label2" type="Label" parent="VBoxContainer/GridContainer"]
+layout_mode = 2
+text = "URL"
+
+[node name="LineEdit2" type="LineEdit" parent="VBoxContainer/GridContainer"]
+layout_mode = 2
+placeholder_text = "https://api.openai.com/v1/chat/completions"
+alignment = 1
+
+[node name="Label3" type="Label" parent="VBoxContainer/GridContainer"]
+layout_mode = 2
+text = "API Key"
+
+[node name="LineEdit3" type="LineEdit" parent="VBoxContainer/GridContainer"]
+layout_mode = 2
+placeholder_text = "API_KEY"
+alignment = 1
+secret = true
+
+[node name="TipLabel" type="Label" parent="VBoxContainer/GridContainer"]
+layout_mode = 2
+text = "Configure ai_config.gd before running tests"
+
+[node name="Button" type="Button" parent="VBoxContainer/GridContainer"]
+layout_mode = 2
+text = "Connection Test"
+
+[node name="Label4" type="Label" parent="VBoxContainer/GridContainer"]
+layout_mode = 2
+text = "Connection Status ->"
+
+[node name="Label5" type="Label" parent="VBoxContainer/GridContainer"]
+layout_mode = 2
+
+[node name="Button2" type="Button" parent="VBoxContainer/GridContainer"]
+layout_mode = 2
+text = "Chat Test"
+
+[node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="GridContainer2" type="GridContainer" parent="VBoxContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+columns = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/ScrollContainer/GridContainer2"]
+layout_mode = 2
+size_flags_vertical = 6
+text = "Streaming output"
+
+[node name="LineEdit" type="LineEdit" parent="VBoxContainer/ScrollContainer/GridContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+editable = false
+
+[node name="AiManage" parent="VBoxContainer/ScrollContainer/GridContainer2/LineEdit" instance=ExtResource("2_ai_manage")]
+
+[node name="TextEdit" type="TextEdit" parent="VBoxContainer"]
+custom_minimum_size = Vector2(0, 200)
+layout_mode = 2
+placeholder_text = "Log output..."
+editable = false

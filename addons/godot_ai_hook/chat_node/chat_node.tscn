@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://addons/godot_ai_hook/chat_node/chat_node.gd" id="1_chat_node"]
+
+[node name="ChatNode" type="Node"]
+script = ExtResource("1_chat_node")

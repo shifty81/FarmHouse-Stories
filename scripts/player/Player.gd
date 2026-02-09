@@ -80,7 +80,6 @@ func _attempt_interaction():
 			if area.has_method("interact"):
 				area.interact()
 				return
-	print("Nothing to interact with.")
 
 
 func _is_local_player() -> bool:
