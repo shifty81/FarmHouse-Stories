@@ -75,5 +75,5 @@ func advance_all_crops():
 		crop.advance_day()
 
 
-func _on_crop_ready_to_harvest(crop: Node2D):
-	print("Crop ready to harvest at: ", crop.position)
+func _on_crop_ready_to_harvest(_crop: Node2D) -> void:
+	pass

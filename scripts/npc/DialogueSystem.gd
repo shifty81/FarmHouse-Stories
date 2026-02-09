@@ -1,6 +1,7 @@
 extends Node
 ## DialogueSystem - Manages NPC dialogue trees, relationship-gated conversations,
 ## and quest dialogue. Tracks conversation state and emits signals for the UI.
+## Supports AI-powered dynamic dialogue via the Godot AI Hook plugin.
 
 ## Dialogue state
 var is_dialogue_active: bool = false
@@ -9,9 +10,30 @@ var current_dialogue_lines: Array = []
 var current_line_index: int = 0
 var dialogue_history: Dictionary = {}  ## { npc_id: [seen_dialogue_keys] }
 
+## AI dialogue state
+var ai_enabled: bool = false
+var _npc_ai: Node = null
+var _ai_waiting: bool = false
 
-func _ready():
+## Maps NPC roles to system prompt keys in SystemPromptConfig
+const ROLE_TO_PROMPT_KEY: Dictionary = {
+	"Blacksmith": "npc_blacksmith",
+	"Mayor": "npc_mayor",
+	"Town Doctor": "npc_doctor",
+	"Doctor": "npc_doctor",
+	"Tavern Owner": "npc_tavern_owner",
+	"Carpenter": "npc_carpenter",
+	"Archaeologist/Scholar": "npc_scholar",
+	"Myth-Keeper/Librarian": "npc_scholar",
+	"Ranger/Guard Captain": "npc_ranger",
+	"Void Anchor Vendor": "npc_void_vendor",
+	"Hermit/Herbalist": "npc_herbalist",
+}
+
+
+func _ready() -> void:
 	EventBus.npc_friendship_changed.connect(_on_friendship_changed)
+	_setup_ai_dialogue()
 
 
 ## Start a dialogue with an NPC. Selects appropriate dialogue based on
@@ -62,7 +84,7 @@ func advance_dialogue() -> Dictionary:
 
 
 ## End the current dialogue.
-func end_dialogue():
+func end_dialogue() -> void:
 	if not is_dialogue_active:
 		return
 
@@ -227,7 +249,7 @@ func _get_role_dialogue(npc_name: String, role: String) -> Dictionary:
 			return {}
 
 
-func _on_friendship_changed(_npc_id: String, _level: int):
+func _on_friendship_changed(_npc_id: String, _level: int) -> void:
 	pass  # Could trigger new dialogue availability notifications
 
 
@@ -242,3 +264,128 @@ func get_save_data() -> Dictionary:
 func load_save_data(data: Dictionary) -> void:
 	if data.has("dialogue_history"):
 		dialogue_history = data.dialogue_history
+
+
+# === AI Dialogue Integration (Godot AI Hook) ===
+
+
+## Initialize the AI dialogue system. Creates an NPCAIDialogue adapter node
+## that handles communication with the AI backend via Godot AI Hook.
+func _setup_ai_dialogue() -> void:
+	# Create an NPCAIDialogue adapter node
+	_npc_ai = Node.new()
+	_npc_ai.set_script(load("res://scripts/npc/NPCAIDialogue.gd"))
+	_npc_ai.name = "NPCAIDialogue"
+	add_child(_npc_ai)
+	_npc_ai.dialogue_system = self
+	# AI is enabled when a valid API key is configured
+	ai_enabled = not AiConfig.api_key.is_empty()
+
+
+## Request an AI-generated dialogue response for an NPC.
+## Falls back to static dialogue if AI is unavailable or fails.
+func request_ai_dialogue(npc_id: String, player_message: String) -> void:
+	if not ai_enabled or _npc_ai == null or AiConfig.api_key.is_empty():
+		# Fall back to static dialogue
+		start_dialogue(npc_id)
+		return
+
+	if _ai_waiting:
+		return
+
+	var npc: Dictionary = NPCDatabase.get_npc(npc_id)
+	if npc.is_empty():
+		return
+
+	var npc_name: String = npc.get("display_name", npc.get("name", "Villager"))
+	var role: String = npc.get("occupation", npc.get("role", ""))
+	var friendship: int = npc.get("friendship_level", 0)
+	var backstory: String = npc.get("backstory", "")
+
+	# Build a context-rich system prompt
+	var system_prompt: String = _build_npc_system_prompt(npc_id, npc_name, role, friendship, backstory)
+
+	_ai_waiting = true
+	current_npc_id = npc_id
+
+	EventBus.ai_dialogue_requested.emit(npc_id, player_message)
+
+	# Use the NPCAIDialogue adapter to send the request
+	_npc_ai.send_request(player_message, system_prompt)
+
+
+## Build a system prompt for an NPC based on their character data.
+func _build_npc_system_prompt(_npc_id: String, npc_name: String, role: String, friendship: int, backstory: String) -> String:
+	# Start with role-based prompt if available
+	var prompt_key: String = ROLE_TO_PROMPT_KEY.get(role, "npc_default")
+	var base_prompt: String = SystemPromptConfig.system_prompt_dic.get(prompt_key, "")
+	if base_prompt.is_empty():
+		base_prompt = SystemPromptConfig.system_prompt_dic.get("npc_default", "")
+
+	# Enrich with character-specific context
+	var context: String = base_prompt
+	context += "\n\nCharacter details:"
+	context += "\n- Your name is %s." % npc_name
+	if role != "":
+		context += "\n- Your role/occupation: %s." % role
+	context += "\n- Your friendship level with the player: %d/10 hearts." % friendship
+	if friendship >= 8:
+		context += " You consider the player a dear friend."
+	elif friendship >= 5:
+		context += " You are friendly with the player."
+	elif friendship >= 2:
+		context += " You are acquainted with the player."
+	else:
+		context += " You barely know the player."
+
+	if backstory != "":
+		context += "\n- Background: %s" % backstory
+
+	context += "\n\nCurrent season: %s, Day %d." % [EventBus.current_season, EventBus.current_day]
+	context += "\nKeep your response in-character, brief (1-3 sentences), and do not break the fourth wall."
+
+	return context
+
+
+## Called by NPCAIDialogue when the AI response is received.
+func _on_ai_response_received(response: String) -> void:
+	_ai_waiting = false
+	if response.is_empty():
+		# AI returned empty, fall back to static
+		start_dialogue(current_npc_id)
+		return
+
+	var npc: Dictionary = NPCDatabase.get_npc(current_npc_id)
+	var npc_name: String = npc.get("display_name", npc.get("name", "Villager"))
+
+	# Create a dialogue line from the AI response
+	current_dialogue_lines = [{
+		"speaker": npc_name,
+		"key": current_npc_id + "_ai_response",
+		"text": response,
+		"ai_generated": true
+	}]
+	current_line_index = 0
+	is_dialogue_active = true
+
+	EventBus.ai_dialogue_received.emit(current_npc_id, response)
+	EventBus.npc_dialogue_triggered.emit(current_npc_id, "ai_greeting")
+	EventBus.dialogue_started.emit()
+
+
+## Called by NPCAIDialogue when an AI error occurs. Falls back to static dialogue.
+func _on_ai_error(err_msg: String) -> void:
+	_ai_waiting = false
+	EventBus.ai_dialogue_error.emit(current_npc_id, err_msg)
+	# Fall back to static dialogue
+	start_dialogue(current_npc_id)
+
+
+## Check if AI dialogue is available and configured.
+func is_ai_available() -> bool:
+	return ai_enabled and _npc_ai != null and not AiConfig.api_key.is_empty()
+
+
+## Enable or disable AI-powered dialogue at runtime.
+func set_ai_enabled(enabled: bool) -> void:
+	ai_enabled = enabled

@@ -199,9 +199,9 @@ func add_item(item_id: String, quantity: int = 1) -> int:
 			}
 			remaining -= stack_amount
 
-	var added = quantity - remaining
+	var added: int = quantity - remaining
 	if added > 0:
-		EventBus.special_item_obtained.emit(item_id)
+		EventBus.inventory_item_added.emit(item_id, added)
 	return added
 
 

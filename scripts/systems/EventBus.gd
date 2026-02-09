@@ -86,6 +86,11 @@ signal aunt_journal_page_found(page_number: int)
 signal havenport_representative_visit()
 signal farm_worth_proven()
 
+# AI dialogue signals
+signal ai_dialogue_requested(npc_id: String, player_message: String)
+signal ai_dialogue_received(npc_id: String, ai_response: String)
+signal ai_dialogue_error(npc_id: String, error_message: String)
+
 # Global game state
 var current_day: int = 1
 var current_season: String = "Spring"

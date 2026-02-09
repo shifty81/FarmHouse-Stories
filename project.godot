@@ -97,6 +97,10 @@ inventory={
 2d_physics/layer_7="Dungeon"
 2d_physics/layer_8="Enemies"
 
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/godot_ai_hook/plugin.cfg")
+
 [rendering]
 
 textures/canvas_textures/default_texture_filter=0
