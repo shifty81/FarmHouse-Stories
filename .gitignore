@@ -15,6 +15,7 @@ mono_crash.*.json
 # Export templates
 *.pck
 *.zip
+*.7z
 
 # OS generated
 .DS_Store

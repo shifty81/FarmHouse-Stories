@@ -1,87 +1,60 @@
 # Note About the GFX Folder
 
-## Status: Awaiting Upload
+## Status: Assets Integrated
 
-The `gfx` folder that you mentioned has not yet been found in the repository. This note explains what to do once you upload it.
+The `gfx/` folder now contains all extracted and organized game assets from the uploaded packs.
 
-## When You Upload the GFX Folder
+## Asset Structure
 
-Once you add the `gfx` folder to the repository, follow these steps:
+```
+gfx/
+├── ui/                    # TravelBook UI theme (Complete_UI_Book_Styles_Pack_Free)
+│   ├── icons/             # Coin, energy, heart, star, gear, home, etc.
+│   ├── frames/            # Panel frames, book pages, popup, selection
+│   ├── slots/             # Inventory slot backgrounds (normal, selected, hover)
+│   ├── bars/              # Progress bar frame and fill textures
+│   ├── buttons/           # Button and toggle textures
+│   ├── gamepad/           # Gamepad button prompt icons
+│   └── misc/              # Cursors, separators, markers, command prompts
+├── terrain/               # LPC Terrain tileset (CC-BY-SA 3.0 / GPL 3.0)
+│   ├── terrain.png        # Complete terrain spritesheet
+│   ├── Terrain.tsx        # Tiled editor tileset definition
+│   └── Attribution.txt    # Full contributor credits
+├── animals/               # Farm animal spritesheets
+│   ├── chicken_spritesheet.png  # Chicken animations (32×32 grid)
+│   └── cow_spritesheet.png      # Cow animations (48×32 grid)
+├── items/                 # Item icons (Stardew style, 1x pixel art)
+│   ├── artifacts/         # Collectible artifact icons
+│   ├── artisan_goods/     # Artisan product icons
+│   ├── cooking/           # Cooking recipe icons
+│   ├── crops/             # Crop item icons
+│   ├── forage/            # Forage item icons
+│   └── minerals/          # Mineral and gem icons
+├── crops_spritesheet.png  # Crop growth stage sprites (16×32)
+├── farm_environment_items.png  # Farm decorations and objects
+├── Overworld.png          # Main overworld tileset
+├── Inner.png              # Interior tileset
+├── cave.png               # Cave/dungeon tileset
+├── character.png          # Player character sprites
+├── objects.png            # Tools and items
+├── NPC_test.png           # NPC sprite
+├── log.png                # Dialog box elements
+├── font.png               # Bitmap font
+└── CREDITS.md             # Full attribution for all assets
+```
 
-### Option 1: Quick Analysis
+## License Summary
 
-1. **Add and commit the folder:**
-   ```bash
-   git add gfx/
-   git commit -m "Add graphics assets in gfx folder"
-   git push
-   ```
+| Asset Pack | License | Attribution Required |
+|---|---|---|
+| TravelBook UI | Free with attribution | Yes - credit Crusenho Agus Hennihuno |
+| LPC Terrain | CC-BY-SA 3.0 / GPL 3.0 | Yes - see Attribution.txt |
+| Zelda-like Tilesets | [To verify on OpenGameArt] | Yes |
+| Animal Farm Pack | [To verify] | TBD |
+| Stardew Item Icons | [To verify] | TBD |
 
-2. **Let me know** and I'll analyze it using the GFX Integration Guide
-
-### Option 2: Manual Analysis
-
-Follow the comprehensive guide in [docs/08_GFXIntegrationGuide.md](docs/08_GFXIntegrationGuide.md) which includes:
-- Asset inventory and categorization
-- Organization recommendations
-- Import settings for Godot
-- Cell shader testing
-- Performance optimization
-
-## What I'm Looking For
-
-When the `gfx` folder is available, I'll analyze:
-
-1. **Content Type:**
-   - Character sprites (player, NPCs, animals)
-   - Environment tiles and tilesets
-   - Crops and plants
-   - UI elements
-   - Tools and objects
-   - Effects and particles
-
-2. **Technical Details:**
-   - Image formats (PNG, JPG, etc.)
-   - Dimensions and resolution
-   - Organization structure
-   - File sizes and optimization needs
-
-3. **Integration Plan:**
-   - Where to place files in the project
-   - How to configure Godot import settings
-   - Which assets work well with cell shading
-   - Any modifications needed
-
-4. **Licensing:**
-   - Whether assets are original or third-party
-   - What attribution is needed
-   - License compatibility
-
-## Alternative: Describe What's in the Folder
-
-If you can't upload the folder directly, you can tell me:
-- What types of graphics are included
-- How they're organized
-- The intended use for each asset type
-- Any specific questions about integration
-
-## Prepared Documentation
-
-I've already created complete documentation that's ready to use with your graphics:
-
-- **[05_AssetOrganization.md](docs/05_AssetOrganization.md)** - How to organize assets properly
-- **[08_GFXIntegrationGuide.md](docs/08_GFXIntegrationGuide.md)** - Step-by-step integration workflow
-- **[02_CellShadingTechniques.md](docs/02_CellShadingTechniques.md)** - How to apply shaders to your graphics
-
-## Next Steps
-
-1. **Upload the gfx folder** to the repository
-2. **Push the changes** to GitHub
-3. **Let me know** so I can analyze the contents
-4. **I'll provide** specific recommendations for your assets
+See `gfx/CREDITS.md` for full attribution details.
 
 ---
 
-**Note:** This file can be deleted once the gfx folder is analyzed and integrated.
-
-*Created: February 2026*
+*Updated: February 2026*

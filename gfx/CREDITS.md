@@ -49,18 +49,94 @@ Source: OpenGameArt.org
 
 ---
 
+## Complete UI Book Styles Pack (TravelBook Lite)
+
+**Source:** https://crusenho.itch.io/complete-ui-book-styles-pack  
+**Author:** Crusenho Agus Hennihuno  
+**License:** Free to use for personal and commercial projects with attribution (see License.txt). No resale or NFT use.
+
+### Files Included
+
+All files in `/gfx/ui/`:
+
+- **icons/** - Coin, energy, heart, star, gear, home, arrow, cross, tick, alert, pause, play, restart icons
+- **frames/** - Panel frame, selection frames, book cover, page frames, popup
+- **slots/** - Normal, selected, and hover inventory slot backgrounds
+- **bars/** - Bar frame and fill textures for progress bars
+- **buttons/** - Normal and pressed button textures, toggles
+- **gamepad/** - Gamepad button prompt icons (A/B/X/Y, D-pad, bumpers, triggers, sticks)
+- **misc/** - Cursor, separators, markers, points, command prompts, handles
+
+### Attribution
+
+```
+UI Assets: "Complete UI Book Styles Pack" (TravelBook Lite) by Crusenho Agus Hennihuno
+Source: https://crusenho.itch.io/complete-ui-book-styles-pack
+```
+
+---
+
+## LPC Terrain Tileset
+
+**Source:** OpenGameArt.org (Liberated Pixel Cup contest)  
+**Authors:** Multiple contributors (see `/gfx/terrain/Attribution.txt` for full list)  
+**License:** CC-BY-SA 3.0 / GNU GPL 3.0
+
+### Files Included
+
+- **gfx/terrain/terrain.png** - Complete terrain tileset
+- **gfx/terrain/Terrain.tsx** - Tiled editor tileset definition
+- **gfx/terrain/Attribution.txt** - Full attribution and contributor list
+
+### Key Contributors
+
+- Lanea Zimmerman (Sharm) - Base terrain tiles
+- Daniel Eddeland - Plant and environment tilesets
+- Matthew Nash - Road tiles
+- Nushio - Snow/ice recolors
+- William.Thompsonj - Sand/dirt recolors
+
+---
+
+## Animal Farm Asset Pack
+
+**Source:** Uploaded asset pack  
+**License:** [To be verified]
+
+### Files Included
+
+- **gfx/animals/chicken_spritesheet.png** - Chicken animations (32×32 grid)
+- **gfx/animals/cow_spritesheet.png** - Cow animations (48×32 grid)
+- **gfx/crops_spritesheet.png** - Crop growth stages (16×32)
+- **gfx/farm_environment_items.png** - Farm environment objects and decorations
+
+---
+
+## Item Icons (Stardew Style)
+
+**Source:** Uploaded asset pack (stardew_V3)  
+**License:** [To be verified]
+
+### Files Included
+
+All files in `/gfx/items/`:
+
+- **artifacts/** - Collectible artifact item icons
+- **artisan_goods/** - Artisan product item icons
+- **cooking/** - Cooking recipe item icons
+- **crops/** - Crop item icons
+- **forage/** - Forage item icons
+- **minerals/** - Mineral and gem item icons
+
+---
+
 ## Additional Assets
 
 ### Future Assets to Add
 
-As the project expands, document any additional graphics assets here:
-
-- [ ] Crop growth stage sprites
-- [ ] Farm animal sprites
-- [ ] Additional NPC characters
 - [ ] Seasonal tile variants
 - [ ] Weather effects
-- [ ] Additional UI elements
+- [ ] Additional NPC character sprites
 
 ---
 
