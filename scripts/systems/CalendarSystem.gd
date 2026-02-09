@@ -17,6 +17,8 @@ var current_minute: int = 0
 
 var time_paused: bool = false:
 	set(value):
+		if time_paused == value:
+			return
 		time_paused = value
 		set_process(not value)
 var time_accumulator: float = 0.0

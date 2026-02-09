@@ -37,7 +37,7 @@ func say_bind_key(content: String, key: String) -> void:
 		push_error("system_prompt key is empty")
 		return
 	system_prompt = SystemPromptConfig.system_prompt_dic.get(key, "")
-	if system_prompt is not String:
+	if typeof(system_prompt) != TYPE_STRING:
 		push_error("system_prompt must be a String, please check the value for this key in SystemPromptConfig.system_prompt_dic")
 		return
 	if system_prompt.is_empty():

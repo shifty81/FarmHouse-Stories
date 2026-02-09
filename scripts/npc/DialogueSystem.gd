@@ -272,14 +272,14 @@ func load_save_data(data: Dictionary) -> void:
 ## Initialize the AI dialogue system. Creates an NPCAIDialogue adapter node
 ## that handles communication with the AI backend via Godot AI Hook.
 func _setup_ai_dialogue() -> void:
-	if not AiConfig.api_key.is_empty():
-		ai_enabled = true
 	# Create an NPCAIDialogue adapter node
 	_npc_ai = Node.new()
 	_npc_ai.set_script(load("res://scripts/npc/NPCAIDialogue.gd"))
 	_npc_ai.name = "NPCAIDialogue"
 	add_child(_npc_ai)
 	_npc_ai.dialogue_system = self
+	# AI is enabled when a valid API key is configured
+	ai_enabled = not AiConfig.api_key.is_empty()
 
 
 ## Request an AI-generated dialogue response for an NPC.
