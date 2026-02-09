@@ -74,7 +74,7 @@ func _setup_farm():
 	world_generator.generate_farm(ground_layer, paths_layer, plantable_layer, objects_layer, tileset)
 
 	# Set spawn positions based on world generator
-	var base_spawn := world_generator.get_spawn_position()
+	var base_spawn: Vector2 = world_generator.get_spawn_position()
 	_spawn_positions = [
 		base_spawn,
 		base_spawn + Vector2(24, 0),
@@ -134,7 +134,7 @@ func get_tile_at_position(world_pos: Vector2) -> Vector2i:
 
 func is_plantable(tile_pos: Vector2i) -> bool:
 	if plantable_layer:
-		var source_id := plantable_layer.get_cell_source_id(tile_pos)
+		var source_id: int = plantable_layer.get_cell_source_id(tile_pos)
 		return source_id != -1
 	return false
 
