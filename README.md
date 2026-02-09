@@ -1,16 +1,19 @@
-# FarmHouse Stories
+# FarmHouse Stories — Echoes of Aethelgard
 
-A **2D top-down farming simulation game** inspired by Stardew Valley, built with **Godot Engine 4.6**. Features cell-shaded graphics, comprehensive farming mechanics, and engaging gameplay combining agriculture, crafting, fishing, mining, and social simulation.
+A **2D top-down action-farming RPG** built with **Godot Engine 4.6**, merging **Link to the Past** puzzle-dungeons with **Stardew Valley** relationship mechanics. Set in **Aethelgard Valley**, players manage a farm, explore Zelda-style dungeons in the Echo Ridge mountains, tackle procedurally generated Mythic Rift dungeons for rare loot, and build relationships with 35 unique citizens of Hearthhaven.
 
 ## 🎮 Project Vision
 
-Create a charming and relaxing farming game that combines:
-- **Top-down 2D gameplay** with Zelda-like exploration
+Create an engaging action-farming RPG that combines:
+- **Top-down 2D gameplay** with Zelda-like dungeon exploration and puzzle-solving
 - **Cell-shaded graphics** for a unique artistic style
-- **Deep farming mechanics** including crops, animals, and seasons
+- **Deep farming mechanics** including crops, animals, and rift-touched seasons
+- **Dual gear sets** — Farm Set for daily life, Dungeon Set for combat/spelunking
+- **Link to the Past-style dungeons** with keys, puzzles, and boss battles
+- **Mythic Rift dungeons** — procedurally generated challenges with Ethereal Token rewards
+- **35 unique NPCs** with daily routines, rich backstories, and evolving questlines
+- **Seasonal events** tied to US holidays with special creatures, drops, and activities
 - **Resource management** through crafting and gathering
-- **Social simulation** with NPCs and relationships
-- **Adventure elements** with mining and light combat
 
 ## 🚀 Getting Started
 
@@ -74,32 +77,75 @@ The game uses **cell shading** (toon shading) to create a distinctive, cartoon-l
 
 See `docs/02_CellShadingTechniques.md` for implementation details.
 
-## 🌾 Core Features (Planned)
+## 🌍 World: Aethelgard Valley
 
-### Farming System
-- **Crop Cultivation:** Plant, water, and harvest seasonal crops
-- **Animal Husbandry:** Raise chickens, cows, and other farm animals
-- **Farm Expansion:** Upgrade and customize your farm layout
-- **Seasonal Gameplay:** Four seasons with unique crops and events
+### The Hub City — Hearthhaven
+A bustling, cozy town centered around a large Clock Tower, a market square, and the Gilded Hearth tavern. Home to 35 unique citizens with daily schedules, rich backstories, and evolving questlines.
 
-### Resource Management
-- **Crafting System:** Create tools, equipment, and artisan goods
-- **Mining:** Explore mines for ores, gems, and resources
-- **Fishing:** Catch fish in various locations and seasons
-- **Foraging:** Gather wild items throughout the world
+### Echo Ridge Mountains
+Ancient mountains containing **Link to the Past-style dungeons** with keys, puzzles, and bosses:
+- **Echo Caverns** — Stone corridors echoing the past (Difficulty 1)
+- **Whispering Depths** — Rift energy seeps through ancient walls (Difficulty 2)
+- **Ancient Aqueducts** — Waterlogged tunnels with shifting currents (Difficulty 2)
+- **Crystal Sanctum** — Cathedral of living crystals (Difficulty 3)
+- **Ember Forge** — Volcanic dungeon with ancient forges (Difficulty 4)
+- **Void Fortress** — Reality bends within these halls (Difficulty 5)
 
-### Social & Progression
-- **NPC Relationships:** Befriend villagers and build relationships
-- **Community Events:** Participate in seasonal festivals
-- **Skill System:** Level up farming, mining, fishing, foraging, and combat
-- **Economy:** Manage money through selling goods and purchasing upgrades
+### The Mythic Rifts (Void Anchor)
+Near the valley's edge lies the **Void Anchor**, where a mysterious cloaked vendor opens daily randomized **Mythic Rift** dungeons in exchange for **Chronos Shards**. These procedurally generated dungeons offer escalating tiers of difficulty (Minor to Abyssal) with better loot and **Ethereal Tokens** for gear upgrades.
 
-### Technical Features
-- **Time System:** Dynamic day/night cycle and calendar
-- **Save/Load:** Persistent game progress
-- **Inventory Management:** Organize and manage items
-- **Tool Upgrades:** Improve efficiency with better equipment
-- **Multiplayer:** Host or join cooperative farming sessions (up to 4 players via ENet)
+### Whispering Wastes
+The desolate border of the known world, home to Old Moss the hermit and strange phenomena.
+
+## ⚔️ Dual Gear System
+
+- **Farm Set** — Casual wear for daily farm life: stamina regen, movement speed, interaction bonuses, harvest quality
+- **Dungeon Set** — Combat gear for exploration: defense, HP, trap resistance, elemental protection
+- Gear automatically swaps when entering/exiting dungeons
+- Dungeon gear upgradeable using **Ethereal Tokens** from Mythic Rift vendors (up to 5 upgrade levels)
+
+## 🏰 Dungeon Mechanics
+
+Dungeons feature **Link to the Past-style** gameplay:
+- **Room types:** Combat, puzzle, treasure, key rooms, boss arenas
+- **Puzzle types:** Block pushing, switch sequences, light reflection, pressure plates, torch lighting, crystal alignment, water flow, lever order
+- **Key progression:** Small keys, big keys, boss keys, crystal keys
+- **Boss encounters** with specific weaknesses and unique loot drops
+- **Chronos Shard** drops that unlock Mythic Rift access
+
+## 👥 Citizens of Hearthhaven (35 NPCs)
+
+Each NPC has a unique backstory, daily schedule, favorite/disliked gifts, birthday, and multi-part questline:
+
+| NPC | Role | Key Questline |
+|-----|------|---------------|
+| **Silas** | Blacksmith | Overcome trauma → unlock Legendary gear forging |
+| **Elara** | Myth-Keeper/Librarian | Translate ancient texts → reveal Aethelgard's true history |
+| **Barnaby** | Botanist | Overcome social anxiety → access rare rift-touched crops |
+| **Mayor Thornwell** | Mayor | Uncover founding secrets and political intrigue |
+| **Marlowe** | Tavern Owner | Rebuild the Gilded Hearth after a mysterious fire |
+| **The Shrouded One** | Void Anchor Vendor | Mysterious Rift fragment — Mythic dungeon gateway |
+| **Old Moss** | Hermit/Herbalist | Reveal he sealed the original Rift breach |
+| **Theron** | Ranger/Guard Captain | Defend against threats from beyond Echo Ridge |
+| ...and 27 more | Various | Deep personal stories woven into the world |
+
+## 🎉 Seasonal Events (US Holidays)
+
+Events are adapted to Aethelgard's fantasy world with special creatures, drops, and activities:
+
+| Season | Event | US Holiday | Special Creatures |
+|--------|-------|------------|-------------------|
+| 🌸 Spring | **Spring Bloom Fair** | Easter | Petal-Pups, Bloom Bunnies |
+| 🌸 Spring | **Blossom Hearts Festival** | Valentine's Day | Love Sprites |
+| 🌸 Spring | **Emerald Fortune Day** | St. Patrick's Day | Gold Sprites |
+| ☀️ Summer | **Sun-Singe Solstice** | Summer Solstice | Sun-Ray Fish, Sand Crab King |
+| ☀️ Summer | **Freedom Fireworks** | Independence Day | Spark Beetles |
+| 🍂 Fall | **Harvest Moon Hallow** | Halloween | Void-Bats, Shadow Cats |
+| 🍂 Fall | **Great Harvest Feast** | Thanksgiving | Golden Turkeys |
+| ❄️ Winter | **The Great Frost-Light** | Christmas | Frost Stags, Snow Sprites |
+| ❄️ Winter | **New Dawn Festival** | New Year's | Chrono Butterflies |
+| ❄️ Winter | **Unity Day** | MLK Day | — |
+
 
 ## 🌐 Multiplayer
 
@@ -116,12 +162,21 @@ All players share the same farm world. Crop actions and time progression are syn
 ```
 FarmHouse-Stories/
 ├── docs/               # Comprehensive documentation
-├── assets/            # Game assets (graphics, audio, fonts)
+├── gfx/               # Game assets (sprites, fonts)
 ├── scenes/            # Godot scene files
+│   ├── ui/            # HUD, lobby
+│   ├── farm/          # Farm, crops
+│   └── player/        # Player character
 ├── scripts/           # GDScript game logic
+│   ├── systems/       # EventBus, Calendar, Save, Network
+│   ├── farm/          # Crop management
+│   ├── player/        # Player movement, tools
+│   ├── npc/           # NPC database and data definitions
+│   ├── gear/          # Dual gear set system
+│   ├── dungeon/       # Dungeon and Mythic Rift systems
+│   └── events/        # Seasonal event system
 ├── shaders/           # Custom shaders (cell shading)
-├── resources/         # Game data (crops, items, recipes)
-└── addons/            # Third-party plugins and extensions
+└── project.godot      # Godot project configuration
 ```
 
 ## 🛠️ Technology Stack
@@ -167,34 +222,46 @@ Please read the documentation first to understand the project structure and conv
 - [x] Cell shader for toon-style rendering
 - [ ] Tilemap and level design
 
-### Phase 2: Core Mechanics (In Progress)
+### Phase 2: Core Mechanics ✅
 - [x] Farming system (planting, watering, harvesting)
 - [x] Day/night cycle and calendar system
 - [x] Basic HUD (time, date, money, energy)
 - [x] Tool system base class
-- [x] Save/load system
+- [x] Save/load system (extended for all new systems)
 - [x] Multiplayer support (host/join lobby, player spawning, position sync)
 - [ ] Inventory and item system
 - [ ] Tool-specific implementations (hoe, watering can, axe, pickaxe)
 
-### Phase 3: Advanced Features
-- [ ] Crafting and artisan goods
-- [ ] Mining and combat system
-- [ ] Fishing mechanics
-- [ ] NPC and dialogue system
+### Phase 3: World Systems ✅
+- [x] NPC database with 35 citizens (backstories, schedules, questlines)
+- [x] Dual gear set system (Farm Set / Dungeon Set)
+- [x] Story dungeon system (6 Link to the Past-style dungeons)
+- [x] Mythic Rift procedural dungeon system with tiered difficulty
+- [x] Void Anchor vendor with Chronos Shard / Ethereal Token economy
+- [x] Seasonal event system (16+ events tied to US holidays)
+- [x] EventBus extended with NPC, gear, dungeon, rift, and event signals
 
-### Phase 4: Polish & Content
-- [ ] Cell shader implementation
+### Phase 4: Advanced Features
+- [ ] Dungeon room/puzzle scene implementations
+- [ ] Combat system with enemy AI
+- [ ] NPC dialogue and cutscene system
+- [ ] Crafting and artisan goods
+- [ ] Fishing mechanics
+- [ ] Mining system
+
+### Phase 5: Polish & Content
+- [ ] Cell shader integration with all scenes
 - [ ] UI/UX improvements
 - [ ] Sound effects and music
+- [ ] Quest journal UI
 - [ ] Additional content and balancing
 
 See `docs/01_ProjectOverview.md` for detailed roadmap.
 
 ## 🎯 Current Status
 
-**Phase:** Core Systems Implemented  
-**Next Steps:** Add tilemap/level design, implement inventory system, and create tool-specific scripts
+**Phase:** World Systems Complete  
+**Next Steps:** Implement dungeon room scenes, combat system, NPC dialogue system, and inventory management
 
 ## 📄 License
 

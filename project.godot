@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="FarmHouse Stories"
-config/description="A 2D top-down farming simulation game inspired by Stardew Valley"
+config/description="Echoes of Aethelgard - A 2D top-down action-farming RPG merging Link to the Past puzzle-dungeons with Stardew Valley relationship mechanics, set in the vibrant Aethelgard Valley"
 run/main_scene="res://scenes/ui/MultiplayerLobby.tscn"
 config/features=PackedStringArray("4.6", "GL Compatibility")
 
@@ -21,6 +21,11 @@ EventBus="*res://scripts/systems/EventBus.gd"
 SaveSystem="*res://scripts/systems/SaveSystem.gd"
 Calendar="*res://scripts/systems/CalendarSystem.gd"
 NetworkManager="*res://scripts/systems/NetworkManager.gd"
+NPCDatabase="*res://scripts/npc/NPCDatabase.gd"
+GearSetSystem="*res://scripts/gear/GearSetSystem.gd"
+DungeonSystem="*res://scripts/dungeon/DungeonSystem.gd"
+MythicRiftSystem="*res://scripts/dungeon/MythicRiftSystem.gd"
+SeasonalEventSystem="*res://scripts/events/SeasonalEventSystem.gd"
 
 [display]
 
@@ -86,6 +91,8 @@ inventory={
 2d_physics/layer_4="Crops"
 2d_physics/layer_5="Interactables"
 2d_physics/layer_6="Items"
+2d_physics/layer_7="Dungeon"
+2d_physics/layer_8="Enemies"
 
 [rendering]
 
