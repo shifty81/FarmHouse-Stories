@@ -40,7 +40,7 @@ const GRASS_EDGE_B  := Vector2i(1, 5)   # bottom
 const GRASS_EDGE_BR := Vector2i(2, 5)   # bottom-right
 
 # Dirt / tilled soil - solid brown tiles
-const DIRT_TILES: Array = [
+const DIRT_TILES: Array[Vector2i] = [
 	Vector2i(7, 1),   # medium brown (solid, 256 opaque)
 	Vector2i(8, 1),   # darker brown (solid, 256 opaque)
 	Vector2i(9, 1),   # medium brown variant
@@ -206,7 +206,7 @@ func _create_farm_plots(layer: TileMapLayer) -> void:
 	## Create several rectangular farmland plots where crops can be planted
 	## Each plot has a dirt border around tilled farmland rows
 
-	var plots = [
+	var plots: Array[Rect2i] = [
 		# Main large plot near spawn
 		Rect2i(22, 20, 12, 10),
 		# Second plot to the right
