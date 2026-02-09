@@ -20,11 +20,14 @@ func save_game() -> bool:
 			"hour": EventBus.current_hour,
 		},
 		"farm": {},
+		"inventory": _get_inventory_data(),
 		"npc_friendships": _get_npc_friendship_data(),
+		"dialogue": _get_dialogue_data(),
 		"gear": _get_gear_data(),
 		"dungeons": _get_dungeon_data(),
 		"mythic_rift": _get_mythic_rift_data(),
-		"events": _get_event_data()
+		"events": _get_event_data(),
+		"combat": _get_combat_data()
 	}
 
 	var file = FileAccess.open(SAVE_FILE, FileAccess.WRITE)
@@ -67,10 +70,13 @@ func load_game() -> Dictionary:
 			EventBus.active_gear_set = data.player.active_gear_set
 
 	_load_npc_friendship_data(data.get("npc_friendships", {}))
+	_load_inventory_data(data.get("inventory", {}))
+	_load_dialogue_data(data.get("dialogue", {}))
 	_load_gear_data(data.get("gear", {}))
 	_load_dungeon_data(data.get("dungeons", {}))
 	_load_mythic_rift_data(data.get("mythic_rift", {}))
 	_load_event_data(data.get("events", {}))
+	_load_combat_data(data.get("combat", {}))
 
 	print("Game loaded successfully!")
 	return data
@@ -154,3 +160,42 @@ func _load_event_data(data: Dictionary) -> void:
 	var event_system = get_node_or_null("/root/SeasonalEventSystem")
 	if event_system and event_system.has_method("load_save_data"):
 		event_system.load_save_data(data)
+
+
+func _get_inventory_data() -> Dictionary:
+	var inventory = get_node_or_null("/root/InventorySystem")
+	if inventory and inventory.has_method("get_save_data"):
+		return inventory.get_save_data()
+	return {}
+
+
+func _load_inventory_data(data: Dictionary) -> void:
+	var inventory = get_node_or_null("/root/InventorySystem")
+	if inventory and inventory.has_method("load_save_data"):
+		inventory.load_save_data(data)
+
+
+func _get_dialogue_data() -> Dictionary:
+	var dialogue = get_node_or_null("/root/DialogueSystem")
+	if dialogue and dialogue.has_method("get_save_data"):
+		return dialogue.get_save_data()
+	return {}
+
+
+func _load_dialogue_data(data: Dictionary) -> void:
+	var dialogue = get_node_or_null("/root/DialogueSystem")
+	if dialogue and dialogue.has_method("load_save_data"):
+		dialogue.load_save_data(data)
+
+
+func _get_combat_data() -> Dictionary:
+	var combat = get_node_or_null("/root/CombatSystem")
+	if combat and combat.has_method("get_save_data"):
+		return combat.get_save_data()
+	return {}
+
+
+func _load_combat_data(data: Dictionary) -> void:
+	var combat = get_node_or_null("/root/CombatSystem")
+	if combat and combat.has_method("load_save_data"):
+		combat.load_save_data(data)

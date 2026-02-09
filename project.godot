@@ -26,6 +26,9 @@ GearSetSystem="*res://scripts/gear/GearSetSystem.gd"
 DungeonSystem="*res://scripts/dungeon/DungeonSystem.gd"
 MythicRiftSystem="*res://scripts/dungeon/MythicRiftSystem.gd"
 SeasonalEventSystem="*res://scripts/events/SeasonalEventSystem.gd"
+InventorySystem="*res://scripts/systems/InventorySystem.gd"
+DialogueSystem="*res://scripts/npc/DialogueSystem.gd"
+CombatSystem="*res://scripts/combat/CombatSystem.gd"
 
 [display]
 
