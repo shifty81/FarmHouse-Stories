@@ -210,7 +210,7 @@ func _create_water_feature(layer: TileMapLayer) -> void:
 				var atlas_coord := _get_water_edge(x - pond_x, y - pond_y, pond_w, pond_h)
 				layer.set_cell(Vector2i(x, y), OVERWORLD_SOURCE, atlas_coord)
 
-	# Small secondary pond in the north-west corner
+	# Small secondary pond in the south-west
 	var pond2_x := 6
 	var pond2_y := 42
 	var pond2_w := 5
@@ -502,5 +502,5 @@ func _tile_hash(x: int, y: int) -> int:
 
 func get_spawn_position() -> Vector2:
 	## Returns the player spawn position in world coordinates
-	## In front of the farmhouse door (Stardew Valley style)
-	return Vector2(14 * TILE_SIZE, 12 * TILE_SIZE)
+	## In front of the farmhouse door (Stardew Valley style), centered on tile
+	return Vector2(14 * TILE_SIZE + TILE_SIZE / 2, 12 * TILE_SIZE + TILE_SIZE / 2)
