@@ -27,12 +27,13 @@ class_name NPCData extends Resource
 var friendship_level: int = 0
 var friendship_points: int = 0
 
-const POINTS_PER_LEVEL = 250
+const POINTS_PER_LEVEL: int = 250
+const MAX_LEVEL: int = 10
 
 
 func add_friendship(points: int) -> bool:
 	friendship_points += points
-	var new_level = mini(friendship_points / POINTS_PER_LEVEL, 10)
+	var new_level: int = mini(friendship_points / POINTS_PER_LEVEL, MAX_LEVEL)
 	if new_level != friendship_level:
 		friendship_level = new_level
 		return true

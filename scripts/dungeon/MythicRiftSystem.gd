@@ -51,12 +51,13 @@ func _ready():
 	EventBus.mythic_rift_completed.connect(_on_rift_completed)
 
 
+const SEASONS_TO_INT = {"Spring": 1, "Summer": 2, "Fall": 3, "Winter": 4}
+
+
 func _on_day_started(_day: int, _season: String):
 	daily_seed = _day * 1000 + SEASONS_TO_INT.get(_season, 0)
 	rift_active = false
 	active_rift = {}
-
-const SEASONS_TO_INT = {"Spring": 1, "Summer": 2, "Fall": 3, "Winter": 4}
 
 
 func open_mythic_rift(tier: int) -> Dictionary:

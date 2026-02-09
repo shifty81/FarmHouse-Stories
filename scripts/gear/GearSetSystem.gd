@@ -4,6 +4,7 @@ extends Node
 
 ## Gear slot definitions
 const GEAR_SLOTS = ["head", "body", "legs", "feet", "accessory", "tool"]
+const MAX_UPGRADE_LEVEL: int = 5
 
 ## Current equipment per set: { slot_name: item_data }
 var farm_set: Dictionary = {}
@@ -108,7 +109,7 @@ func upgrade_dungeon_gear(slot: String, tokens_required: int) -> bool:
 		return false
 
 	var current_level = item.get("upgrade_level", 0)
-	if current_level >= 5:
+	if current_level >= MAX_UPGRADE_LEVEL:
 		return false
 
 	EventBus.ethereal_tokens -= tokens_required
