@@ -99,6 +99,17 @@ See `docs/02_CellShadingTechniques.md` for implementation details.
 - **Save/Load:** Persistent game progress
 - **Inventory Management:** Organize and manage items
 - **Tool Upgrades:** Improve efficiency with better equipment
+- **Multiplayer:** Host or join cooperative farming sessions (up to 4 players via ENet)
+
+## 🌐 Multiplayer
+
+FarmHouse Stories supports cooperative multiplayer for up to **4 players**:
+
+1. **Host a Game:** One player creates a server on a chosen port (default 9999).
+2. **Join a Game:** Other players connect using the host's IP address and port.
+3. **Singleplayer:** Start a solo game directly from the lobby.
+
+All players share the same farm world. Crop actions and time progression are synchronized across all connected clients.
 
 ## 🗂️ Project Structure
 
@@ -162,6 +173,7 @@ Please read the documentation first to understand the project structure and conv
 - [x] Basic HUD (time, date, money, energy)
 - [x] Tool system base class
 - [x] Save/load system
+- [x] Multiplayer support (host/join lobby, player spawning, position sync)
 - [ ] Inventory and item system
 - [ ] Tool-specific implementations (hoe, watering can, axe, pickaxe)
 

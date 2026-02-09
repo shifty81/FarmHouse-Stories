@@ -79,10 +79,11 @@ func _advance_season():
 
 
 func get_time_string() -> String:
-	var hour_12 = current_hour % 12
+	var display_hour = current_hour % 24
+	var hour_12 = display_hour % 12
 	if hour_12 == 0:
 		hour_12 = 12
-	var am_pm = "AM" if current_hour < 12 else "PM"
+	var am_pm = "AM" if display_hour < 12 else "PM"
 	return "%02d:%02d %s" % [hour_12, current_minute, am_pm]
 
 

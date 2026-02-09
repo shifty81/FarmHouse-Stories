@@ -1,14 +1,17 @@
 [gd_scene load_steps=4 format=3 uid="uid://bfarm001"]
 
 [ext_resource type="Script" path="res://scripts/farm/Farm.gd" id="1_farm"]
-[ext_resource type="PackedScene" uid="uid://bplayer001" path="res://scenes/player/Player.tscn" id="2_player"]
 [ext_resource type="Script" path="res://scripts/farm/CropManager.gd" id="3_cropmanager"]
+[ext_resource type="PackedScene" uid="uid://bplayer001" path="res://scenes/player/Player.tscn" id="4_player"]
 
 [node name="Farm" type="Node2D"]
 script = ExtResource("1_farm")
 
-[node name="Player" parent="." instance=ExtResource("2_player")]
-position = Vector2(640, 360)
+[node name="Players" type="Node2D" parent="."]
+
+[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
+spawn_path = NodePath("../Players")
+_spawnable_scenes = PackedStringArray("res://scenes/player/Player.tscn")
 
 [node name="CropManager" type="Node" parent="."]
 script = ExtResource("3_cropmanager")

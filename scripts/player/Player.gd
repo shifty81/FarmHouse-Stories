@@ -1,5 +1,6 @@
 extends CharacterBody2D
 ## Player - Handles player movement, animation, and interaction.
+## Multiplayer-aware: only the owning peer processes input.
 
 @export var speed: float = 150.0
 @export var acceleration: float = 1000.0
@@ -12,10 +13,17 @@ var last_direction: Vector2 = Vector2.DOWN
 
 
 func _ready():
-	camera.enabled = true
+	# Only enable camera for the local player
+	if _is_local_player():
+		camera.enabled = true
+	else:
+		camera.enabled = false
 
 
 func _physics_process(delta):
+	if not _is_local_player():
+		return
+
 	var input_direction = _get_input_direction()
 
 	if input_direction != Vector2.ZERO:
@@ -57,6 +65,8 @@ func _get_direction_suffix() -> String:
 
 
 func _input(event):
+	if not _is_local_player():
+		return
 	if event.is_action_pressed("interact"):
 		_attempt_interaction()
 
@@ -70,3 +80,9 @@ func _attempt_interaction():
 				area.interact()
 				return
 	print("Nothing to interact with.")
+
+
+func _is_local_player() -> bool:
+	if not multiplayer.has_multiplayer_peer():
+		return true
+	return is_multiplayer_authority()

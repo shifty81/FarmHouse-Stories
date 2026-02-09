@@ -1,5 +1,6 @@
 extends Node
 ## CropManager - Manages planting, watering, and harvesting crops.
+## In multiplayer, crop actions are synchronized via RPCs (server-authoritative).
 
 var planted_crops: Dictionary = {}
 
@@ -7,6 +8,17 @@ const CROP_SCENE = preload("res://scenes/farm/Crop.tscn")
 
 
 func plant_crop(tile_pos: Vector2i, crop_data: CropData) -> bool:
+	if planted_crops.has(tile_pos):
+		return false
+
+	if multiplayer.has_multiplayer_peer() and not multiplayer.is_server():
+		_request_plant.rpc_id(1, tile_pos, crop_data.resource_path)
+		return true
+
+	return _do_plant(tile_pos, crop_data)
+
+
+func _do_plant(tile_pos: Vector2i, crop_data: CropData) -> bool:
 	if planted_crops.has(tile_pos):
 		return false
 
@@ -24,6 +36,15 @@ func plant_crop(tile_pos: Vector2i, crop_data: CropData) -> bool:
 	planted_crops[tile_pos] = crop
 	EventBus.crop_planted.emit(tile_pos, crop_data.crop_name)
 	return true
+
+
+@rpc("any_peer", "reliable")
+func _request_plant(tile_pos: Vector2i, crop_path: String):
+	if not multiplayer.is_server():
+		return
+	var data = load(crop_path) as CropData
+	if data:
+		_do_plant(tile_pos, data)
 
 
 func water_crop(tile_pos: Vector2i):

@@ -16,12 +16,9 @@ func _ready():
 	_update_display()
 
 
-func _process(_delta):
+func _update_display():
 	if time_label:
 		time_label.text = Calendar.get_time_string()
-
-
-func _update_display():
 	if date_label:
 		date_label.text = Calendar.get_date_string()
 	if money_label:
