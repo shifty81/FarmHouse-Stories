@@ -16,6 +16,7 @@ func _ready():
 	# Only enable camera for the local player
 	if _is_local_player():
 		camera.enabled = true
+		camera.make_current()
 	else:
 		camera.enabled = false
 
