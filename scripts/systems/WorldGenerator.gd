@@ -71,10 +71,6 @@ const FLOWER_TILES: Array = [
 	Vector2i(3, 2), Vector2i(4, 2), Vector2i(5, 2),
 ]
 
-## Player spawn position (center of farm in pixels)
-var player_spawn_position: Vector2 = Vector2(640, 480)
-
-
 func generate_farm(ground_layer: TileMapLayer, paths_layer: TileMapLayer,
 		plantable_layer: TileMapLayer, objects_layer: TileMapLayer,
 		tileset: TileSet) -> void:

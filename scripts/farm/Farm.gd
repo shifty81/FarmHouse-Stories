@@ -10,6 +10,7 @@ extends Node2D
 @onready var objects_layer = $ObjectsLayer
 
 const PLAYER_SCENE = preload("res://scenes/player/Player.tscn")
+const DEFAULT_SPAWN := Vector2(328, 248)
 
 var world_generator: Node
 var _spawn_positions: Array[Vector2] = []
@@ -37,7 +38,7 @@ func _setup_multiplayer():
 func _spawn_local_player():
 	var player = PLAYER_SCENE.instantiate()
 	player.name = "Player"
-	player.position = _spawn_positions[0] if _spawn_positions.size() > 0 else Vector2(328, 248)
+	player.position = _spawn_positions[0] if _spawn_positions.size() > 0 else DEFAULT_SPAWN
 	player_spawner.add_child(player)
 
 
@@ -47,7 +48,7 @@ func _spawn_player(peer_id: int):
 	player.set_multiplayer_authority(peer_id)
 
 	var index = clampi(NetworkManager.players.keys().find(peer_id), 0, _spawn_positions.size() - 1)
-	player.position = _spawn_positions[index] if _spawn_positions.size() > 0 else Vector2(328, 248)
+	player.position = _spawn_positions[index] if _spawn_positions.size() > 0 else DEFAULT_SPAWN
 
 	player_spawner.add_child(player)
 
