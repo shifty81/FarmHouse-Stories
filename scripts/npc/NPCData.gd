@@ -23,6 +23,9 @@ class_name NPCData extends Resource
 ## Quest chain IDs associated with this NPC
 @export var quest_chain: Array[String] = []
 
+## Quest requirements: quest_id -> {"heart_level": int, "title": String, "description": String}
+@export var quest_requirements: Dictionary = {}
+
 ## Friendship level (0-10 hearts)
 var friendship_level: int = 0
 var friendship_points: int = 0
