@@ -168,12 +168,13 @@ FarmHouse-Stories/
 │   ├── farm/          # Farm, crops
 │   └── player/        # Player character
 ├── scripts/           # GDScript game logic
-│   ├── systems/       # EventBus, Calendar, Save, Network
+│   ├── systems/       # EventBus, Calendar, Save, Network, Inventory
 │   ├── farm/          # Crop management
 │   ├── player/        # Player movement, tools
-│   ├── npc/           # NPC database and data definitions
+│   ├── npc/           # NPC database, data definitions, dialogue system
 │   ├── gear/          # Dual gear set system
 │   ├── dungeon/       # Dungeon and Mythic Rift systems
+│   ├── combat/        # Combat system and enemy definitions
 │   └── events/        # Seasonal event system
 ├── shaders/           # Custom shaders (cell shading)
 └── project.godot      # Godot project configuration
@@ -229,7 +230,7 @@ Please read the documentation first to understand the project structure and conv
 - [x] Tool system base class
 - [x] Save/load system (extended for all new systems)
 - [x] Multiplayer support (host/join lobby, player spawning, position sync)
-- [ ] Inventory and item system
+- [x] Inventory and item system
 - [ ] Tool-specific implementations (hoe, watering can, axe, pickaxe)
 
 ### Phase 3: World Systems ✅
@@ -243,8 +244,8 @@ Please read the documentation first to understand the project structure and conv
 
 ### Phase 4: Advanced Features
 - [ ] Dungeon room/puzzle scene implementations
-- [ ] Combat system with enemy AI
-- [ ] NPC dialogue and cutscene system
+- [x] Combat system with enemy AI
+- [x] NPC dialogue and cutscene system
 - [ ] Crafting and artisan goods
 - [ ] Fishing mechanics
 - [ ] Mining system
@@ -260,8 +261,8 @@ See `docs/01_ProjectOverview.md` for detailed roadmap.
 
 ## 🎯 Current Status
 
-**Phase:** World Systems Complete  
-**Next Steps:** Implement dungeon room scenes, combat system, NPC dialogue system, and inventory management
+**Phase:** Core Systems & Combat Implementation  
+**Next Steps:** Implement dungeon room scenes, crafting system, fishing mechanics, and mining system
 
 ## 📄 License
 

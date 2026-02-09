@@ -58,6 +58,18 @@ signal npc_needs_refuge(npc_id: String)
 signal npc_needs_assistance(npc_id: String, assistance_type: String)
 signal npc_sheltered(npc_id: String)
 
+# Inventory signals
+signal inventory_item_added(item_id: String, quantity: int)
+signal inventory_item_removed(item_id: String, quantity: int)
+signal hotbar_slot_changed(slot_index: int)
+
+# Combat signals
+signal combat_started
+signal combat_ended
+signal player_hp_changed(hp: int, max_hp: int)
+signal enemy_defeated(enemy_id: String)
+signal player_defeated
+
 # Seasonal event signals
 signal seasonal_event_started(event_id: String)
 signal seasonal_event_ended(event_id: String)
