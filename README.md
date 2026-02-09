@@ -67,6 +67,12 @@ Comprehensive documentation is available in the `docs/` folder:
 7. **[Implementation Guide](docs/07_ImplementationGuide.md)**  
    Step-by-step guide to building the game from scratch
 
+8. **[GFX Integration Guide](docs/08_GFXIntegrationGuide.md)**  
+   Graphics asset integration and workflow
+
+9. **[Echo Ridge Inheritance Story](docs/09_EchoRidgeInheritanceStory.md)**  
+   Alternative starting story concept with detailed farm layout and asset guide
+
 ## 🎨 Art Style
 
 The game uses **cell shading** (toon shading) to create a distinctive, cartoon-like aesthetic:

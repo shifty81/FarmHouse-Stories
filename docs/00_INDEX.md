@@ -74,6 +74,13 @@ Welcome to the FarmHouse Stories documentation! This index provides a quick over
    - Testing with shaders
    - Helper scripts
 
+10. **[09_EchoRidgeInheritanceStory.md](09_EchoRidgeInheritanceStory.md)** - Echo Ridge starting story
+   - Complete narrative concept ("Echo Ridge Inheritance")
+   - Detailed farm layout and elements
+   - Comprehensive asset requirements
+   - Godot integration guidelines
+   - Development tips and code examples
+
 ## 🗺️ Documentation Map
 
 ```
@@ -92,9 +99,12 @@ Documentation Structure:
 │   ├── 03_StardewValleyMechanics.md (What to build)
 │   └── 04_OpenSourceProjects.md (How others did it)
 │
-└── Asset Pipeline
-    ├── 05_AssetOrganization.md (Organization guidelines)
-    └── 08_GFXIntegrationGuide.md (Integration workflow)
+├── Asset Pipeline
+│   ├── 05_AssetOrganization.md (Organization guidelines)
+│   └── 08_GFXIntegrationGuide.md (Integration workflow)
+│
+└── Story & Content
+    └── 09_EchoRidgeInheritanceStory.md (Starting story concept)
 ```
 
 ## 📚 Reading Paths
@@ -204,6 +214,7 @@ grep -r "farming" docs/
 | 06_GodotResources.md | ✅ Complete | Feb 2026 |
 | 07_ImplementationGuide.md | ✅ Complete | Feb 2026 |
 | 08_GFXIntegrationGuide.md | ✅ Complete | Feb 2026 |
+| 09_EchoRidgeInheritanceStory.md | ✅ Complete | Feb 2026 |
 
 ## 🆘 Getting Help
 
