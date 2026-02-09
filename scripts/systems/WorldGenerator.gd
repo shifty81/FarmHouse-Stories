@@ -2,7 +2,7 @@ extends Node
 ## WorldGenerator - Procedurally generates the farm world layout.
 ## Creates a Stardew Valley-style farm with grass, farmland, paths,
 ## water features, fences, trees, and decorative objects using the
-## Overworld tileset (16x16 tiles from gfx/Overworld.png).
+## Overworld tileset (16x16 tiles from gfx/Overworld.png, 40 cols x 36 rows).
 
 ## Farm dimensions in tiles (16x16 each)
 const FARM_WIDTH: int = 80
@@ -15,60 +15,95 @@ const TILE_SIZE: int = 16
 const OVERWORLD_SOURCE: int = 0
 const OBJECTS_SOURCE: int = 1
 
-## -- Overworld.png atlas coordinates for key terrain tiles --
-## These map to specific 16x16 cells in the 640x576 Overworld.png (40 cols x 36 rows)
+## -- Overworld.png atlas coordinates (verified against actual pixel content) --
 
-# Grass variants
+# Grass variants - solid green tiles for base ground fill
 const GRASS_TILES: Array = [
-	Vector2i(0, 0), Vector2i(1, 0), Vector2i(2, 0),
-	Vector2i(0, 1), Vector2i(1, 1), Vector2i(2, 1),
+	Vector2i(0, 0),   # plain dark grass
+	Vector2i(0, 3),   # grass with subtle variation
+	Vector2i(2, 3),   # grass with subtle variation
+	Vector2i(0, 5),   # grass variant
+	Vector2i(5, 9),   # uniform grass
+	Vector2i(7, 9),   # uniform grass
 ]
 
-# Dirt / tilled soil
+# Grass autotile 3x3 block (rows 3-5, cols 0-2) for terrain edges
+# Used when grass meets dirt - provides natural transitions
+const GRASS_EDGE_TL := Vector2i(0, 3)   # top-left
+const GRASS_EDGE_T  := Vector2i(1, 3)   # top
+const GRASS_EDGE_TR := Vector2i(2, 3)   # top-right
+const GRASS_EDGE_L  := Vector2i(0, 4)   # left
+const GRASS_CENTER  := Vector2i(1, 4)   # bright center
+const GRASS_EDGE_R  := Vector2i(2, 4)   # right
+const GRASS_EDGE_BL := Vector2i(0, 5)   # bottom-left
+const GRASS_EDGE_B  := Vector2i(1, 5)   # bottom
+const GRASS_EDGE_BR := Vector2i(2, 5)   # bottom-right
+
+# Dirt / tilled soil - solid brown tiles
 const DIRT_TILES: Array = [
-	Vector2i(6, 0), Vector2i(7, 0), Vector2i(8, 0),
-	Vector2i(6, 1), Vector2i(7, 1), Vector2i(8, 1),
+	Vector2i(7, 1),   # medium brown (solid, 256 opaque)
+	Vector2i(8, 1),   # darker brown (solid, 256 opaque)
+	Vector2i(9, 1),   # medium brown variant
 ]
 
-# Farmland (plantable tilled soil)
-const FARMLAND_TILE := Vector2i(7, 1)
+# Farmland (plantable tilled soil) - rows of tilled dirt
+const FARMLAND_TILE := Vector2i(34, 17)  # solid farmland brown
 
-# Path tiles (stone path)
+# Path tiles (stone/grey path)
 const PATH_TILES: Array = [
-	Vector2i(12, 0), Vector2i(13, 0), Vector2i(14, 0),
-	Vector2i(12, 1), Vector2i(13, 1), Vector2i(14, 1),
+	Vector2i(22, 4),  # grey stone left
+	Vector2i(23, 4),  # grey stone center (lighter)
+	Vector2i(24, 4),  # grey stone right
+	Vector2i(23, 3),  # grey stone top
+	Vector2i(1, 24),  # grey stone variant
+	Vector2i(1, 25),  # grey stone variant
 ]
-const PATH_CENTER := Vector2i(13, 1)
+const PATH_CENTER := Vector2i(23, 4)  # main stone path center
 
-# Water tiles
+# Water tiles - proper grass-to-water transition edges
+# Left/top transitions at cols 2-3, right transitions at cols 15-16
+const WATER_EDGE_TL := Vector2i(2, 9)   # grass-water corner top-left (blue+green mix)
+const WATER_EDGE_T  := Vector2i(3, 9)   # grass-water transition top (blue+green mix)
+const WATER_EDGE_TR := Vector2i(15, 9)  # grass-water corner top-right (blue+green mix)
+const WATER_EDGE_L  := Vector2i(2, 10)  # grass-water transition left (blue+green mix)
+const WATER_CENTER  := Vector2i(19, 0)  # solid deep blue water center
+const WATER_EDGE_R  := Vector2i(15, 10) # grass-water transition right (blue+green mix)
+const WATER_EDGE_BL := Vector2i(2, 6)   # grass-water corner bottom-left
+const WATER_EDGE_B  := Vector2i(3, 6)   # grass-water transition bottom
+const WATER_EDGE_BR := Vector2i(16, 8)  # grass-water corner bottom-right
+# Alternate solid water tiles for variety
 const WATER_TILES: Array = [
-	Vector2i(0, 6), Vector2i(1, 6), Vector2i(2, 6),
-	Vector2i(0, 7), Vector2i(1, 7), Vector2i(2, 7),
-	Vector2i(0, 8), Vector2i(1, 8), Vector2i(2, 8),
+	Vector2i(17, 0), Vector2i(18, 0), Vector2i(19, 0),
+	Vector2i(17, 1), Vector2i(19, 1), Vector2i(20, 1),
+	Vector2i(17, 2), Vector2i(19, 2), Vector2i(20, 2),
 ]
-const WATER_CENTER := Vector2i(1, 7)
 
-# Fence tiles
-const FENCE_H := Vector2i(19, 0)
-const FENCE_V := Vector2i(18, 0)
-const FENCE_POST := Vector2i(18, 1)
+# Fence tiles - partially transparent wooden fence sprites
+const FENCE_H := Vector2i(12, 4)     # horizontal fence segment
+const FENCE_V := Vector2i(6, 4)      # vertical fence segment
+const FENCE_POST := Vector2i(7, 4)   # fence post/corner
 
-# Tree tiles (larger objects, using top-left of tree graphic)
+# Tree tiles - green foliage tiles (trees are drawn on grass)
 const TREE_TILES: Array = [
-	Vector2i(0, 10), Vector2i(2, 10), Vector2i(4, 10),
+	Vector2i(0, 11),  # dark green tree/bush
+	Vector2i(4, 11),  # darker tree variant
+	Vector2i(5, 11),  # tree foliage variant
 ]
 
 # Bush / shrub
-const BUSH_TILE := Vector2i(6, 10)
+const BUSH_TILE := Vector2i(11, 5)  # solid dark green bush
 
-# Rock / stone
+# Rock / stone decorations
 const ROCK_TILES: Array = [
-	Vector2i(16, 4), Vector2i(17, 4),
+	Vector2i(12, 3),  # dark brown rock
+	Vector2i(13, 3),  # dark brown rock variant
 ]
 
-# Flower decorations
+# Flower decorations - grass tiles with colorful accents
 const FLOWER_TILES: Array = [
-	Vector2i(3, 2), Vector2i(4, 2), Vector2i(5, 2),
+	Vector2i(11, 6),  # grass with flower detail
+	Vector2i(12, 5),  # light green grass detail
+	Vector2i(12, 6),  # grass with flower detail variant
 ]
 
 func generate_farm(ground_layer: TileMapLayer, paths_layer: TileMapLayer,
@@ -106,8 +141,8 @@ func _fill_ground(layer: TileMapLayer) -> void:
 
 
 func _create_water_feature(layer: TileMapLayer) -> void:
-	## Create a creek/pond that runs through the farm
-	## Inspired by the marine farm reference - a gentle stream
+	## Create a pond and stream using proper water edge tiles
+	## Uses 3x3 edge pattern for natural-looking water bodies
 
 	# Pond in the bottom-right area
 	var pond_x := 58
@@ -118,44 +153,58 @@ func _create_water_feature(layer: TileMapLayer) -> void:
 	for x in range(pond_x, pond_x + pond_w):
 		for y in range(pond_y, pond_y + pond_h):
 			if x >= 0 and x < FARM_WIDTH and y >= 0 and y < FARM_HEIGHT:
-				var wx := x - pond_x
-				var wy := y - pond_y
-				# Determine edge vs center for proper water tile
-				var atlas_coord := _get_water_atlas(wx, wy, pond_w, pond_h)
+				var atlas_coord := _get_water_edge(x - pond_x, y - pond_y, pond_w, pond_h)
 				layer.set_cell(Vector2i(x, y), OVERWORLD_SOURCE, atlas_coord)
 
-	# Small stream running from top-right toward the pond
+	# Small stream running from top-right toward the pond (3 tiles wide with edges)
 	var stream_x := 62
-	for y in range(10, pond_y):
-		# Narrow 2-tile wide stream
-		layer.set_cell(Vector2i(stream_x, y), OVERWORLD_SOURCE, WATER_CENTER)
+	var stream_start_y := 10
+	for y in range(stream_start_y, pond_y):
+		layer.set_cell(Vector2i(stream_x, y), OVERWORLD_SOURCE, WATER_EDGE_L)
 		layer.set_cell(Vector2i(stream_x + 1, y), OVERWORLD_SOURCE, WATER_CENTER)
-		# Dirt banks on sides
-		layer.set_cell(Vector2i(stream_x - 1, y), OVERWORLD_SOURCE, DIRT_TILES[0])
-		layer.set_cell(Vector2i(stream_x + 2, y), OVERWORLD_SOURCE, DIRT_TILES[2])
+		layer.set_cell(Vector2i(stream_x + 2, y), OVERWORLD_SOURCE, WATER_EDGE_R)
+
+	# Stream top cap
+	layer.set_cell(Vector2i(stream_x, stream_start_y), OVERWORLD_SOURCE, WATER_EDGE_TL)
+	layer.set_cell(Vector2i(stream_x + 1, stream_start_y), OVERWORLD_SOURCE, WATER_EDGE_T)
+	layer.set_cell(Vector2i(stream_x + 2, stream_start_y), OVERWORLD_SOURCE, WATER_EDGE_TR)
 
 
-func _get_water_atlas(local_x: int, local_y: int, w: int, h: int) -> Vector2i:
+func _get_water_edge(local_x: int, local_y: int, w: int, h: int) -> Vector2i:
 	## Pick appropriate water tile based on position within the water body
-	var col := 1  # center
-	var row := 1  # center
+	## Uses proper edge/corner tiles for natural-looking water borders
+	var is_left := local_x == 0
+	var is_right := local_x == w - 1
+	var is_top := local_y == 0
+	var is_bottom := local_y == h - 1
 
-	if local_x == 0:
-		col = 0  # left edge
-	elif local_x == w - 1:
-		col = 2  # right edge
+	# Corners
+	if is_top and is_left:
+		return WATER_EDGE_TL
+	if is_top and is_right:
+		return WATER_EDGE_TR
+	if is_bottom and is_left:
+		return WATER_EDGE_BL
+	if is_bottom and is_right:
+		return WATER_EDGE_BR
 
-	if local_y == 0:
-		row = 0  # top edge
-	elif local_y == h - 1:
-		row = 2  # bottom edge
+	# Edges
+	if is_top:
+		return WATER_EDGE_T
+	if is_bottom:
+		return WATER_EDGE_B
+	if is_left:
+		return WATER_EDGE_L
+	if is_right:
+		return WATER_EDGE_R
 
-	return WATER_TILES[row * 3 + col]
+	# Center - use solid water with slight variation
+	return WATER_CENTER
 
 
 func _create_farm_plots(layer: TileMapLayer) -> void:
 	## Create several rectangular farmland plots where crops can be planted
-	## Main farm plot area - center of the farm
+	## Each plot has a dirt border around tilled farmland rows
 
 	var plots = [
 		# Main large plot near spawn
@@ -171,11 +220,20 @@ func _create_farm_plots(layer: TileMapLayer) -> void:
 	for plot in plots:
 		for x in range(plot.position.x, plot.position.x + plot.size.x):
 			for y in range(plot.position.y, plot.position.y + plot.size.y):
-				layer.set_cell(Vector2i(x, y), OVERWORLD_SOURCE, FARMLAND_TILE)
+				var is_border_x := (x == plot.position.x or x == plot.position.x + plot.size.x - 1)
+				var is_border_y := (y == plot.position.y or y == plot.position.y + plot.size.y - 1)
+				if is_border_x or is_border_y:
+					# Dirt border around the farmland
+					var dirt := DIRT_TILES[_tile_hash(x, y) % DIRT_TILES.size()]
+					layer.set_cell(Vector2i(x, y), OVERWORLD_SOURCE, dirt)
+				else:
+					# Interior tilled farmland
+					layer.set_cell(Vector2i(x, y), OVERWORLD_SOURCE, FARMLAND_TILE)
 
 
 func _create_paths(layer: TileMapLayer) -> void:
 	## Create stone paths connecting farm areas
+	## Uses path edge tiles for natural-looking stone walkways
 
 	# Main horizontal path across the farm (y=18, from house area to east)
 	for x in range(10, 55):
