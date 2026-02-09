@@ -47,6 +47,7 @@ func start_siege(tier: int) -> Dictionary:
 		"duration_hours": tier_data.duration_hours,
 		"dungeon_difficulty": tier_data.dungeon_difficulty,
 		"start_hour": siege_start_hour,
+		"start_day": EventBus.current_day,
 		"npcs_needing_help": []
 	}
 
@@ -142,13 +143,12 @@ func _select_affected_npcs(count: int) -> Array:
 
 
 func _on_day_started(_day: int, _season: String):
-	# Check if siege should end based on duration
+	# Check if siege should end based on duration (track by day count)
 	if siege_active:
-		var elapsed = EventBus.current_hour - siege_start_hour
-		if elapsed < 0:
-			elapsed += 24
 		var duration = active_siege.get("duration_hours", 6)
-		if elapsed >= duration:
+		var days_elapsed = _day - active_siege.get("start_day", _day)
+		var total_hours_elapsed = (days_elapsed * 24) + (EventBus.current_hour - siege_start_hour)
+		if total_hours_elapsed >= duration:
 			end_siege()
 
 

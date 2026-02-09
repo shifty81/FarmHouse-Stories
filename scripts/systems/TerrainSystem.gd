@@ -21,7 +21,7 @@ const TERRAIN_TYPES = {
 	"rift_touched": {"id": 13, "name": "Rift-Touched Ground", "walkable": true, "plantable": true, "source": "base"}
 }
 
-## LPC terrain tile source path
+## LPC terrain tile source path (configurable via project settings)
 const LPC_TERRAIN_PATH = "res://LPC_Terrain.zip"
 
 ## Seasonal terrain variants (LPC tiles support seasonal look)
