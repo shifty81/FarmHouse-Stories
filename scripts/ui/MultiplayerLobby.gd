@@ -27,7 +27,7 @@ func _ready():
 
 func _on_host_pressed():
 	var port = int(port_input.text) if port_input.text.is_valid_int() else NetworkManager.DEFAULT_PORT
-	NetworkManager.local_player_name = name_input.text if name_input.text != "" else "Host"
+	_apply_player_name()
 
 	var error = NetworkManager.host_game(port)
 	if error == OK:
@@ -44,7 +44,7 @@ func _on_host_pressed():
 func _on_join_pressed():
 	var address = address_input.text if address_input.text != "" else "127.0.0.1"
 	var port = int(port_input.text) if port_input.text.is_valid_int() else NetworkManager.DEFAULT_PORT
-	NetworkManager.local_player_name = name_input.text if name_input.text != "" else "Guest"
+	_apply_player_name()
 
 	var error = NetworkManager.join_game(address, port)
 	if error == OK:
@@ -116,3 +116,7 @@ func _update_player_list():
 		var info = NetworkManager.players[id]
 		var suffix = " (Host)" if id == 1 else ""
 		player_list.add_item("%s%s" % [info.get("name", "Unknown"), suffix])
+
+
+func _apply_player_name():
+	NetworkManager.local_player_name = name_input.text if name_input.text != "" else "Farmer"

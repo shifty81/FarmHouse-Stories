@@ -13,7 +13,7 @@ func plant_crop(tile_pos: Vector2i, crop_data: CropData) -> bool:
 
 	if multiplayer.has_multiplayer_peer() and not multiplayer.is_server():
 		_request_plant.rpc_id(1, tile_pos, crop_data.resource_path)
-		return true
+		return false  # Not yet confirmed by server
 
 	return _do_plant(tile_pos, crop_data)
 
