@@ -193,13 +193,19 @@ func _get_role_dialogue(npc_name: String, role: String) -> Dictionary:
 		"Blacksmith":
 			return {"speaker": npc_name, "key": "role_blacksmith",
 				"text": "If you need tools upgraded or weapons forged, you know where to find me."}
-		"Town Doctor", "Doctor":
+		"Town Doctor":
+			return {"speaker": npc_name, "key": "role_doctor",
+				"text": "Stay healthy out there. If the Rift sickness gets to you, come see me right away."}
+		"Doctor":
 			return {"speaker": npc_name, "key": "role_doctor",
 				"text": "Stay healthy out there. If the Rift sickness gets to you, come see me right away."}
 		"Carpenter":
 			return {"speaker": npc_name, "key": "role_carpenter",
 				"text": "Need any buildings constructed or repaired? I've got the lumber for it."}
-		"Archaeologist/Scholar", "Myth-Keeper/Librarian":
+		"Archaeologist/Scholar":
+			return {"speaker": npc_name, "key": "role_scholar",
+				"text": "I've been studying the ancient texts. The Rifts hold secrets we've barely begun to uncover."}
+		"Myth-Keeper/Librarian":
 			return {"speaker": npc_name, "key": "role_scholar",
 				"text": "I've been studying the ancient texts. The Rifts hold secrets we've barely begun to uncover."}
 		"Tavern Owner":
