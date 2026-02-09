@@ -1,10 +1,10 @@
 extends Node
 ## CalendarSystem - Manages in-game time, seasons, and day progression.
 
-const SEASONS = ["Spring", "Summer", "Fall", "Winter"]
-const DAYS_PER_SEASON = 28
-const HOURS_PER_DAY = 24
-const MINUTES_PER_HOUR = 60
+const SEASONS: Array[String] = ["Spring", "Summer", "Fall", "Winter"]
+const DAYS_PER_SEASON: int = 28
+const HOURS_PER_DAY: int = 24
+const MINUTES_PER_HOUR: int = 60
 
 ## How fast time passes: 1 real second = time_scale game seconds
 @export var time_scale: float = 60.0
@@ -15,20 +15,20 @@ var current_year: int = 1
 var current_hour: int = 6
 var current_minute: int = 0
 
-var time_paused: bool = false
+var time_paused: bool = false:
+	set(value):
+		time_paused = value
+		set_process(not value)
 var time_accumulator: float = 0.0
 
 
-func _ready():
+func _ready() -> void:
 	EventBus.current_day = current_day
 	EventBus.current_season = SEASONS[current_season_index]
 	EventBus.current_hour = current_hour
 
 
-func _process(delta):
-	if time_paused:
-		return
-
+func _process(delta: float) -> void:
 	time_accumulator += delta * time_scale
 
 	while time_accumulator >= 60.0:
@@ -36,7 +36,7 @@ func _process(delta):
 		_advance_minute()
 
 
-func _advance_minute():
+func _advance_minute() -> void:
 	current_minute += 1
 
 	if current_minute >= MINUTES_PER_HOUR:
@@ -44,7 +44,7 @@ func _advance_minute():
 		_advance_hour()
 
 
-func _advance_hour():
+func _advance_hour() -> void:
 	current_hour += 1
 	EventBus.hour_changed.emit(current_hour)
 
@@ -53,7 +53,7 @@ func _advance_hour():
 		end_day()
 
 
-func end_day():
+func end_day() -> void:
 	EventBus.day_ended.emit()
 
 	current_day += 1
@@ -68,7 +68,7 @@ func end_day():
 	EventBus.day_started.emit(current_day, SEASONS[current_season_index])
 
 
-func _advance_season():
+func _advance_season() -> void:
 	current_day = 1
 	current_season_index = (current_season_index + 1) % SEASONS.size()
 
