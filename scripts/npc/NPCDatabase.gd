@@ -60,36 +60,46 @@ func _get_npc_location(npc: Dictionary, hour: int) -> String:
 
 func _register_all_citizens():
 	# === KEY STORY NPCs ===
-	_add_npc("silas", {
-		"display_name": "Silas",
+	_add_npc("rowland_smith", {
+		"display_name": "Rowland Smith",
 		"age": 42,
 		"occupation": "Blacksmith",
 		"personality": "Moody, guarded, deeply skilled",
-		"backstory": "The town's master blacksmith who once explored the deepest rifts as a spelunker. After losing his partner in a dungeon collapse, he swore never to return underground. His trauma hides the knowledge needed to forge Legendary-tier gear. Earning his trust means helping him confront his past and ultimately unlocking the most powerful equipment upgrades in the game.",
-		"home_location": "silas_house",
+		"backstory": "The town's master blacksmith who crafts and upgrades tools and forges specialized gear for Rift Dungeons. After losing his partner in a dungeon collapse, he swore never to return underground. His trauma hides the knowledge needed to forge Legendary-tier gear. Earning his trust means helping him confront his past and ultimately unlocking the most powerful equipment upgrades in the game.",
+		"home_location": "rowland_house",
 		"work_location": "blacksmith_shop",
 		"favorite_gifts": ["iron_ore", "ancient_metal", "fire_crystal"],
 		"disliked_gifts": ["flowers", "sweets"],
 		"birthday_season": "Winter",
 		"birthday_day": 15,
-		"schedule": {"6": "silas_house", "8": "blacksmith_shop", "12": "tavern", "13": "blacksmith_shop", "18": "tavern", "22": "silas_house"},
-		"quest_chain": ["silas_trust", "silas_past", "silas_redemption", "legendary_forge"]
+		"schedule": {"7": "blacksmith_shop", "8": "blacksmith_shop", "17": "blacksmith_shop", "18": "tavern", "21": "rowland_house"},
+		"quest_chain": ["rowland_bellows", "rowland_void_weapon", "rowland_legacy"],
+		"quest_requirements": {
+			"rowland_bellows": {"heart_level": 2, "title": "Bring me 50 Copper Ore", "description": "Rowland asks for resources to fix his bellows."},
+			"rowland_void_weapon": {"heart_level": 5, "title": "A Weapon for the Void", "description": "Rowland asks for rare, high-tier Rift materials to create a special weapon, unlocking a new weapon type."},
+			"rowland_legacy": {"heart_level": 8, "title": "Forging a Legacy", "description": "Rowland asks to meet your grandfather's old spirit, revealing his past training."}
+		}
 	})
 
 	_add_npc("elara", {
 		"display_name": "Elara",
 		"age": 34,
-		"occupation": "Myth-Keeper / Librarian",
+		"occupation": "Archaeologist / Scholar",
 		"personality": "Curious, scholarly, warm",
-		"backstory": "Operates the Hearthhaven Library and serves as the valley's lore keeper. She has spent years translating ancient texts that hint at the true origin of the Rifts and Aethelgard itself. Her storyline reveals the world's deepest secrets and provides critical clues to dungeon puzzles. Helping her decode the final manuscript unlocks the true history of the valley.",
+		"backstory": "Researches the history of Aethelgard and the nature of the Rifts. She operates the Hearthhaven Museum and Library, serving as the valley's lore keeper. She has spent years translating ancient texts that hint at the true origin of the Rifts and Aethelgard itself. Her storyline reveals the world's deepest secrets and provides critical clues to dungeon puzzles.",
 		"home_location": "elara_house",
-		"work_location": "library",
+		"work_location": "museum_library",
 		"favorite_gifts": ["ancient_scroll", "rare_book", "ink_pot"],
 		"disliked_gifts": ["raw_fish", "slime"],
 		"birthday_season": "Fall",
 		"birthday_day": 7,
-		"schedule": {"6": "elara_house", "9": "library", "12": "market_square", "13": "library", "19": "clock_tower", "21": "elara_house"},
-		"quest_chain": ["elara_texts", "elara_translation", "elara_revelation", "true_history"]
+		"schedule": {"9": "museum_library", "13": "town_archives", "16": "valley_patrol", "22": "elara_house"},
+		"quest_chain": ["elara_artifact", "elara_cipher", "elara_truth"],
+		"quest_requirements": {
+			"elara_artifact": {"heart_level": 2, "title": "Locate a Lost Artifact", "description": "Elara tasks you with finding a specific item in a low-level dungeon."},
+			"elara_cipher": {"heart_level": 5, "title": "Unraveling the Cipher", "description": "Elara asks for a scroll from a specific, dangerous, and puzzle-heavy rift."},
+			"elara_truth": {"heart_level": 8, "title": "The Truth Behind the Void", "description": "Elara shares her research, revealing the origin of the rifts."}
+		}
 	})
 
 	_add_npc("barnaby", {
@@ -129,31 +139,41 @@ func _register_all_citizens():
 		"age": 38,
 		"occupation": "Tavern Owner",
 		"personality": "Boisterous, caring, gossip-lover",
-		"backstory": "Runs 'The Gilded Hearth' tavern at the center of Hearthhaven. Marlowe knows everyone's business and serves as the town's social hub. A former adventurer turned barkeep, she has connections to the dungeon-delving community and can point you toward hidden quests. Her story involves rebuilding after a mysterious fire years ago.",
+		"backstory": "Runs 'The Bludgeoned Barrister' tavern at the center of Hearthhaven. Marlowe serves food and drinks and provides a social hub for the villagers. A former adventurer turned barkeep, she has connections to the dungeon-delving community and can point you toward hidden quests. Her story involves rebuilding after a mysterious fire years ago.",
 		"home_location": "tavern_upstairs",
 		"work_location": "tavern",
 		"favorite_gifts": ["aged_spirits", "exotic_spice", "recipe_book"],
 		"disliked_gifts": ["plain_water", "dirt"],
 		"birthday_season": "Fall",
 		"birthday_day": 19,
-		"schedule": {"6": "tavern_upstairs", "10": "market_square", "11": "tavern", "23": "tavern_upstairs"},
-		"quest_chain": ["marlowe_supplies", "marlowe_recipes", "marlowe_past", "gilded_hearth_restored"]
+		"schedule": {"5": "tavern_upstairs", "6": "tavern", "13": "park", "15": "tavern", "23": "tavern_upstairs"},
+		"quest_chain": ["marlowe_rare_blend", "marlowe_entertainment", "marlowe_toast"],
+		"quest_requirements": {
+			"marlowe_rare_blend": {"heart_level": 2, "title": "A Rare Blend", "description": "Asks for a special, foraged item to make a new drink."},
+			"marlowe_entertainment": {"heart_level": 5, "title": "The Evening Entertainment", "description": "Asks for a musical instrument or a special performance to liven up the tavern."},
+			"marlowe_toast": {"heart_level": 8, "title": "A Toast to the Town", "description": "The owner shares a deeply personal story."}
+		}
 	})
 
-	_add_npc("dr_wynn", {
-		"display_name": "Dr. Wynn",
+	_add_npc("jessop_edwards", {
+		"display_name": "Jessop Edwards",
 		"age": 45,
-		"occupation": "Physician",
+		"occupation": "Town Doctor",
 		"personality": "Precise, empathetic, secretive",
-		"backstory": "Hearthhaven's doctor who treats everything from farming injuries to rift-sickness. She came to the valley fleeing a scandal at a city hospital. Her medical knowledge extends to crafting unique healing potions. Her storyline involves confronting her past and developing cures for rift-touched ailments.",
+		"backstory": "Provides medical care, cures illnesses from Rift exposure, and manages the town Apothecary. He came to the valley fleeing a scandal at a city hospital. His medical knowledge extends to crafting unique healing potions. His storyline involves confronting his past and developing cures for rift-touched ailments.",
 		"home_location": "clinic_upstairs",
 		"work_location": "clinic",
 		"favorite_gifts": ["medicinal_herb", "crystal_vial", "research_notes"],
 		"disliked_gifts": ["alcohol", "void_essence"],
 		"birthday_season": "Winter",
 		"birthday_day": 3,
-		"schedule": {"6": "clinic_upstairs", "8": "clinic", "12": "park", "13": "clinic", "18": "clinic_upstairs"},
-		"quest_chain": ["wynn_supplies", "wynn_research", "wynn_past", "rift_cure"]
+		"schedule": {"8": "clinic", "10": "clinic", "16": "clinic", "17": "river_bank", "20": "clinic_upstairs"},
+		"quest_chain": ["jessop_herbs", "jessop_rift_sickness", "jessop_ailment"],
+		"quest_requirements": {
+			"jessop_herbs": {"heart_level": 2, "title": "Forage for Medicinal Herbs", "description": "Asks for 10 units of a rare herb to make a potion for an ill villager."},
+			"jessop_rift_sickness": {"heart_level": 5, "title": "The Rift Sickness", "description": "Asks for a potion-like ingredient found inside a difficult, high-level dungeon."},
+			"jessop_ailment": {"heart_level": 8, "title": "An Uncurable Ailment", "description": "Jessop reveals his fear of the rifts and asks to research the origin of the sickness."}
+		}
 	})
 
 	_add_npc("garrick", {
@@ -188,20 +208,25 @@ func _register_all_citizens():
 		"quest_chain": ["fern_bouquets", "fern_rift_garden", "fern_masterpiece"]
 	})
 
-	_add_npc("rowan", {
-		"display_name": "Rowan",
+	_add_npc("jack_watt", {
+		"display_name": "Jack Watt",
 		"age": 30,
 		"occupation": "Carpenter",
 		"personality": "Sturdy, reliable, quiet",
-		"backstory": "The town carpenter who builds and repairs everything in Hearthhaven. A craftsman of few words but extraordinary skill. His family built the original Clock Tower. Helping him restore old structures around town reveals architectural secrets and unlocks farm building upgrades.",
+		"backstory": "Builds and upgrades farm structures, homes, and public facilities. A craftsman of few words but extraordinary skill. His family built the original Clock Tower. Helping him restore old structures around town reveals architectural secrets and unlocks farm building upgrades.",
 		"home_location": "carpenter_shop",
 		"work_location": "carpenter_shop",
 		"favorite_gifts": ["hardwood", "blueprint", "fine_tools"],
 		"disliked_gifts": ["cheap_food", "mud"],
 		"birthday_season": "Summer",
 		"birthday_day": 10,
-		"schedule": {"6": "carpenter_shop", "8": "lumber_yard", "12": "carpenter_shop", "14": "town_buildings", "18": "tavern", "21": "carpenter_shop"},
-		"quest_chain": ["rowan_repairs", "rowan_clocktower", "rowan_legacy"]
+		"schedule": {"6": "carpenter_shop", "9": "lumber_yard", "18": "lumber_yard", "19": "tavern", "21": "carpenter_shop"},
+		"quest_chain": ["jack_hardwood", "jack_structural", "jack_future"],
+		"quest_requirements": {
+			"jack_hardwood": {"heart_level": 2, "title": "Bring 100 Hardwood", "description": "Jack asks for resources to repair a town bridge."},
+			"jack_structural": {"heart_level": 5, "title": "The Structural Integrity Task", "description": "Jack asks for specialized materials to reinforce your farm against a future Rift Siege."},
+			"jack_future": {"heart_level": 8, "title": "Designing a New Future", "description": "Jack asks you to help design a new, specialized building in town."}
+		}
 	})
 
 	_add_npc("isla", {

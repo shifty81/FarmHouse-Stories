@@ -51,6 +51,13 @@ signal mythic_rift_completed(rift_tier: int, rewards: Dictionary)
 signal chronos_shard_obtained
 signal vendor_item_exchanged(item_id: String, token_cost: int)
 
+# Rift Siege signals
+signal rift_siege_started(siege_id: String)
+signal rift_siege_ended(siege_id: String)
+signal npc_needs_refuge(npc_id: String)
+signal npc_needs_assistance(npc_id: String, assistance_type: String)
+signal npc_sheltered(npc_id: String)
+
 # Seasonal event signals
 signal seasonal_event_started(event_id: String)
 signal seasonal_event_ended(event_id: String)
