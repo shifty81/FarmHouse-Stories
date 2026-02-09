@@ -76,6 +76,16 @@ signal seasonal_event_ended(event_id: String)
 signal special_creature_spawned(creature_id: String)
 signal special_item_obtained(item_id: String)
 
+# Echo Ridge story signals (alternative starting story)
+signal spirit_orb_state_changed(new_state: int)
+signal echo_tree_awakened()
+signal echo_tree_stage_changed(stage: int)
+signal farm_cleared_percentage(percent: float)
+signal nature_spirit_encountered(spirit_id: String)
+signal aunt_journal_page_found(page_number: int)
+signal havenport_representative_visit()
+signal farm_worth_proven()
+
 # Global game state
 var current_day: int = 1
 var current_season: String = "Spring"
