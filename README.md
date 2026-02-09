@@ -151,14 +151,19 @@ Please read the documentation first to understand the project structure and conv
 ### Phase 1: Foundation ✅
 - [x] Project setup and structure
 - [x] Research and documentation
-- [ ] Basic player controller
+- [x] Godot project file with input mapping and physics layers
+- [x] Basic player controller with movement and interaction
+- [x] Cell shader for toon-style rendering
 - [ ] Tilemap and level design
 
 ### Phase 2: Core Mechanics (In Progress)
-- [ ] Farming system (planting, watering, harvesting)
+- [x] Farming system (planting, watering, harvesting)
+- [x] Day/night cycle and calendar system
+- [x] Basic HUD (time, date, money, energy)
+- [x] Tool system base class
+- [x] Save/load system
 - [ ] Inventory and item system
-- [ ] Tool system and upgrades
-- [ ] Day/night cycle and calendar
+- [ ] Tool-specific implementations (hoe, watering can, axe, pickaxe)
 
 ### Phase 3: Advanced Features
 - [ ] Crafting and artisan goods
@@ -176,8 +181,8 @@ See `docs/01_ProjectOverview.md` for detailed roadmap.
 
 ## 🎯 Current Status
 
-**Phase:** Research & Documentation Complete  
-**Next Steps:** Implement player controller and basic farm scene
+**Phase:** Core Systems Implemented  
+**Next Steps:** Add tilemap/level design, implement inventory system, and create tool-specific scripts
 
 ## 📄 License
 

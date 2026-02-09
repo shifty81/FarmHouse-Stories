@@ -100,15 +100,17 @@ FarmHouse-Stories/
 ### Phase 1: Foundation (Current)
 - [x] Project setup and structure
 - [x] Research and documentation
-- [ ] Basic player controller
+- [x] Basic player controller
+- [x] Cell shader implementation
 - [ ] Tilemap and level design
-- [ ] Cell shader implementation
 
 ### Phase 2: Core Mechanics
-- [ ] Farming system (planting, watering, harvesting)
+- [x] Farming system (planting, watering, harvesting)
+- [x] Day/night cycle and calendar
+- [x] Save/load system
+- [x] Tool system base
 - [ ] Inventory and item system
-- [ ] Tool system and upgrades
-- [ ] Day/night cycle and calendar
+- [ ] Tool-specific implementations
 
 ### Phase 3: Advanced Features
 - [ ] Crafting and artisan goods
