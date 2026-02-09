@@ -158,15 +158,16 @@ func _create_water_feature(layer: TileMapLayer) -> void:
 
 	# Small stream running from top-right toward the pond (3 tiles wide with edges)
 	var stream_x := 62
-	for y in range(10, pond_y):
+	var stream_start_y := 10
+	for y in range(stream_start_y, pond_y):
 		layer.set_cell(Vector2i(stream_x, y), OVERWORLD_SOURCE, WATER_EDGE_L)
 		layer.set_cell(Vector2i(stream_x + 1, y), OVERWORLD_SOURCE, WATER_CENTER)
 		layer.set_cell(Vector2i(stream_x + 2, y), OVERWORLD_SOURCE, WATER_EDGE_R)
 
 	# Stream top cap
-	layer.set_cell(Vector2i(stream_x, 10), OVERWORLD_SOURCE, WATER_EDGE_TL)
-	layer.set_cell(Vector2i(stream_x + 1, 10), OVERWORLD_SOURCE, WATER_EDGE_T)
-	layer.set_cell(Vector2i(stream_x + 2, 10), OVERWORLD_SOURCE, WATER_EDGE_TR)
+	layer.set_cell(Vector2i(stream_x, stream_start_y), OVERWORLD_SOURCE, WATER_EDGE_TL)
+	layer.set_cell(Vector2i(stream_x + 1, stream_start_y), OVERWORLD_SOURCE, WATER_EDGE_T)
+	layer.set_cell(Vector2i(stream_x + 2, stream_start_y), OVERWORLD_SOURCE, WATER_EDGE_TR)
 
 
 func _get_water_edge(local_x: int, local_y: int, w: int, h: int) -> Vector2i:
