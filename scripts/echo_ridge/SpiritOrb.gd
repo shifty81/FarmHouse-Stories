@@ -42,7 +42,7 @@ func _ready() -> void:
 		EventBus.farm_cleared_percentage.connect(_on_farm_cleared)
 
 func update_state(farm_clear_percentage: float) -> void:
-	"""Update spirit orb state based on farm clearing progress."""
+	## Update spirit orb state based on farm clearing progress.
 	var new_state: State = current_state
 	
 	if farm_clear_percentage >= 0.8:
@@ -66,7 +66,7 @@ func update_state(farm_clear_percentage: float) -> void:
 			show_random_dialogue()
 
 func update_appearance() -> void:
-	"""Update visual appearance based on current state."""
+	## Update visual appearance based on current state.
 	if not anim_sprite:
 		return
 		
@@ -83,7 +83,7 @@ func update_appearance() -> void:
 			anim_sprite.modulate = Color(1.5, 1.4, 0.8)
 
 func show_dialogue(text: String, duration: float = 3.0) -> void:
-	"""Display dialogue text for specified duration."""
+	## Display dialogue text for specified duration.
 	if not dialogue_label:
 		print("SpiritOrb: ", text)  # Fallback to console
 		return
@@ -96,7 +96,7 @@ func show_dialogue(text: String, duration: float = 3.0) -> void:
 	dialogue_label.visible = false
 
 func show_random_dialogue() -> void:
-	"""Show a random dialogue for the current state."""
+	## Show a random dialogue for the current state.
 	if current_state not in dialogue_text:
 		return
 		
@@ -108,9 +108,9 @@ func show_random_dialogue() -> void:
 	show_dialogue(random_text)
 
 func _on_farm_cleared(percent: float) -> void:
-	"""Handle farm clearing percentage update."""
+	## Handle farm clearing percentage update.
 	update_state(percent)
 
 func interact() -> void:
-	"""Called when player interacts with the spirit orb."""
+	## Called when player interacts with the spirit orb.
 	show_random_dialogue()

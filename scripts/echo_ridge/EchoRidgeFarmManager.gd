@@ -37,9 +37,9 @@ func _ready() -> void:
 		EventBus.player_money_changed.connect(_on_money_changed)
 
 func _on_day_changed(day: int, season: String) -> void:
-	"""Handle day-based story events."""
+	## Handle day-based story events.
 	# Havenport representative visits on Day 14
-	if day == 14 and season == "spring" and not havenport_rep_visited:
+	if day == 14 and season == "Spring" and not havenport_rep_visited:
 		trigger_havenport_visit()
 
 func trigger_havenport_visit() -> void:
@@ -63,13 +63,13 @@ func debris_cleared_by_player(debris_type: String) -> void:
 		print("Farm cleared: ", clear_percentage * 100, "%")
 
 func get_clear_percentage() -> float:
-	"""Get the percentage of farm that has been cleared."""
+	## Get the percentage of farm that has been cleared.
 	if total_debris_count == 0:
 		return 1.0
 	return float(debris_cleared) / float(total_debris_count)
 
 func _on_money_changed(money: int) -> void:
-	"""Check if farm worth goal has been reached."""
+	## Check if farm worth goal has been reached.
 	if not farm_worth_proven and money >= farm_worth_goal and havenport_rep_visited:
 		prove_farm_worth()
 
@@ -82,7 +82,7 @@ func prove_farm_worth() -> void:
 	# TODO: Show achievement/quest completion
 
 func unlock_greenhouse() -> void:
-	"""Unlock the greenhouse for restoration."""
+	## Unlock the greenhouse for restoration.
 	greenhouse_unlocked = true
 	print("🏚️ The Greenhouse is now accessible!")
 	# TODO: Enable greenhouse restoration quest
@@ -106,7 +106,7 @@ func get_save_data() -> Dictionary:
 	}
 
 func load_save_data(data: Dictionary) -> void:
-	"""Load saved data."""
+	## Load saved data.
 	debris_cleared = data.get("debris_cleared", 0)
 	debris_counts = data.get("debris_counts", debris_counts)
 	havenport_rep_visited = data.get("havenport_rep_visited", false)

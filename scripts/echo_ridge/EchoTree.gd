@@ -52,7 +52,7 @@ func check_growth_stage() -> void:
 			return
 
 func advance_to_stage(new_stage: Stage) -> void:
-	"""Advance tree to a new growth stage."""
+	## Advance tree to a new growth stage.
 	if new_stage <= current_stage:
 		return
 		
@@ -92,23 +92,23 @@ func update_appearance() -> void:
 	print("Echo Tree: Stage ", Stage.keys()[current_stage], " - ", stage_visuals[current_stage])
 
 func show_awakening_event() -> void:
-	"""Show special event when tree first awakens."""
+	## Show special event when tree first awakens.
 	print("🌳 The Echo Tree stirs! Small buds appear on its ancient branches.")
 	# TODO: Play awakening animation/cutscene
 	# TODO: Trigger spirit orb dialogue
 
 func show_sanctuary_event() -> void:
-	"""Show special event when tree becomes a spirit sanctuary."""
+	## Show special event when tree becomes a spirit sanctuary.
 	print("🌳✨ The Echo Tree has become a sanctuary! Spirits gather beneath its radiant boughs.")
 	# TODO: Play sanctuary animation
 	# TODO: Spawn spirit NPCs around tree
 
 func interact() -> void:
-	"""Called when player interacts with the tree."""
+	## Called when player interacts with the tree.
 	show_tree_info()
 
 func show_tree_info() -> void:
-	"""Display information about the tree's current state."""
+	## Display information about the tree's current state.
 	var stage_name: String = Stage.keys()[current_stage]
 	var description: String = stage_visuals[current_stage]
 	
