@@ -10,7 +10,7 @@ extends Node2D
 @onready var objects_layer = $ObjectsLayer
 
 const PLAYER_SCENE = preload("res://scenes/player/Player.tscn")
-const DEFAULT_SPAWN := Vector2(328, 248)
+const DEFAULT_SPAWN := Vector2(224, 192)
 
 var world_generator: Node
 var _spawn_positions: Array[Vector2] = []

@@ -4,7 +4,7 @@
 [ext_resource type="SpriteFrames" path="res://resources/sprites/player_sprites.tres" id="2_sprites"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_p1"]
-size = Vector2(12, 12)
+size = Vector2(14, 8)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ia"]
 size = Vector2(16, 16)
@@ -23,6 +23,7 @@ collision_mask = 1
 script = ExtResource("1_player")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 8)
 shape = SubResource("RectangleShape2D_p1")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
@@ -31,14 +32,14 @@ animation = &"idle_down"
 autoplay = "idle_down"
 
 [node name="Camera2D" type="Camera2D" parent="."]
-zoom = Vector2(5, 5)
+zoom = Vector2(3, 3)
 
 [node name="InteractionArea" type="Area2D" parent="."]
 collision_layer = 0
 collision_mask = 32
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionArea"]
-position = Vector2(0, 10)
+position = Vector2(0, 16)
 shape = SubResource("RectangleShape2D_ia")
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
