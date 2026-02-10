@@ -1,0 +1,29 @@
+name: GDScript Lint
+
+on:
+  pull_request:
+    paths:
+      - '**.gd'
+      - 'gdlintrc'
+
+permissions:
+  contents: read
+
+jobs:
+  gdlint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install gdtoolkit
+        run: pip install gdtoolkit
+
+      - name: Run gdlint
+        # TODO: Remove continue-on-error once pre-existing lint warnings
+        # (mostly max-line-length) are resolved across the codebase.
+        continue-on-error: true
+        run: gdlint scripts/
