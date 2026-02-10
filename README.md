@@ -177,10 +177,14 @@ FarmHouse-Stories/
 │   ├── systems/       # EventBus, Calendar, Save, Network, Inventory
 │   ├── farm/          # Crop management
 │   ├── player/        # Player movement, tools
+│   │   └── tools/     # Tool implementations (hoe, axe, pickaxe, etc.)
 │   ├── npc/           # NPC database, data definitions, dialogue system
 │   ├── gear/          # Dual gear set system
 │   ├── dungeon/       # Dungeon and Mythic Rift systems
 │   ├── combat/        # Combat system and enemy definitions
+│   ├── crafting/      # Crafting recipes and artisan goods
+│   ├── fishing/       # Fishing system and fish registry
+│   ├── mining/        # Mining system and ore extraction
 │   └── events/        # Seasonal event system
 ├── shaders/           # Custom shaders (cell shading)
 └── project.godot      # Godot project configuration
@@ -237,7 +241,7 @@ Please read the documentation first to understand the project structure and conv
 - [x] Save/load system (extended for all new systems)
 - [x] Multiplayer support (host/join lobby, player spawning, position sync)
 - [x] Inventory and item system
-- [ ] Tool-specific implementations (hoe, watering can, axe, pickaxe)
+- [x] Tool-specific implementations (hoe, watering can, axe, pickaxe, scythe, fishing rod)
 
 ### Phase 3: World Systems ✅
 - [x] NPC database with 35 citizens (backstories, schedules, questlines)
@@ -252,9 +256,9 @@ Please read the documentation first to understand the project structure and conv
 - [ ] Dungeon room/puzzle scene implementations
 - [x] Combat system with enemy AI
 - [x] NPC dialogue and cutscene system
-- [ ] Crafting and artisan goods
-- [ ] Fishing mechanics
-- [ ] Mining system
+- [x] Crafting and artisan goods
+- [x] Fishing mechanics
+- [x] Mining system
 
 ### Phase 5: Polish & Content
 - [ ] Cell shader integration with all scenes
@@ -267,8 +271,8 @@ See `docs/01_ProjectOverview.md` for detailed roadmap.
 
 ## 🎯 Current Status
 
-**Phase:** Core Systems & Combat Implementation  
-**Next Steps:** Implement dungeon room scenes, crafting system, fishing mechanics, and mining system
+**Phase:** Advanced Features & Content  
+**Next Steps:** Implement dungeon room scenes, quest journal UI, sound effects and music, and additional content
 
 ## 📄 License
 

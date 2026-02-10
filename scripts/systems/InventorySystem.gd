@@ -144,6 +144,70 @@ func _register_default_items():
 		"stackable": true, "sell_price": 150
 	})
 
+	# Fish
+	_register_item("bass", "Bass", ItemCategory.CROP, {
+		"description": "A common freshwater fish.", "stackable": true, "sell_price": 30
+	})
+	_register_item("trout", "Trout", ItemCategory.CROP, {
+		"description": "A speckled stream fish.", "stackable": true, "sell_price": 45
+	})
+	_register_item("catfish", "Catfish", ItemCategory.CROP, {
+		"description": "A whiskered bottom-feeder.", "stackable": true, "sell_price": 50
+	})
+	_register_item("salmon", "Salmon", ItemCategory.CROP, {
+		"description": "A prized pink-fleshed fish.", "stackable": true, "sell_price": 75
+	})
+	_register_item("golden_fish", "Golden Fish", ItemCategory.CROP, {
+		"description": "A rare shimmering fish worth a fortune.", "stackable": true, "sell_price": 200
+	})
+	_register_item("ice_pike", "Ice Pike", ItemCategory.CROP, {
+		"description": "A cold-water predator found only in winter.", "stackable": true, "sell_price": 90
+	})
+	_register_item("sunfish", "Sunfish", ItemCategory.CROP, {
+		"description": "A bright, warm-water fish.", "stackable": true, "sell_price": 40
+	})
+	_register_item("rift_eel", "Rift Eel", ItemCategory.CROP, {
+		"description": "An eerie eel infused with rift energy.", "stackable": true, "sell_price": 150
+	})
+
+	# Refined materials
+	_register_item("copper_bar", "Copper Bar", ItemCategory.MATERIAL, {
+		"description": "A refined bar of copper.", "stackable": true, "sell_price": 60
+	})
+	_register_item("iron_bar", "Iron Bar", ItemCategory.MATERIAL, {
+		"description": "A refined bar of iron.", "stackable": true, "sell_price": 100
+	})
+	_register_item("gold_ore", "Gold Ore", ItemCategory.MATERIAL, {
+		"description": "Raw gold ore from deep underground.", "stackable": true, "sell_price": 50
+	})
+	_register_item("crystal_shard", "Crystal Shard", ItemCategory.MATERIAL, {
+		"description": "A glowing shard from crystal deposits.", "stackable": true, "sell_price": 80
+	})
+
+	# Crafted consumables
+	_register_item("turnip_soup", "Turnip Soup", ItemCategory.CONSUMABLE, {
+		"description": "A warm bowl of turnip soup. Restores 20 energy.",
+		"stackable": true, "effect_type": "restore_energy", "effect_value": 20, "sell_price": 50
+	})
+	_register_item("veggie_stew", "Veggie Stew", ItemCategory.CONSUMABLE, {
+		"description": "A hearty vegetable stew. Restores 40 energy.",
+		"stackable": true, "effect_type": "restore_energy", "effect_value": 40, "sell_price": 120
+	})
+	_register_item("pumpkin_pie", "Pumpkin Pie", ItemCategory.CONSUMABLE, {
+		"description": "A sweet pumpkin pie. Restores 50 HP.",
+		"stackable": true, "effect_type": "heal_hp", "effect_value": 50, "sell_price": 200
+	})
+
+	# Crafted special items
+	_register_item("echo_lantern", "Echo Lantern", ItemCategory.KEY_ITEM, {
+		"description": "A lantern that reveals hidden paths in Echo Caverns.",
+		"stackable": false, "sell_price": 0
+	})
+	_register_item("void_charm", "Void Charm", ItemCategory.KEY_ITEM, {
+		"description": "A charm that provides protection in the Void Fortress.",
+		"stackable": false, "sell_price": 0
+	})
+
 
 func _register_item(id: String, display_name: String, category: ItemCategory, data: Dictionary):
 	item_registry[id] = {

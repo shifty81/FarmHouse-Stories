@@ -1,5 +1,5 @@
 extends CharacterBody2D
-## Player - Handles player movement, animation, and interaction.
+## Player - Handles player movement, animation, interaction, and tool usage.
 ## Multiplayer-aware: only the owning peer processes input.
 
 @export var speed: float = 150.0
@@ -11,6 +11,9 @@ extends CharacterBody2D
 
 var last_direction: Vector2 = Vector2.DOWN
 
+## Tool instances keyed by tool_type (e.g., "hoe", "axe")
+var tools: Dictionary = {}
+
 
 func _ready():
 	# Only enable camera for the local player
@@ -19,6 +22,8 @@ func _ready():
 		camera.make_current()
 	else:
 		camera.enabled = false
+
+	_register_tools()
 
 
 func _physics_process(delta):
@@ -70,6 +75,8 @@ func _input(event):
 		return
 	if event.is_action_pressed("interact"):
 		_attempt_interaction()
+	if event.is_action_pressed("use_tool"):
+		_use_selected_tool()
 
 
 func _attempt_interaction():
@@ -80,6 +87,29 @@ func _attempt_interaction():
 			if area.has_method("interact"):
 				area.interact()
 				return
+
+
+func _use_selected_tool():
+	var selected = InventorySystem.get_selected_item()
+	if not selected:
+		return
+
+	var item_id: String = selected.get("item_id", "")
+	if not tools.has(item_id):
+		return
+
+	var tool_instance: ToolBase = tools[item_id]
+	var target_pos: Vector2 = global_position + last_direction * tool_instance.use_range
+	tool_instance.use(self, target_pos)
+
+
+func _register_tools():
+	tools["hoe"] = HoeTool.new()
+	tools["watering_can"] = WateringCanTool.new()
+	tools["axe"] = AxeTool.new()
+	tools["pickaxe"] = PickaxeTool.new()
+	tools["scythe"] = ScytheTool.new()
+	tools["fishing_rod"] = FishingRodTool.new()
 
 
 func _is_local_player() -> bool:

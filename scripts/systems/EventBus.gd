@@ -76,6 +76,15 @@ signal seasonal_event_ended(event_id: String)
 signal special_creature_spawned(creature_id: String)
 signal special_item_obtained(item_id: String)
 
+# Crafting signals
+signal item_crafted(recipe_id: String, result_item_id: String)
+
+# Fishing signals
+signal fish_caught(fish_id: String)
+
+# Mining signals
+signal rock_mined(tile_pos: Vector2i)
+
 # Echo Ridge story signals (alternative starting story)
 signal spirit_orb_state_changed(new_state: int)
 signal echo_tree_awakened()
