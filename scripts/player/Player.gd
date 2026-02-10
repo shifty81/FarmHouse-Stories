@@ -11,6 +11,9 @@ extends CharacterBody2D
 
 var last_direction: Vector2 = Vector2.DOWN
 
+## Whether the player can traverse water tiles. Starts true; later will be a craftable raft item.
+var has_raft: bool = true
+
 ## Tool instances keyed by tool_type (e.g., "hoe", "axe")
 var tools: Dictionary = {}
 

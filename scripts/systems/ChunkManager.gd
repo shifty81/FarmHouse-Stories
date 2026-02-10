@@ -70,7 +70,7 @@ func get_chunk_data(chunk_pos: Vector2i) -> Dictionary:
 func get_biome_at(world_pos: Vector2) -> String:
 	## Returns the biome ID at the given world position.
 	var chunk_pos := world_to_chunk(world_pos)
-	var chunk := loaded_chunks.get(chunk_pos, {})
+	var chunk: Dictionary = loaded_chunks.get(chunk_pos, {})
 	if chunk.is_empty():
 		return ""
 	var origin := chunk_to_world_origin(chunk_pos)
