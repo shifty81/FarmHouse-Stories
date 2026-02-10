@@ -81,6 +81,14 @@ Welcome to the FarmHouse Stories documentation! This index provides a quick over
    - Godot integration guidelines
    - Development tips and code examples
 
+### Coding Standards
+
+10. **[10_GDScriptStyleGuide.md](10_GDScriptStyleGuide.md)** - GDScript coding conventions
+   - Type annotation rules (avoiding Variant inference)
+   - Naming conventions
+   - File and function limits
+   - Linting with gdlint
+
 ## 🗺️ Documentation Map
 
 ```
@@ -103,8 +111,11 @@ Documentation Structure:
 │   ├── 05_AssetOrganization.md (Organization guidelines)
 │   └── 08_GFXIntegrationGuide.md (Integration workflow)
 │
-└── Story & Content
-    └── 09_EchoRidgeInheritanceStory.md (Starting story concept)
+├── Story & Content
+│   └── 09_EchoRidgeInheritanceStory.md (Starting story concept)
+│
+└── Coding Standards
+    └── 10_GDScriptStyleGuide.md (Type annotations & style rules)
 ```
 
 ## 📚 Reading Paths
@@ -142,8 +153,9 @@ Documentation Structure:
 
 1. Read [README.md](../README.md) contributing section
 2. Review [01_ProjectOverview.md](01_ProjectOverview.md) roadmap
-3. Check [07_ImplementationGuide.md](07_ImplementationGuide.md) for current phase
-4. Pick a task and start coding!
+3. Read [10_GDScriptStyleGuide.md](10_GDScriptStyleGuide.md) for coding conventions
+4. Check [07_ImplementationGuide.md](07_ImplementationGuide.md) for current phase
+5. Pick a task and start coding!
 
 ## 🎯 Quick Reference
 
