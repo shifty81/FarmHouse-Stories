@@ -48,7 +48,7 @@ func mine_rock(tile_pos: Vector2i, pickaxe_level: int) -> Array:
 			if randf() < ore_data.drop_chance:
 				drops.append({"item_id": ore_id, "quantity": 1})
 
-	# Always drop at least stone (copper ore as base)
+	# Always drop at least copper ore as a base material
 	if drops.is_empty():
 		drops.append({"item_id": "copper_ore", "quantity": 1})
 

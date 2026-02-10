@@ -15,7 +15,8 @@ enum ItemCategory {
 	CONSUMABLE,
 	LOOT,
 	KEY_ITEM,
-	GEAR
+	GEAR,
+	FISH
 }
 
 ## Main inventory storage: Array of slot dictionaries
@@ -145,28 +146,28 @@ func _register_default_items():
 	})
 
 	# Fish
-	_register_item("bass", "Bass", ItemCategory.CROP, {
+	_register_item("bass", "Bass", ItemCategory.FISH, {
 		"description": "A common freshwater fish.", "stackable": true, "sell_price": 30
 	})
-	_register_item("trout", "Trout", ItemCategory.CROP, {
+	_register_item("trout", "Trout", ItemCategory.FISH, {
 		"description": "A speckled stream fish.", "stackable": true, "sell_price": 45
 	})
-	_register_item("catfish", "Catfish", ItemCategory.CROP, {
+	_register_item("catfish", "Catfish", ItemCategory.FISH, {
 		"description": "A whiskered bottom-feeder.", "stackable": true, "sell_price": 50
 	})
-	_register_item("salmon", "Salmon", ItemCategory.CROP, {
+	_register_item("salmon", "Salmon", ItemCategory.FISH, {
 		"description": "A prized pink-fleshed fish.", "stackable": true, "sell_price": 75
 	})
-	_register_item("golden_fish", "Golden Fish", ItemCategory.CROP, {
+	_register_item("golden_fish", "Golden Fish", ItemCategory.FISH, {
 		"description": "A rare shimmering fish worth a fortune.", "stackable": true, "sell_price": 200
 	})
-	_register_item("ice_pike", "Ice Pike", ItemCategory.CROP, {
+	_register_item("ice_pike", "Ice Pike", ItemCategory.FISH, {
 		"description": "A cold-water predator found only in winter.", "stackable": true, "sell_price": 90
 	})
-	_register_item("sunfish", "Sunfish", ItemCategory.CROP, {
+	_register_item("sunfish", "Sunfish", ItemCategory.FISH, {
 		"description": "A bright, warm-water fish.", "stackable": true, "sell_price": 40
 	})
-	_register_item("rift_eel", "Rift Eel", ItemCategory.CROP, {
+	_register_item("rift_eel", "Rift Eel", ItemCategory.FISH, {
 		"description": "An eerie eel infused with rift energy.", "stackable": true, "sell_price": 150
 	})
 

@@ -27,15 +27,8 @@ func perform_action(user: CharacterBody2D, target_position: Vector2) -> bool:
 	var atlas_coords: Vector2i = objects_layer.get_cell_atlas_coords(tile_pos)
 	if _is_mineable(atlas_coords):
 		objects_layer.erase_cell(tile_pos)
-		# Drop ore into inventory based on chance
-		var roll := randf()
-		if roll < 0.4:
-			InventorySystem.add_item("copper_ore", 1)
-		elif roll < 0.7:
-			InventorySystem.add_item("iron_ore", 1)
-		else:
-			# Just stone, no special ore
-			pass
+		# Use MiningSystem to determine ore drops
+		MiningSystem.mine_rock(tile_pos, upgrade_level)
 		return true
 
 	return false
