@@ -6,10 +6,16 @@ extends CharacterBody2D
 @export var acceleration: float = 1000.0
 @export var friction: float = 1000.0
 
+## Camera zoom settings
+@export var zoom_step: float = 0.1
+@export var zoom_min: float = 1.0
+@export var zoom_max: float = 6.0
+
 @onready var animated_sprite = $AnimatedSprite2D
 @onready var camera = $Camera2D
 
 var last_direction: Vector2 = Vector2.DOWN
+var _current_zoom: float = 3.0
 
 ## Whether the player can traverse water tiles. Starts true; later will be a craftable raft item.
 var has_raft: bool = true
@@ -80,6 +86,11 @@ func _input(event):
 		_attempt_interaction()
 	if event.is_action_pressed("use_tool"):
 		_use_selected_tool()
+	if event is InputEventMouseButton and event.pressed and event.ctrl_pressed:
+		if event.button_index == MOUSE_BUTTON_WHEEL_UP:
+			_zoom_camera(zoom_step)
+		elif event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
+			_zoom_camera(-zoom_step)
 
 
 func _attempt_interaction():
@@ -113,6 +124,11 @@ func _register_tools():
 	tools["pickaxe"] = PickaxeTool.new()
 	tools["scythe"] = ScytheTool.new()
 	tools["fishing_rod"] = FishingRodTool.new()
+
+
+func _zoom_camera(step: float) -> void:
+	_current_zoom = clampf(_current_zoom + step, zoom_min, zoom_max)
+	camera.zoom = Vector2(_current_zoom, _current_zoom)
 
 
 func _is_local_player() -> bool:
