@@ -14,6 +14,10 @@ extends Node2D
 const PLAYER_SCENE = preload("res://scenes/player/Player.tscn")
 const DEFAULT_SPAWN := Vector2(224, 192)
 
+## Farm tile boundary – overworld chunks skip tiles inside this rectangle so
+## the hand-crafted Stardew Valley-style farm layout stays clean and visible.
+const FARM_TILE_RECT := Rect2i(0, 0, 80, 60)
+
 ## Maps ground type strings from the generator to Overworld.png atlas coords.
 const _GROUND_ATLAS_MAP: Dictionary = {
 	"grass": Vector2i(0, 0),
@@ -153,6 +157,8 @@ func _get_local_player() -> Node:
 
 func _on_chunk_loaded(chunk_pos: Vector2i) -> void:
 	## Render a newly generated chunk onto the overworld TileMapLayer.
+	## Tiles that fall inside FARM_TILE_RECT are skipped so the hand-crafted
+	## farm layout remains visible and unobstructed.
 	if not has_node("/root/ChunkManager") or overworld_layer == null:
 		return
 	var cm: Node = get_node("/root/ChunkManager")
@@ -164,11 +170,18 @@ func _on_chunk_loaded(chunk_pos: Vector2i) -> void:
 	var ground_tiles: Dictionary = chunk.get("ground_tiles", {})
 	var water_tiles: Dictionary = chunk.get("water_tiles", {})
 
+	var chunk_size := 32
+	var chunk_rect := Rect2i(origin, Vector2i(chunk_size, chunk_size))
+	var skip_farm := chunk_rect.intersects(FARM_TILE_RECT)
+
 	# Use Overworld source (0) with known atlas coordinates.
 	var water_atlas := Vector2i(19, 0)
 
 	for local_pos: Vector2i in ground_tiles:
-		var world_tile := Vector2i(origin.x + local_pos.x, origin.y + local_pos.y)
+		var world_tile := Vector2i(
+			origin.x + local_pos.x, origin.y + local_pos.y)
+		if skip_farm and FARM_TILE_RECT.has_point(world_tile):
+			continue
 		if water_tiles.has(local_pos):
 			overworld_layer.set_cell(world_tile, 0, water_atlas)
 		else:
@@ -179,7 +192,10 @@ func _on_chunk_loaded(chunk_pos: Vector2i) -> void:
 	# Fill any remaining water tiles not in ground_tiles
 	for local_pos: Vector2i in water_tiles:
 		if not ground_tiles.has(local_pos):
-			var world_tile := Vector2i(origin.x + local_pos.x, origin.y + local_pos.y)
+			var world_tile := Vector2i(
+				origin.x + local_pos.x, origin.y + local_pos.y)
+			if skip_farm and FARM_TILE_RECT.has_point(world_tile):
+				continue
 			overworld_layer.set_cell(world_tile, 0, water_atlas)
 
 
