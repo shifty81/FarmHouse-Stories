@@ -170,12 +170,17 @@ func _on_chunk_loaded(chunk_pos: Vector2i) -> void:
 	var ground_tiles: Dictionary = chunk.get("ground_tiles", {})
 	var water_tiles: Dictionary = chunk.get("water_tiles", {})
 
+	var chunk_size := 32
+	var chunk_rect := Rect2i(origin, Vector2i(chunk_size, chunk_size))
+	var skip_farm := chunk_rect.intersects(FARM_TILE_RECT)
+
 	# Use Overworld source (0) with known atlas coordinates.
 	var water_atlas := Vector2i(19, 0)
 
 	for local_pos: Vector2i in ground_tiles:
-		var world_tile := Vector2i(origin.x + local_pos.x, origin.y + local_pos.y)
-		if FARM_TILE_RECT.has_point(world_tile):
+		var world_tile := Vector2i(
+			origin.x + local_pos.x, origin.y + local_pos.y)
+		if skip_farm and FARM_TILE_RECT.has_point(world_tile):
 			continue
 		if water_tiles.has(local_pos):
 			overworld_layer.set_cell(world_tile, 0, water_atlas)
@@ -187,8 +192,9 @@ func _on_chunk_loaded(chunk_pos: Vector2i) -> void:
 	# Fill any remaining water tiles not in ground_tiles
 	for local_pos: Vector2i in water_tiles:
 		if not ground_tiles.has(local_pos):
-			var world_tile := Vector2i(origin.x + local_pos.x, origin.y + local_pos.y)
-			if FARM_TILE_RECT.has_point(world_tile):
+			var world_tile := Vector2i(
+				origin.x + local_pos.x, origin.y + local_pos.y)
+			if skip_farm and FARM_TILE_RECT.has_point(world_tile):
 				continue
 			overworld_layer.set_cell(world_tile, 0, water_atlas)
 
