@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://bfarm001"]
+[gd_scene load_steps=5 format=3 uid="uid://bfarm001"]
 
 [ext_resource type="Script" path="res://scripts/farm/Farm.gd" id="1_farm"]
 [ext_resource type="Script" path="res://scripts/farm/CropManager.gd" id="3_cropmanager"]
 [ext_resource type="PackedScene" uid="uid://bhud001" path="res://scenes/ui/HUD.tscn" id="4_hud"]
+[ext_resource type="PackedScene" uid="uid://cinv001" path="res://scenes/ui/InventoryUI.tscn" id="5_inv"]
 
 [node name="Farm" type="Node2D"]
 script = ExtResource("1_farm")
@@ -30,3 +31,5 @@ _spawnable_scenes = PackedStringArray("res://scenes/player/Player.tscn")
 script = ExtResource("3_cropmanager")
 
 [node name="HUD" parent="." instance=ExtResource("4_hud")]
+
+[node name="InventoryUI" parent="." instance=ExtResource("5_inv")]
