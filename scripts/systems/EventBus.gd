@@ -100,6 +100,15 @@ signal ai_dialogue_requested(npc_id: String, player_message: String)
 signal ai_dialogue_received(npc_id: String, ai_response: String)
 signal ai_dialogue_error(npc_id: String, error_message: String)
 
+# World generation signals
+signal world_generation_started(seed: int)
+signal world_generation_completed(seed: int)
+signal chunk_generated(chunk_pos: Vector2i)
+signal chunk_loaded(chunk_pos: Vector2i)
+signal chunk_unloaded(chunk_pos: Vector2i)
+signal biome_entered(biome_id: String)
+signal structure_discovered(structure_type: String, position: Vector2i)
+
 # Global game state
 var current_day: int = 1
 var current_season: String = "Spring"

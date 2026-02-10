@@ -12,6 +12,8 @@ var _event_system: Node
 var _inventory: Node
 var _dialogue: Node
 var _combat: Node
+var _overworld_gen: Node
+var _chunk_manager: Node
 
 
 func _ready() -> void:
@@ -24,6 +26,8 @@ func _ready() -> void:
 	_inventory = get_node_or_null("/root/InventorySystem")
 	_dialogue = get_node_or_null("/root/DialogueSystem")
 	_combat = get_node_or_null("/root/CombatSystem")
+	_overworld_gen = get_node_or_null("/root/OverworldGenerator")
+	_chunk_manager = get_node_or_null("/root/ChunkManager")
 
 func save_game() -> bool:
 	var save_data: Dictionary = {
@@ -49,7 +53,9 @@ func save_game() -> bool:
 		"dungeons": _get_dungeon_data(),
 		"mythic_rift": _get_mythic_rift_data(),
 		"events": _get_event_data(),
-		"combat": _get_combat_data()
+		"combat": _get_combat_data(),
+		"overworld": _get_overworld_data(),
+		"chunks": _get_chunk_data()
 	}
 
 	var file: FileAccess = FileAccess.open(SAVE_FILE, FileAccess.WRITE)
@@ -98,6 +104,8 @@ func load_game() -> Dictionary:
 	_load_mythic_rift_data(data.get("mythic_rift", {}))
 	_load_event_data(data.get("events", {}))
 	_load_combat_data(data.get("combat", {}))
+	_load_overworld_data(data.get("overworld", {}))
+	_load_chunk_data(data.get("chunks", {}))
 
 	return data
 
@@ -203,3 +211,25 @@ func _get_combat_data() -> Dictionary:
 func _load_combat_data(data: Dictionary) -> void:
 	if _combat and _combat.has_method("load_save_data"):
 		_combat.load_save_data(data)
+
+
+func _get_overworld_data() -> Dictionary:
+	if _overworld_gen and _overworld_gen.has_method("get_save_data"):
+		return _overworld_gen.get_save_data()
+	return {}
+
+
+func _load_overworld_data(data: Dictionary) -> void:
+	if _overworld_gen and _overworld_gen.has_method("load_save_data"):
+		_overworld_gen.load_save_data(data)
+
+
+func _get_chunk_data() -> Dictionary:
+	if _chunk_manager and _chunk_manager.has_method("get_save_data"):
+		return _chunk_manager.get_save_data()
+	return {}
+
+
+func _load_chunk_data(data: Dictionary) -> void:
+	if _chunk_manager and _chunk_manager.has_method("load_save_data"):
+		_chunk_manager.load_save_data(data)
