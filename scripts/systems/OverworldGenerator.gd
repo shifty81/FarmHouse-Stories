@@ -94,9 +94,9 @@ func generate_chunk(chunk_pos: Vector2i) -> Dictionary:
 			var world := Vector2i(wx, wy)
 
 			# Noise values
-			var height := noise_gen.get_height(wx, wy)
-			var moisture := noise_gen.get_moisture(wx, wy)
-			var temperature := noise_gen.get_temperature(wx, wy)
+			var height: float = noise_gen.get_height(wx, wy)
+			var moisture: float = noise_gen.get_moisture(wx, wy)
+			var temperature: float = noise_gen.get_temperature(wx, wy)
 			var dist := _distance_from_center(wx, wy)
 
 			# Determine biome
@@ -160,16 +160,16 @@ func _determine_biome_with_adjacency(wx: int, wy: int, height: float,
 	for offset: Vector2i in neighbor_offsets:
 		var nx := wx + offset.x
 		var ny := wy + offset.y
-		var n_height := noise_gen.get_height(nx, ny)
-		var n_moisture := noise_gen.get_moisture(nx, ny)
-		var n_temp := noise_gen.get_temperature(nx, ny)
+		var n_height: float = noise_gen.get_height(nx, ny)
+		var n_moisture: float = noise_gen.get_moisture(nx, ny)
+		var n_temp: float = noise_gen.get_temperature(nx, ny)
 		var n_dist := _distance_from_center(nx, ny)
 		var neighbor_biome: String = biome_sys.determine_biome(
 			n_height, n_moisture, n_temp, n_dist)
 
 		if neighbor_biome != biome_id and not biome_sys.can_be_adjacent(biome_id, neighbor_biome):
 			# Use a transition: pick from allowed neighbors of the neighbor
-			var allowed := biome_sys.get_allowed_neighbors(neighbor_biome)
+			var allowed: Array = biome_sys.get_allowed_neighbors(neighbor_biome)
 			if not allowed.is_empty():
 				# Pick the allowed neighbor with the best noise score
 				var best: String = allowed[0]
@@ -177,7 +177,7 @@ func _determine_biome_with_adjacency(wx: int, wy: int, height: float,
 				for candidate: String in allowed:
 					var b: Dictionary = biome_sys.get_biome(candidate)
 					if not b.is_empty():
-						var s := biome_sys._score_biome_match(b, height, moisture, temperature)
+						var s: float = biome_sys._score_biome_match(b, height, moisture, temperature)
 						if s > best_score:
 							best_score = s
 							best = candidate
@@ -197,7 +197,7 @@ func _select_ground_tile(biome_id: String, wx: int, wy: int, _height: float) -> 
 	var tiles: Array = biome.get("ground_tiles", ["grass"])
 	if tiles.is_empty():
 		return "grass"
-	var idx := noise_gen.tile_hash(wx, wy) % tiles.size()
+	var idx: int = noise_gen.tile_hash(wx, wy) % tiles.size()
 	return tiles[idx]
 
 
@@ -207,7 +207,7 @@ func _is_water_tile(wx: int, wy: int, height: float, moisture: float) -> bool:
 	## River value near zero = river channel.
 	if height < 0.18 and moisture > 0.55:
 		return true
-	var river := noise_gen.get_river_value(wx, wy)
+	var river: float = noise_gen.get_river_value(wx, wy)
 	if river < 0.03 and height < 0.45:
 		return true
 	return false
@@ -220,8 +220,8 @@ func _place_vegetation(biome_id: String, wx: int, wy: int) -> String:
 		return ""
 	var biome_sys: Node = get_node("/root/BiomeSystem")
 	var biome: Dictionary = biome_sys.get_biome(biome_id)
-	var detail := noise_gen.get_detail(wx, wy)
-	var hash_val := noise_gen.tile_hash(wx, wy)
+	var detail: float = noise_gen.get_detail(wx, wy)
+	var hash_val: int = noise_gen.tile_hash(wx, wy)
 
 	# Trees
 	var tree_density: float = biome.get("tree_density", 0.0)
@@ -240,7 +240,7 @@ func _place_vegetation(biome_id: String, wx: int, wy: int) -> String:
 	var resources: Array = biome.get("resources", [])
 	if res_density > 0.0 and not resources.is_empty():
 		# Use a separate noise band for resources to avoid overlapping vegetation
-		var res_noise := noise_gen.get_detail(wx + 1000, wy + 1000)
+		var res_noise: float = noise_gen.get_detail(wx + 1000, wy + 1000)
 		if res_noise < res_density:
 			return resources[hash_val % resources.size()]
 
@@ -279,7 +279,7 @@ func _place_structures(chunk_pos: Vector2i, origin: Vector2i,
 	if dominant_biome.is_empty():
 		return []
 
-	var possible := biome_sys.get_structures_for_biome(dominant_biome)
+	var possible: Array = biome_sys.get_structures_for_biome(dominant_biome)
 	if possible.is_empty():
 		return []
 
