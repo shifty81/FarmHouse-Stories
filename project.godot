@@ -32,6 +32,9 @@ CombatSystem="*res://scripts/combat/CombatSystem.gd"
 CraftingSystem="*res://scripts/crafting/CraftingSystem.gd"
 FishingSystem="*res://scripts/fishing/FishingSystem.gd"
 MiningSystem="*res://scripts/mining/MiningSystem.gd"
+BiomeSystem="*res://scripts/systems/BiomeSystem.gd"
+ChunkManager="*res://scripts/systems/ChunkManager.gd"
+OverworldGenerator="*res://scripts/systems/OverworldGenerator.gd"
 
 [display]
 
