@@ -231,9 +231,7 @@ func _is_water_tile(wx: int, wy: int, height: float, moisture: float) -> bool:
 	var dist := _distance_from_center(wx, wy)
 	if dist >= ISLAND_RADIUS:
 		return true
-	if height < 0.18:
-		return true
-	if height < 0.25 and moisture > 0.55:
+	if height < 0.18 and moisture > 0.55:
 		return true
 	var river: float = noise_gen.get_river_value(wx, wy)
 	if river < 0.03 and height < 0.45:

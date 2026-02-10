@@ -106,7 +106,7 @@ func _setup_farm():
 
 
 func _setup_overworld():
-	## Initialise the OverworldGenerator and ChunkManager autoloads and create
+	## Initialize the OverworldGenerator and ChunkManager autoloads and create
 	## a dedicated TileMapLayer for procedural island terrain rendered below the
 	## static farm layers.
 	overworld_layer = TileMapLayer.new()
