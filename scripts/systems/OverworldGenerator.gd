@@ -26,8 +26,11 @@ var world_seed: int = 0
 ## Noise utility instance
 var noise_gen: RefCounted = null
 
-## World center in tile coordinates (player hub / farm)
-var world_center: Vector2i = Vector2i(40, 30)
+## World center in tile coordinates (player hub / farm).
+## Matches the farmhouse location from WorldGenerator.gd layout.
+const DEFAULT_CENTER_X: int = 40
+const DEFAULT_CENTER_Y: int = 30
+var world_center: Vector2i = Vector2i(DEFAULT_CENTER_X, DEFAULT_CENTER_Y)
 
 ## Tile size
 const TILE_SIZE: int = 16
@@ -35,10 +38,15 @@ const TILE_SIZE: int = 16
 ## Chunk size must match ChunkManager
 const CHUNK_SIZE: int = 32
 
+## Distance in tiles to sample neighbors for adjacency rule checks
+const ADJACENCY_CHECK_DISTANCE: int = 4
+
+## Probability (0.0-1.0) that a chunk contains a structure
+const STRUCTURE_SPAWN_CHANCE: float = 0.15
+
 ## Structure placement tracking to avoid duplicates
 var placed_structures: Dictionary = {}
 
-## RNG for structure placement, seeded per-chunk
 var _rng: RandomNumberGenerator = RandomNumberGenerator.new()
 
 
@@ -144,8 +152,11 @@ func _determine_biome_with_adjacency(wx: int, wy: int, height: float,
 	var biome_id: String = biome_sys.determine_biome(height, moisture, temperature, dist)
 
 	# Check adjacency: sample a few neighbors and if incompatible, try fallback
-	var neighbor_offsets := [Vector2i(-4, 0), Vector2i(4, 0),
-		Vector2i(0, -4), Vector2i(0, 4)]
+	var neighbor_offsets := [
+		Vector2i(-ADJACENCY_CHECK_DISTANCE, 0),
+		Vector2i(ADJACENCY_CHECK_DISTANCE, 0),
+		Vector2i(0, -ADJACENCY_CHECK_DISTANCE),
+		Vector2i(0, ADJACENCY_CHECK_DISTANCE)]
 	for offset: Vector2i in neighbor_offsets:
 		var nx := wx + offset.x
 		var ny := wy + offset.y
@@ -249,8 +260,8 @@ func _place_structures(chunk_pos: Vector2i, origin: Vector2i,
 	var chunk_seed := world_seed + chunk_pos.x * 73856093 + chunk_pos.y * 19349663
 	_rng.seed = chunk_seed
 
-	# Only place a structure with ~15% probability per chunk
-	if _rng.randf() > 0.15:
+	# Only place a structure with configured probability per chunk
+	if _rng.randf() > STRUCTURE_SPAWN_CHANCE:
 		return []
 
 	# Find the dominant biome in this chunk

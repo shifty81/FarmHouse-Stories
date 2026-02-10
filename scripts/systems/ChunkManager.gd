@@ -49,14 +49,8 @@ func update_player_position(world_pos: Vector2) -> void:
 
 func world_to_chunk(world_pos: Vector2) -> Vector2i:
 	## Converts a world-space position to the chunk coordinate it belongs to.
-	var tile_x := int(world_pos.x) / TILE_SIZE
-	var tile_y := int(world_pos.y) / TILE_SIZE
-	# Handle negative coordinates correctly
-	if world_pos.x < 0:
-		tile_x -= 1
-	if world_pos.y < 0:
-		tile_y -= 1
-	return Vector2i(tile_x / CHUNK_SIZE, tile_y / CHUNK_SIZE)
+	var tile := _world_pos_to_tile(world_pos)
+	return Vector2i(tile.x / CHUNK_SIZE, tile.y / CHUNK_SIZE)
 
 
 func chunk_to_world_origin(chunk_pos: Vector2i) -> Vector2i:
@@ -80,13 +74,8 @@ func get_biome_at(world_pos: Vector2) -> String:
 	if chunk.is_empty():
 		return ""
 	var origin := chunk_to_world_origin(chunk_pos)
-	var tile_x := int(world_pos.x) / TILE_SIZE
-	var tile_y := int(world_pos.y) / TILE_SIZE
-	if world_pos.x < 0:
-		tile_x -= 1
-	if world_pos.y < 0:
-		tile_y -= 1
-	var local := Vector2i(tile_x - origin.x, tile_y - origin.y)
+	var tile := _world_pos_to_tile(world_pos)
+	var local := Vector2i(tile.x - origin.x, tile.y - origin.y)
 	var biome_map: Dictionary = chunk.get("biome_map", {})
 	return biome_map.get(local, "")
 
@@ -147,6 +136,17 @@ func _unload_chunk(chunk_pos: Vector2i) -> void:
 func _chunk_distance(a: Vector2i, b: Vector2i) -> int:
 	## Chebyshev distance between two chunk positions.
 	return maxi(absi(a.x - b.x), absi(a.y - b.y))
+
+
+func _world_pos_to_tile(world_pos: Vector2) -> Vector2i:
+	## Converts a world-space position to tile coordinates, handling negatives.
+	var tile_x := int(world_pos.x) / TILE_SIZE
+	var tile_y := int(world_pos.y) / TILE_SIZE
+	if world_pos.x < 0:
+		tile_x -= 1
+	if world_pos.y < 0:
+		tile_y -= 1
+	return Vector2i(tile_x, tile_y)
 
 
 func get_loaded_chunk_count() -> int:
