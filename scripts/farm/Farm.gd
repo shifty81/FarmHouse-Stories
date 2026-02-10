@@ -1,6 +1,8 @@
 extends Node2D
 ## Farm - Main farm scene managing the player's farm area.
 ## Handles world generation and multiplayer player spawning.
+## Wires the OverworldGenerator and ChunkManager to stream procedural
+## island terrain around the player as they explore.
 
 @onready var crop_manager = $CropManager
 @onready var player_spawner = $Players
@@ -12,12 +14,32 @@ extends Node2D
 const PLAYER_SCENE = preload("res://scenes/player/Player.tscn")
 const DEFAULT_SPAWN := Vector2(224, 192)
 
+## Maps ground type strings from the generator to Overworld.png atlas coords.
+const _GROUND_ATLAS_MAP: Dictionary = {
+	"grass": Vector2i(0, 0),
+	"grass_light": Vector2i(1, 4),
+	"dirt": Vector2i(7, 1),
+	"forest_floor": Vector2i(0, 3),
+	"sand": Vector2i(9, 1),
+	"stone": Vector2i(12, 3),
+	"marsh": Vector2i(2, 3),
+	"snow": Vector2i(0, 5),
+	"cave_floor": Vector2i(8, 1),
+}
+
 var world_generator: Node
 var _spawn_positions: Array[Vector2] = []
+
+## TileMapLayer used for procedurally generated overworld chunks
+var overworld_layer: TileMapLayer = null
+
+## Tileset shared by both static farm and overworld layers
+var _tileset: TileSet = null
 
 
 func _ready():
 	_setup_farm()
+	_setup_overworld()
 	EventBus.day_ended.connect(_on_day_ended)
 
 	if multiplayer.has_multiplayer_peer():
@@ -70,8 +92,8 @@ func _setup_farm():
 	world_generator.set_script(load("res://scripts/systems/WorldGenerator.gd"))
 	add_child(world_generator)
 
-	var tileset := _create_tileset()
-	world_generator.generate_farm(ground_layer, paths_layer, plantable_layer, objects_layer, tileset)
+	_tileset = _create_tileset()
+	world_generator.generate_farm(ground_layer, paths_layer, plantable_layer, objects_layer, _tileset)
 
 	# Set spawn positions based on world generator
 	var base_spawn: Vector2 = world_generator.get_spawn_position()
@@ -81,6 +103,100 @@ func _setup_farm():
 		base_spawn + Vector2(0, 24),
 		base_spawn + Vector2(24, 24),
 	]
+
+
+func _setup_overworld():
+	## Initialise the OverworldGenerator and ChunkManager autoloads and create
+	## a dedicated TileMapLayer for procedural island terrain rendered below the
+	## static farm layers.
+	overworld_layer = TileMapLayer.new()
+	overworld_layer.name = "OverworldLayer"
+	overworld_layer.y_sort_enabled = true
+	if _tileset:
+		overworld_layer.tile_set = _tileset
+	# Insert below the ground layer so static farm tiles draw on top
+	add_child(overworld_layer)
+	move_child(overworld_layer, 0)
+
+	# Connect the autoloaded generator to the chunk manager
+	if has_node("/root/OverworldGenerator") and has_node("/root/ChunkManager"):
+		var owg: Node = get_node("/root/OverworldGenerator")
+		var cm: Node = get_node("/root/ChunkManager")
+		cm.world_generator = owg
+		cm.chunk_loaded.connect(_on_chunk_loaded)
+		cm.chunk_unloaded.connect(_on_chunk_unloaded)
+
+		# Trigger initial chunk load around the spawn point
+		var spawn := _spawn_positions[0] if _spawn_positions.size() > 0 else DEFAULT_SPAWN
+		cm.update_player_position(spawn)
+
+
+func _process(_delta: float) -> void:
+	## Feed the local player position into ChunkManager each frame so nearby
+	## chunks are streamed in as the player moves.
+	if not has_node("/root/ChunkManager"):
+		return
+	var cm: Node = get_node("/root/ChunkManager")
+	var player := _get_local_player()
+	if player:
+		cm.update_player_position(player.global_position)
+
+
+func _get_local_player() -> Node:
+	## Returns the local player node, or null if not spawned yet.
+	for child in player_spawner.get_children():
+		if child is CharacterBody2D:
+			if not multiplayer.has_multiplayer_peer() or child.is_multiplayer_authority():
+				return child
+	return null
+
+
+func _on_chunk_loaded(chunk_pos: Vector2i) -> void:
+	## Render a newly generated chunk onto the overworld TileMapLayer.
+	if not has_node("/root/ChunkManager") or overworld_layer == null:
+		return
+	var cm: Node = get_node("/root/ChunkManager")
+	var chunk: Dictionary = cm.get_chunk_data(chunk_pos)
+	if chunk.is_empty():
+		return
+
+	var origin: Vector2i = chunk.get("origin", Vector2i.ZERO)
+	var ground_tiles: Dictionary = chunk.get("ground_tiles", {})
+	var water_tiles: Dictionary = chunk.get("water_tiles", {})
+
+	# Use Overworld source (0) with known atlas coordinates.
+	var water_atlas := Vector2i(19, 0)
+
+	for local_pos: Vector2i in ground_tiles:
+		var world_tile := Vector2i(origin.x + local_pos.x, origin.y + local_pos.y)
+		if water_tiles.has(local_pos):
+			overworld_layer.set_cell(world_tile, 0, water_atlas)
+		else:
+			var ground_type: String = ground_tiles[local_pos]
+			var atlas := _ground_type_to_atlas(ground_type)
+			overworld_layer.set_cell(world_tile, 0, atlas)
+
+	# Fill any remaining water tiles not in ground_tiles
+	for local_pos: Vector2i in water_tiles:
+		if not ground_tiles.has(local_pos):
+			var world_tile := Vector2i(origin.x + local_pos.x, origin.y + local_pos.y)
+			overworld_layer.set_cell(world_tile, 0, water_atlas)
+
+
+func _on_chunk_unloaded(chunk_pos: Vector2i) -> void:
+	## Erase tiles for an unloaded chunk to free rendering resources.
+	if overworld_layer == null:
+		return
+	var chunk_size := 32
+	var origin := Vector2i(chunk_pos.x * chunk_size, chunk_pos.y * chunk_size)
+	for lx in range(chunk_size):
+		for ly in range(chunk_size):
+			overworld_layer.erase_cell(Vector2i(origin.x + lx, origin.y + ly))
+
+
+func _ground_type_to_atlas(ground_type: String) -> Vector2i:
+	## Maps a ground type string to an Overworld.png atlas coordinate.
+	return _GROUND_ATLAS_MAP.get(ground_type, Vector2i(0, 0))
 
 
 func _create_tileset() -> TileSet:

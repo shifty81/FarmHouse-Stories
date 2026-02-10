@@ -38,6 +38,12 @@ const TILE_SIZE: int = 16
 ## Chunk size must match ChunkManager
 const CHUNK_SIZE: int = 32
 
+## Island radius in tiles - land area fades to ocean beyond this distance
+const ISLAND_RADIUS: float = 60.0
+
+## Transition zone width where land blends into ocean
+const ISLAND_SHORE_WIDTH: float = 15.0
+
 ## Distance in tiles to sample neighbors for adjacency rule checks
 const ADJACENCY_CHECK_DISTANCE: int = 4
 
@@ -99,6 +105,10 @@ func generate_chunk(chunk_pos: Vector2i) -> Dictionary:
 			var temperature: float = noise_gen.get_temperature(wx, wy)
 			var dist := _distance_from_center(wx, wy)
 
+			# Apply island falloff - lower height at edges to create ocean
+			var falloff := _island_falloff(dist)
+			height = height * falloff
+
 			# Determine biome
 			var biome_id: String = _determine_biome_with_adjacency(
 				wx, wy, height, moisture, temperature, dist)
@@ -140,6 +150,18 @@ func _distance_from_center(wx: int, wy: int) -> float:
 	var dx := float(wx - world_center.x)
 	var dy := float(wy - world_center.y)
 	return sqrt(dx * dx + dy * dy)
+
+
+func _island_falloff(dist: float) -> float:
+	## Returns a multiplier [0.0, 1.0] that shapes terrain into an island.
+	## 1.0 at center, smoothly drops to 0.0 at and beyond ISLAND_RADIUS.
+	if dist <= ISLAND_RADIUS - ISLAND_SHORE_WIDTH:
+		return 1.0
+	if dist >= ISLAND_RADIUS:
+		return 0.0
+	# Smooth hermite interpolation in the shore transition zone
+	var t := (dist - (ISLAND_RADIUS - ISLAND_SHORE_WIDTH)) / ISLAND_SHORE_WIDTH
+	return 1.0 - t * t * (3.0 - 2.0 * t)
 
 
 func _determine_biome_with_adjacency(wx: int, wy: int, height: float,
@@ -205,7 +227,13 @@ func _is_water_tile(wx: int, wy: int, height: float, moisture: float) -> bool:
 	## Determines if a tile should be water.
 	## Low height + high moisture = lake.
 	## River value near zero = river channel.
-	if height < 0.18 and moisture > 0.55:
+	## Tiles beyond the island radius are always ocean.
+	var dist := _distance_from_center(wx, wy)
+	if dist >= ISLAND_RADIUS:
+		return true
+	if height < 0.18:
+		return true
+	if height < 0.25 and moisture > 0.55:
 		return true
 	var river: float = noise_gen.get_river_value(wx, wy)
 	if river < 0.03 and height < 0.45:
