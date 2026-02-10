@@ -24,6 +24,7 @@ func _input(event):
 			_close()
 		else:
 			_open()
+		get_viewport().set_input_as_handled()
 
 
 func _open():
