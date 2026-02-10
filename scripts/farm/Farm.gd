@@ -139,5 +139,18 @@ func is_plantable(tile_pos: Vector2i) -> bool:
 	return false
 
 
+func till_soil(tile_pos: Vector2i) -> bool:
+	## Convert a ground tile into plantable farmland
+	if not plantable_layer:
+		return false
+	if is_plantable(tile_pos):
+		return false
+	# Only allow tilling within farm boundaries
+	if tile_pos.x < 6 or tile_pos.x >= 74 or tile_pos.y < 6 or tile_pos.y >= 54:
+		return false
+	plantable_layer.set_cell(tile_pos, 0, Vector2i(34, 17))
+	return true
+
+
 func _on_day_ended():
 	crop_manager.advance_all_crops()

@@ -29,6 +29,9 @@ SeasonalEventSystem="*res://scripts/events/SeasonalEventSystem.gd"
 InventorySystem="*res://scripts/systems/InventorySystem.gd"
 DialogueSystem="*res://scripts/npc/DialogueSystem.gd"
 CombatSystem="*res://scripts/combat/CombatSystem.gd"
+CraftingSystem="*res://scripts/crafting/CraftingSystem.gd"
+FishingSystem="*res://scripts/fishing/FishingSystem.gd"
+MiningSystem="*res://scripts/mining/MiningSystem.gd"
 
 [display]
 
