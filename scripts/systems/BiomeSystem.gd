@@ -9,12 +9,13 @@ extends Node
 
 ## Zone ring distances from the world center (Core Keeper style).
 ## Inner rings are safer; outer rings are more dangerous.
+## Scaled for the 512-tile island radius.
 const ZONE_RINGS = {
-	"center":   {"min_dist": 0,   "max_dist": 30},
-	"inner":    {"min_dist": 30,  "max_dist": 80},
-	"middle":   {"min_dist": 80,  "max_dist": 150},
-	"outer":    {"min_dist": 150, "max_dist": 250},
-	"frontier": {"min_dist": 250, "max_dist": 999}
+	"center":   {"min_dist": 0,   "max_dist": 60},
+	"inner":    {"min_dist": 60,  "max_dist": 160},
+	"middle":   {"min_dist": 160, "max_dist": 320},
+	"outer":    {"min_dist": 320, "max_dist": 480},
+	"frontier": {"min_dist": 480, "max_dist": 9999}
 }
 
 ## Biome definitions with terrain, vegetation, resources, and placement rules
@@ -208,9 +209,9 @@ const ADJACENCY_RULES = {
 
 ## Points of interest that can spawn within each biome
 const BIOME_STRUCTURES = {
-	"meadow": ["farm_plot", "well", "signpost"],
+	"meadow": ["village", "farm_plot", "well", "signpost"],
 	"forest": ["woodcutter_camp", "hidden_grove", "beehive"],
-	"plains": ["windmill", "stone_circle", "camp_site"],
+	"plains": ["village", "windmill", "stone_circle", "camp_site"],
 	"swamp": ["witch_hut", "sunken_chest", "fog_gate"],
 	"desert": ["oasis", "buried_temple", "sand_pit"],
 	"tundra": ["ice_shrine", "frozen_lake", "shelter"],
