@@ -37,6 +37,7 @@ ChunkManager="*res://scripts/systems/ChunkManager.gd"
 OverworldGenerator="*res://scripts/systems/OverworldGenerator.gd"
 QuestManager="*res://scripts/systems/QuestManager.gd"
 SoundManager="*res://scripts/systems/SoundManager.gd"
+GameBalance="*res://scripts/systems/GameBalance.gd"
 
 [display]
 

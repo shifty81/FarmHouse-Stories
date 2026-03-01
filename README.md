@@ -181,7 +181,7 @@ FarmHouse-Stories/
 │   ├── dungeon/       # Dungeon room templates
 │   └── player/        # Player character
 ├── scripts/           # GDScript game logic
-│   ├── systems/       # EventBus, Calendar, Save, Network, Inventory, QuestManager, SoundManager
+│   ├── systems/       # EventBus, Calendar, Save, Network, Inventory, QuestManager, SoundManager, GameBalance
 │   ├── farm/          # Crop management
 │   ├── player/        # Player movement, tools
 │   │   └── tools/     # Tool implementations (hoe, axe, pickaxe, etc.)
@@ -269,20 +269,20 @@ Please read the documentation first to understand the project structure and conv
 - [x] Fishing mechanics
 - [x] Mining system
 
-### Phase 5: Polish & Content
+### Phase 5: Polish & Content ✅
 - [x] Cell shader integration with all scenes
 - [x] UI/UX improvements
 - [x] Sound effects and music
 - [x] Quest journal UI
-- [ ] Additional content and balancing
+- [x] Additional content and balancing
 
 See `docs/01_ProjectOverview.md` for detailed roadmap.
 
 ## 🎯 Current Status
 
-**Phase:** Polish & Content  
-**Next Steps:** Additional content and balancing  
-**New:** Cell shader applied to Player and Crop sprites, notification toast system, HUD tool display, DungeonRoom tilemap generation — see `docs/11_GodotAssetLibraryGuide.md` for recommended addons
+**Phase:** All phases complete  
+**Latest:** Additional content and balancing pass — expanded item registry (100+ items), 20+ crafting recipes, 6 new ores/gems, 8 new fish species, full gear sets for all slots, 10 new enemies + 2 missing bosses, and centralized GameBalance system for XP/economy tuning  
+**New:** See `docs/11_GodotAssetLibraryGuide.md` for recommended addons
 
 ## 📄 License
 
