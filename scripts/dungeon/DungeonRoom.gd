@@ -21,7 +21,22 @@ var puzzle_solved: bool = false
 
 
 func _ready() -> void:
+	_generate_tilemap()
 	_setup_room()
+
+
+func _generate_tilemap() -> void:
+	var tilemap := get_node_or_null("TileMap") as TileMap
+	if not tilemap:
+		return
+	var gen = load(
+		"res://scripts/dungeon/DungeonRoomGenerator.gd")
+	var doors := {}
+	for dir_name: String in door_connections:
+		doors[dir_name] = true
+	var seed_val := room_id.hash() if room_id != "" else 0
+	gen.generate_room(
+		tilemap, room_type, doors, seed_val)
 
 
 func _setup_room() -> void:

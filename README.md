@@ -188,6 +188,8 @@ FarmHouse-Stories/
 │   ├── npc/           # NPC database, data definitions, dialogue system
 │   ├── gear/          # Dual gear set system
 │   ├── dungeon/       # Dungeon and Mythic Rift systems, dungeon room base
+│   │   ├── DungeonTilesetBuilder  # Cave tileset builder
+│   │   └── DungeonRoomGenerator   # Procedural room layouts
 │   ├── combat/        # Combat system and enemy definitions
 │   ├── crafting/      # Crafting recipes and artisan goods
 │   ├── fishing/       # Fishing system and fish registry
@@ -238,7 +240,7 @@ Please read the documentation first to understand the project structure and conv
 - [x] Godot project file with input mapping and physics layers
 - [x] Basic player controller with movement and interaction
 - [x] Cell shader for toon-style rendering
-- [ ] Tilemap and level design
+- [x] Tilemap and level design
 
 ### Phase 2: Core Mechanics ✅
 - [x] Farming system (planting, watering, harvesting)
@@ -268,8 +270,8 @@ Please read the documentation first to understand the project structure and conv
 - [x] Mining system
 
 ### Phase 5: Polish & Content
-- [ ] Cell shader integration with all scenes
-- [ ] UI/UX improvements
+- [x] Cell shader integration with all scenes
+- [x] UI/UX improvements
 - [x] Sound effects and music
 - [x] Quest journal UI
 - [ ] Additional content and balancing
@@ -279,8 +281,8 @@ See `docs/01_ProjectOverview.md` for detailed roadmap.
 ## 🎯 Current Status
 
 **Phase:** Polish & Content  
-**Next Steps:** Cell shader integration with all scenes, UI/UX improvements, additional content and balancing  
-**New:** Quest Journal (J key), Sound Manager with BGM crossfade, Dungeon Room base scenes — see `docs/11_GodotAssetLibraryGuide.md` for recommended addons
+**Next Steps:** Additional content and balancing  
+**New:** Cell shader applied to Player and Crop sprites, notification toast system, HUD tool display, DungeonRoom tilemap generation — see `docs/11_GodotAssetLibraryGuide.md` for recommended addons
 
 ## 📄 License
 

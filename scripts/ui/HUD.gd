@@ -7,6 +7,7 @@ extends CanvasLayer
 @onready var money_label = $MarginContainer/VBoxContainer/MoneyRow/MoneyLabel
 @onready var energy_bar = $MarginContainer/VBoxContainer/EnergyRow/EnergyBar
 @onready var energy_icon = $MarginContainer/VBoxContainer/EnergyRow/EnergyIcon
+@onready var tool_label = $MarginContainer/VBoxContainer/ToolRow/ToolLabel
 
 var _energy_icon_full = preload("res://gfx/ui/icons/icon_energy_full.png")
 var _energy_icon_mid = preload("res://gfx/ui/icons/icon_energy_mid.png")
@@ -18,6 +19,7 @@ func _ready():
 	EventBus.day_started.connect(_on_day_started)
 	EventBus.player_money_changed.connect(_on_money_changed)
 	EventBus.player_energy_changed.connect(_on_energy_changed)
+	EventBus.hotbar_slot_changed.connect(_on_hotbar_changed)
 
 	_update_display()
 
@@ -33,6 +35,7 @@ func _update_display():
 		energy_bar.max_value = EventBus.player_max_energy
 		energy_bar.value = EventBus.player_energy
 		_update_energy_icon()
+	_update_tool_display()
 
 
 func _update_energy_icon():
@@ -61,3 +64,23 @@ func _on_money_changed(_money):
 
 func _on_energy_changed(_energy, _max_energy):
 	_update_display()
+
+
+func _on_hotbar_changed(_slot_index):
+	_update_tool_display()
+
+
+func _update_tool_display():
+	if not tool_label:
+		return
+	var selected_item = InventorySystem.get_selected_item()
+	if selected_item:
+		var info = InventorySystem.get_item_info(
+			selected_item.get("item_id", ""))
+		if info:
+			tool_label.text = info.get("name", "Unknown")
+		else:
+			tool_label.text = selected_item.get(
+				"item_id", "").capitalize()
+	else:
+		tool_label.text = "No tool"

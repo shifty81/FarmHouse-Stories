@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://bhud001"]
+[gd_scene load_steps=8 format=3 uid="uid://bhud001"]
 
 [ext_resource type="Script" path="res://scripts/ui/HUD.gd" id="1_hud"]
 [ext_resource type="Texture2D" path="res://gfx/ui/frames/frame_panel.png" id="2_frame"]
@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" path="res://gfx/ui/icons/icon_energy_full.png" id="4_energy"]
 [ext_resource type="Texture2D" path="res://gfx/ui/bars/bar_fill.png" id="5_barfill"]
 [ext_resource type="Texture2D" path="res://gfx/ui/bars/bar_frame.png" id="6_barframe"]
+[ext_resource type="Texture2D" path="res://gfx/ui/icons/icon_gear.png" id="7_gear"]
 
 [node name="HUD" type="CanvasLayer"]
 script = ExtResource("1_hud")
@@ -69,3 +70,17 @@ layout_mode = 2
 size_flags_horizontal = 3
 max_value = 100.0
 value = 100.0
+
+[node name="ToolRow" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="ToolIcon" type="TextureRect" parent="MarginContainer/VBoxContainer/ToolRow"]
+layout_mode = 2
+texture = ExtResource("7_gear")
+stretch_mode = 2
+custom_minimum_size = Vector2(16, 16)
+
+[node name="ToolLabel" type="Label" parent="MarginContainer/VBoxContainer/ToolRow"]
+layout_mode = 2
+text = "No tool"
