@@ -176,17 +176,18 @@ FarmHouse-Stories/
 ├── docs/               # Comprehensive documentation
 ├── gfx/               # Game assets (sprites, fonts)
 ├── scenes/            # Godot scene files
-│   ├── ui/            # HUD, lobby
+│   ├── ui/            # HUD, lobby, quest journal
 │   ├── farm/          # Farm, crops
+│   ├── dungeon/       # Dungeon room templates
 │   └── player/        # Player character
 ├── scripts/           # GDScript game logic
-│   ├── systems/       # EventBus, Calendar, Save, Network, Inventory
+│   ├── systems/       # EventBus, Calendar, Save, Network, Inventory, QuestManager, SoundManager
 │   ├── farm/          # Crop management
 │   ├── player/        # Player movement, tools
 │   │   └── tools/     # Tool implementations (hoe, axe, pickaxe, etc.)
 │   ├── npc/           # NPC database, data definitions, dialogue system
 │   ├── gear/          # Dual gear set system
-│   ├── dungeon/       # Dungeon and Mythic Rift systems
+│   ├── dungeon/       # Dungeon and Mythic Rift systems, dungeon room base
 │   ├── combat/        # Combat system and enemy definitions
 │   ├── crafting/      # Crafting recipes and artisan goods
 │   ├── fishing/       # Fishing system and fish registry
@@ -259,7 +260,7 @@ Please read the documentation first to understand the project structure and conv
 - [x] EventBus extended with NPC, gear, dungeon, rift, and event signals
 
 ### Phase 4: Advanced Features
-- [ ] Dungeon room/puzzle scene implementations
+- [x] Dungeon room/puzzle scene implementations
 - [x] Combat system with enemy AI
 - [x] NPC dialogue and cutscene system
 - [x] Crafting and artisan goods
@@ -269,17 +270,17 @@ Please read the documentation first to understand the project structure and conv
 ### Phase 5: Polish & Content
 - [ ] Cell shader integration with all scenes
 - [ ] UI/UX improvements
-- [ ] Sound effects and music
-- [ ] Quest journal UI
+- [x] Sound effects and music
+- [x] Quest journal UI
 - [ ] Additional content and balancing
 
 See `docs/01_ProjectOverview.md` for detailed roadmap.
 
 ## 🎯 Current Status
 
-**Phase:** Advanced Features & Content  
-**Next Steps:** Implement dungeon room scenes, quest journal UI, sound effects and music, and additional content  
-**New:** See `docs/11_GodotAssetLibraryGuide.md` for recommended addons from Godot's built-in Asset Library to accelerate remaining features
+**Phase:** Polish & Content  
+**Next Steps:** Cell shader integration with all scenes, UI/UX improvements, additional content and balancing  
+**New:** Quest Journal (J key), Sound Manager with BGM crossfade, Dungeon Room base scenes — see `docs/11_GodotAssetLibraryGuide.md` for recommended addons
 
 ## 📄 License
 
