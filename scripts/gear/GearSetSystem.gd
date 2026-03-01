@@ -35,6 +35,12 @@ func _initialize_default_sets():
 	farm_set["feet"] = _create_gear_item("farm_boots", "Muddy Boots", "farm", "feet", {
 		"move_speed": 1.05, "soil_quality": 1.1
 	})
+	farm_set["head"] = _create_gear_item("straw_hat", "Straw Hat", "farm", "head", {
+		"stamina_regen": 0.5, "harvest_bonus": 1.05
+	})
+	farm_set["accessory"] = _create_gear_item("farm_gloves", "Gardening Gloves", "farm", "accessory", {
+		"harvest_bonus": 1.15, "interaction_bonus": 1.1
+	})
 
 	# Default dungeon set starter gear
 	dungeon_set["body"] = _create_gear_item("leather_armor", "Leather Armor", "dungeon", "body", {
@@ -42,6 +48,15 @@ func _initialize_default_sets():
 	})
 	dungeon_set["feet"] = _create_gear_item("iron_boots", "Iron Boots", "dungeon", "feet", {
 		"defense": 2, "move_speed": 0.95, "trap_resist": 1.2
+	})
+	dungeon_set["head"] = _create_gear_item("iron_helm", "Iron Helm", "dungeon", "head", {
+		"defense": 3, "hp_bonus": 5
+	})
+	dungeon_set["legs"] = _create_gear_item("chain_leggings", "Chain Leggings", "dungeon", "legs", {
+		"defense": 4, "move_speed": 0.98
+	})
+	dungeon_set["accessory"] = _create_gear_item("echo_pendant", "Echo Pendant", "dungeon", "accessory", {
+		"attack": 3, "hp_bonus": 5
 	})
 
 
