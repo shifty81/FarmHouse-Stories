@@ -73,6 +73,12 @@ Comprehensive documentation is available in the `docs/` folder:
 9. **[Echo Ridge Inheritance Story](docs/09_EchoRidgeInheritanceStory.md)**  
    Alternative starting story concept with detailed farm layout and asset guide
 
+10. **[GDScript Style Guide](docs/10_GDScriptStyleGuide.md)**  
+    Type annotation rules, naming conventions, and linting with gdlint
+
+11. **[Godot Asset Library Guide](docs/11_GodotAssetLibraryGuide.md)**  
+    How to accelerate development using Godot's built-in Asset Library — recommended addons for dungeons, dialogue, quests, audio, and UI
+
 ## 🎨 Art Style
 
 The game uses **cell shading** (toon shading) to create a distinctive, cartoon-like aesthetic:
@@ -272,7 +278,8 @@ See `docs/01_ProjectOverview.md` for detailed roadmap.
 ## 🎯 Current Status
 
 **Phase:** Advanced Features & Content  
-**Next Steps:** Implement dungeon room scenes, quest journal UI, sound effects and music, and additional content
+**Next Steps:** Implement dungeon room scenes, quest journal UI, sound effects and music, and additional content  
+**New:** See `docs/11_GodotAssetLibraryGuide.md` for recommended addons from Godot's built-in Asset Library to accelerate remaining features
 
 ## 📄 License
 
@@ -294,4 +301,4 @@ See `docs/01_ProjectOverview.md` for detailed roadmap.
 
 **Built with ❤️ using Godot Engine 4.6**
 
-*Last Updated: February 2026*
+*Last Updated: March 2026*
