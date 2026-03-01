@@ -89,6 +89,15 @@ Welcome to the FarmHouse Stories documentation! This index provides a quick over
    - File and function limits
    - Linting with gdlint
 
+### Godot Asset Library
+
+11. **[11_GodotAssetLibraryGuide.md](11_GodotAssetLibraryGuide.md)** - Accelerating development with the Asset Library
+   - How to install addons from Godot's built-in Asset Library
+   - Recommended addons for each remaining feature (dungeons, dialogue, quests, audio, UI)
+   - Integration priority order and step-by-step setup
+   - Connecting addons to existing EventBus, SaveSystem, and CalendarSystem
+   - Free audio and graphic asset sources
+
 ## 🗺️ Documentation Map
 
 ```
@@ -109,7 +118,8 @@ Documentation Structure:
 │
 ├── Asset Pipeline
 │   ├── 05_AssetOrganization.md (Organization guidelines)
-│   └── 08_GFXIntegrationGuide.md (Integration workflow)
+│   ├── 08_GFXIntegrationGuide.md (Integration workflow)
+│   └── 11_GodotAssetLibraryGuide.md (Addons & plugins)
 │
 ├── Story & Content
 │   └── 09_EchoRidgeInheritanceStory.md (Starting story concept)
@@ -217,16 +227,18 @@ grep -r "farming" docs/
 
 | Document | Status | Last Updated |
 |----------|--------|--------------|
-| README.md | ✅ Complete | Feb 2026 |
+| README.md | ✅ Complete | Mar 2026 |
 | 01_ProjectOverview.md | ✅ Complete | Feb 2026 |
 | 02_CellShadingTechniques.md | ✅ Complete | Feb 2026 |
 | 03_StardewValleyMechanics.md | ✅ Complete | Feb 2026 |
 | 04_OpenSourceProjects.md | ✅ Complete | Feb 2026 |
 | 05_AssetOrganization.md | ✅ Complete | Feb 2026 |
 | 06_GodotResources.md | ✅ Complete | Feb 2026 |
-| 07_ImplementationGuide.md | ✅ Complete | Feb 2026 |
+| 07_ImplementationGuide.md | ✅ Complete | Mar 2026 |
 | 08_GFXIntegrationGuide.md | ✅ Complete | Feb 2026 |
 | 09_EchoRidgeInheritanceStory.md | ✅ Complete | Feb 2026 |
+| 10_GDScriptStyleGuide.md | ✅ Complete | Feb 2026 |
+| 11_GodotAssetLibraryGuide.md | ✅ Complete | Mar 2026 |
 
 ## 🆘 Getting Help
 

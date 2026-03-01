@@ -198,18 +198,38 @@ void fragment() {
 
 ### For Farming Games
 
-1. **Dialogue Manager**
+1. **Dialogic 2**
+   - **Link:** [GitHub](https://github.com/dialogic-godot/dialogic)
+   - **Features:** Visual dialogue editor, branching conversations, portraits, variables, timelines, localization, save/load
+   - **License:** MIT
+   - **Install:** Available in Godot's built-in AssetLib
+
+2. **Dialogue Manager**
    - **Link:** [GitHub](https://github.com/nathanhoad/godot_dialogue_manager)
-   - **Features:** Visual dialogue editor, branching conversations
+   - **Features:** Script-driven dialogue, branching conversations
    - **License:** MIT
 
-2. **Inventory System Template**
+3. **Phantom Camera**
+   - **Link:** [GitHub](https://github.com/ramokz/phantom-camera)
+   - **Features:** Cinematic 2D/3D camera with smooth follow, room transitions, screen shake
+   - **License:** MIT
+   - **Install:** Available in Godot's built-in AssetLib
+
+4. **LimboAI**
+   - **Link:** [GitHub](https://github.com/limbonaut/limboai)
+   - **Features:** Behavior trees and state machines for enemy AI and NPC logic
+   - **License:** MIT
+   - **Install:** Available in Godot's built-in AssetLib
+
+5. **Inventory System Template**
    - Various on GitHub and Godot Asset Library
    - Look for Godot 4.x compatibility
 
-3. **Quest System**
+6. **Quest System**
    - Community-developed quest frameworks
    - Can be adapted from RPG templates
+
+> **📖 For a complete addon guide with integration instructions, see `docs/11_GodotAssetLibraryGuide.md`**
 
 ### Development Tools
 
@@ -546,3 +566,4 @@ var random_item = items[randi() % items.size()]
 - `01_ProjectOverview.md` - Project introduction
 - `02_CellShadingTechniques.md` - Shader programming
 - `07_ImplementationGuide.md` - Practical implementation steps
+- `11_GodotAssetLibraryGuide.md` - Asset Library addon recommendations

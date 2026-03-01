@@ -699,9 +699,12 @@ Once foundation is complete:
 8. Add sound effects and music
 9. Polish and optimize
 
+> **💡 Accelerate with Addons:** See `docs/11_GodotAssetLibraryGuide.md` for recommended Asset Library addons that can speed up implementation of dialogue (Dialogic 2), audio (Sound Manager), dungeon AI (LimboAI), camera (Phantom Camera), and testing (GUT).
+
 ---
 
 **Related Documentation:**
 - `01_ProjectOverview.md` - Project vision
 - `03_StardewValleyMechanics.md` - Feature reference
 - `06_GodotResources.md` - Godot guides
+- `11_GodotAssetLibraryGuide.md` - Asset Library addons for faster development
