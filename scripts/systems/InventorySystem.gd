@@ -266,7 +266,7 @@ func _register_default_items():
 		"description": "A deep blue gemstone.", "stackable": true, "sell_price": 250
 	})
 	_register_item("emerald", "Emerald", ItemCategory.MATERIAL, {
-		"description": "A vivid green gemstone.", "stackable": true, "sell_price": 250
+		"description": "A vivid green gemstone.", "stackable": true, "sell_price": 300
 	})
 	_register_item("gold_bar", "Gold Bar", ItemCategory.MATERIAL, {
 		"description": "A refined bar of gold.", "stackable": true, "sell_price": 200

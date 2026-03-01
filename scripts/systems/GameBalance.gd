@@ -99,6 +99,7 @@ func upgrade_token_cost(current_level: int) -> int:
 
 
 func _on_combat_ended() -> void:
+	# TODO: Award XP to player via add_xp() when combat tracking is wired
 	pass
 
 

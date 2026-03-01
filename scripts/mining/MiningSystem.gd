@@ -27,7 +27,7 @@ func _register_ores():
 	_register_ore("moonstone", "Moonstone", 4, 0.05, 150)
 	_register_ore("ruby", "Ruby", 5, 0.03, 250)
 	_register_ore("sapphire", "Sapphire", 5, 0.03, 250)
-	_register_ore("emerald", "Emerald", 6, 0.02, 250)
+	_register_ore("emerald", "Emerald", 6, 0.02, 300)
 
 
 func _register_ore(id: String, display_name: String, min_pickaxe_level: int,
