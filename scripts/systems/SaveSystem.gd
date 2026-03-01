@@ -14,6 +14,7 @@ var _dialogue: Node
 var _combat: Node
 var _overworld_gen: Node
 var _chunk_manager: Node
+var _quest_manager: Node
 
 
 func _ready() -> void:
@@ -28,6 +29,7 @@ func _ready() -> void:
 	_combat = get_node_or_null("/root/CombatSystem")
 	_overworld_gen = get_node_or_null("/root/OverworldGenerator")
 	_chunk_manager = get_node_or_null("/root/ChunkManager")
+	_quest_manager = get_node_or_null("/root/QuestManager")
 
 func save_game() -> bool:
 	var save_data: Dictionary = {
@@ -55,7 +57,8 @@ func save_game() -> bool:
 		"events": _get_event_data(),
 		"combat": _get_combat_data(),
 		"overworld": _get_overworld_data(),
-		"chunks": _get_chunk_data()
+		"chunks": _get_chunk_data(),
+		"quests": _get_quest_data()
 	}
 
 	var file: FileAccess = FileAccess.open(SAVE_FILE, FileAccess.WRITE)
@@ -106,6 +109,7 @@ func load_game() -> Dictionary:
 	_load_combat_data(data.get("combat", {}))
 	_load_overworld_data(data.get("overworld", {}))
 	_load_chunk_data(data.get("chunks", {}))
+	_load_quest_data(data.get("quests", {}))
 
 	return data
 
@@ -233,3 +237,14 @@ func _get_chunk_data() -> Dictionary:
 func _load_chunk_data(data: Dictionary) -> void:
 	if _chunk_manager and _chunk_manager.has_method("load_save_data"):
 		_chunk_manager.load_save_data(data)
+
+
+func _get_quest_data() -> Dictionary:
+	if _quest_manager and _quest_manager.has_method("get_save_data"):
+		return _quest_manager.get_save_data()
+	return {}
+
+
+func _load_quest_data(data: Dictionary) -> void:
+	if _quest_manager and _quest_manager.has_method("load_save_data"):
+		_quest_manager.load_save_data(data)

@@ -95,6 +95,18 @@ signal aunt_journal_page_found(page_number: int)
 signal havenport_representative_visit()
 signal farm_worth_proven()
 
+# Quest signals
+signal quest_started(quest_id: String, npc_id: String)
+signal quest_objective_updated(quest_id: String, objective_index: int)
+signal quest_completed(quest_id: String, npc_id: String)
+signal quest_journal_opened
+signal quest_journal_closed
+
+# Audio signals
+signal bgm_changed(track_id: String)
+signal sfx_played(sfx_id: String)
+signal volume_changed(bus_name: String, volume: float)
+
 # AI dialogue signals
 signal ai_dialogue_requested(npc_id: String, player_message: String)
 signal ai_dialogue_received(npc_id: String, ai_response: String)
