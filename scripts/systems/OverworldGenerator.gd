@@ -19,6 +19,7 @@ extends Node
 ## TileMapLayer nodes.
 
 const NoiseGeneratorScript = preload("res://scripts/systems/NoiseGenerator.gd")
+const VillageGeneratorScript = preload("res://scripts/systems/VillageGenerator.gd")
 
 ## World seed for deterministic generation
 var world_seed: int = 0
@@ -38,11 +39,12 @@ const TILE_SIZE: int = 16
 ## Chunk size must match ChunkManager
 const CHUNK_SIZE: int = 32
 
-## Island radius in tiles - land area fades to ocean beyond this distance
-const ISLAND_RADIUS: float = 60.0
+## Island radius in tiles - land area fades to ocean beyond this distance.
+## 512 tiles × 16px = 8192px radius → ~16k px diameter world.
+const ISLAND_RADIUS: float = 512.0
 
 ## Transition zone width where land blends into ocean
-const ISLAND_SHORE_WIDTH: float = 15.0
+const ISLAND_SHORE_WIDTH: float = 40.0
 
 ## Distance in tiles to sample neighbors for adjacency rule checks
 const ADJACENCY_CHECK_DISTANCE: int = 4
@@ -52,6 +54,12 @@ const STRUCTURE_SPAWN_CHANCE: float = 0.15
 
 ## Structure placement tracking to avoid duplicates
 var placed_structures: Dictionary = {}
+
+## Village generator instance
+var village_gen: RefCounted = null
+
+## Cache of generated village data keyed by chunk position string
+var village_cache: Dictionary = {}
 
 var _rng: RandomNumberGenerator = RandomNumberGenerator.new()
 
@@ -67,8 +75,10 @@ func initialize(seed_value: int) -> void:
 	## Initializes or re-initializes the generator with a new seed.
 	world_seed = seed_value
 	noise_gen = NoiseGeneratorScript.new(world_seed)
+	village_gen = VillageGeneratorScript.new()
 	_rng.seed = world_seed
 	placed_structures.clear()
+	village_cache.clear()
 
 
 func generate_chunk(chunk_pos: Vector2i) -> Dictionary:
@@ -133,6 +143,33 @@ func generate_chunk(chunk_pos: Vector2i) -> Dictionary:
 	# Layer 6: Structure placement
 	var structures := _place_structures(chunk_pos, origin, biome_map)
 
+	# Layer 7: Village generation - expand village structures into full layouts.
+	# Only one structure is placed per chunk, so at most one village is generated.
+	var village_data: Dictionary = {}
+	for struct: Dictionary in structures:
+		if struct.get("type", "") == "village" and village_gen:
+			var v_seed := world_seed + struct.tile_pos.x * 7919 + struct.tile_pos.y * 6271
+			var v_data: Dictionary = village_gen.generate_village(
+				struct.tile_pos, struct.get("biome", "meadow"), v_seed)
+			village_data = v_data
+			# Merge village ground tiles into chunk data (override terrain)
+			for pos: Vector2i in v_data.get("ground_tiles", {}):
+				var lx := pos.x - origin.x
+				var ly := pos.y - origin.y
+				if lx >= 0 and lx < CHUNK_SIZE and ly >= 0 and ly < CHUNK_SIZE:
+					var local := Vector2i(lx, ly)
+					ground_tiles[local] = v_data.ground_tiles[pos]
+					# Remove water/vegetation where village ground exists
+					water_tiles.erase(local)
+					object_tiles.erase(local)
+			# Merge village object tiles
+			for pos: Vector2i in v_data.get("object_tiles", {}):
+				var lx := pos.x - origin.x
+				var ly := pos.y - origin.y
+				if lx >= 0 and lx < CHUNK_SIZE and ly >= 0 and ly < CHUNK_SIZE:
+					object_tiles[Vector2i(lx, ly)] = v_data.object_tiles[pos]
+			break
+
 	return {
 		"chunk_pos": chunk_pos,
 		"origin": origin,
@@ -141,7 +178,8 @@ func generate_chunk(chunk_pos: Vector2i) -> Dictionary:
 		"water_tiles": water_tiles,
 		"cave_tiles": cave_tiles,
 		"object_tiles": object_tiles,
-		"structures": structures
+		"structures": structures,
+		"village_data": village_data
 	}
 
 

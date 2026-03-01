@@ -29,6 +29,27 @@ const _GROUND_ATLAS_MAP: Dictionary = {
 	"marsh": Vector2i(2, 3),
 	"snow": Vector2i(0, 5),
 	"cave_floor": Vector2i(8, 1),
+	"ice": Vector2i(0, 5),
+}
+
+## Maps object type strings to Overworld.png atlas coords for rendering.
+const _OBJECT_ATLAS_MAP: Dictionary = {
+	"tree": Vector2i(0, 11),
+	"bush": Vector2i(11, 5),
+	"flower": Vector2i(11, 6),
+	"rock": Vector2i(12, 3),
+	"tall_grass": Vector2i(2, 3),
+	"wall": Vector2i(7, 1),
+	"wall_dark": Vector2i(8, 1),
+	"roof": Vector2i(7, 0),
+	"door": Vector2i(8, 4),
+	"window": Vector2i(12, 2),
+	"well": Vector2i(13, 3),
+	"fence": Vector2i(12, 4),
+	"signpost": Vector2i(6, 4),
+	"mushroom": Vector2i(12, 6),
+	"cactus": Vector2i(12, 5),
+	"fern": Vector2i(2, 3),
 }
 
 var world_generator: Node
@@ -36,6 +57,9 @@ var _spawn_positions: Array[Vector2] = []
 
 ## TileMapLayer used for procedurally generated overworld chunks
 var overworld_layer: TileMapLayer = null
+
+## TileMapLayer for overworld objects (trees, structures, etc.)
+var overworld_objects_layer: TileMapLayer = null
 
 ## Tileset shared by both static farm and overworld layers
 var _tileset: TileSet = null
@@ -111,7 +135,7 @@ func _setup_farm():
 
 func _setup_overworld():
 	## Initialize the OverworldGenerator and ChunkManager autoloads and create
-	## a dedicated TileMapLayer for procedural island terrain rendered below the
+	## dedicated TileMapLayers for procedural island terrain rendered below the
 	## static farm layers.
 	overworld_layer = TileMapLayer.new()
 	overworld_layer.name = "OverworldLayer"
@@ -121,6 +145,16 @@ func _setup_overworld():
 	# Insert below the ground layer so static farm tiles draw on top
 	add_child(overworld_layer)
 	move_child(overworld_layer, 0)
+
+	# Objects layer for trees, buildings, structures (rendered above ground)
+	overworld_objects_layer = TileMapLayer.new()
+	overworld_objects_layer.name = "OverworldObjectsLayer"
+	overworld_objects_layer.y_sort_enabled = true
+	if _tileset:
+		overworld_objects_layer.tile_set = _tileset
+	add_child(overworld_objects_layer)
+	# Place after ground but before static farm objects
+	move_child(overworld_objects_layer, 1)
 
 	# Connect the autoloaded generator to the chunk manager
 	if has_node("/root/OverworldGenerator") and has_node("/root/ChunkManager"):
@@ -156,7 +190,7 @@ func _get_local_player() -> Node:
 
 
 func _on_chunk_loaded(chunk_pos: Vector2i) -> void:
-	## Render a newly generated chunk onto the overworld TileMapLayer.
+	## Render a newly generated chunk onto the overworld TileMapLayers.
 	## Tiles that fall inside FARM_TILE_RECT are skipped so the hand-crafted
 	## farm layout remains visible and unobstructed.
 	if not has_node("/root/ChunkManager") or overworld_layer == null:
@@ -169,6 +203,7 @@ func _on_chunk_loaded(chunk_pos: Vector2i) -> void:
 	var origin: Vector2i = chunk.get("origin", Vector2i.ZERO)
 	var ground_tiles: Dictionary = chunk.get("ground_tiles", {})
 	var water_tiles: Dictionary = chunk.get("water_tiles", {})
+	var object_tiles: Dictionary = chunk.get("object_tiles", {})
 
 	var chunk_size := 32
 	var chunk_rect := Rect2i(origin, Vector2i(chunk_size, chunk_size))
@@ -198,21 +233,65 @@ func _on_chunk_loaded(chunk_pos: Vector2i) -> void:
 				continue
 			overworld_layer.set_cell(world_tile, 0, water_atlas)
 
+	# Render object tiles (trees, vegetation, structures)
+	if overworld_objects_layer:
+		for local_pos: Vector2i in object_tiles:
+			var world_tile := Vector2i(
+				origin.x + local_pos.x, origin.y + local_pos.y)
+			if skip_farm and FARM_TILE_RECT.has_point(world_tile):
+				continue
+			var obj_type: String = object_tiles[local_pos]
+			var atlas := _object_type_to_atlas(obj_type)
+			if atlas != Vector2i(-1, -1):
+				overworld_objects_layer.set_cell(world_tile, 0, atlas)
+
 
 func _on_chunk_unloaded(chunk_pos: Vector2i) -> void:
 	## Erase tiles for an unloaded chunk to free rendering resources.
-	if overworld_layer == null:
-		return
 	var chunk_size := 32
 	var origin := Vector2i(chunk_pos.x * chunk_size, chunk_pos.y * chunk_size)
 	for lx in range(chunk_size):
 		for ly in range(chunk_size):
-			overworld_layer.erase_cell(Vector2i(origin.x + lx, origin.y + ly))
+			var tile := Vector2i(origin.x + lx, origin.y + ly)
+			if overworld_layer:
+				overworld_layer.erase_cell(tile)
+			if overworld_objects_layer:
+				overworld_objects_layer.erase_cell(tile)
 
 
 func _ground_type_to_atlas(ground_type: String) -> Vector2i:
 	## Maps a ground type string to an Overworld.png atlas coordinate.
 	return _GROUND_ATLAS_MAP.get(ground_type, Vector2i(0, 0))
+
+
+func _object_type_to_atlas(obj_type: String) -> Vector2i:
+	## Maps an object type string to an Overworld.png atlas coordinate.
+	return _OBJECT_ATLAS_MAP.get(obj_type, Vector2i(-1, -1))
+
+
+## Atlas coordinates that should have collision (water and solid objects).
+const _COLLISION_ATLAS_COORDS: Array = [
+	Vector2i(19, 0),   # water center
+	Vector2i(2, 9),    # water edge TL
+	Vector2i(3, 9),    # water edge T
+	Vector2i(15, 9),   # water edge TR
+	Vector2i(2, 10),   # water edge L
+	Vector2i(15, 10),  # water edge R
+	Vector2i(2, 6),    # water edge BL
+	Vector2i(3, 6),    # water edge B
+	Vector2i(16, 8),   # water edge BR
+	Vector2i(0, 11),   # tree
+	Vector2i(4, 11),   # tree variant
+	Vector2i(5, 11),   # tree foliage
+	Vector2i(7, 1),    # building wall
+	Vector2i(8, 1),    # building wall dark
+	Vector2i(7, 0),    # roof
+	Vector2i(8, 0),    # roof edge
+	Vector2i(13, 3),   # well / rock variant
+	Vector2i(12, 4),   # fence horizontal
+	Vector2i(6, 4),    # fence vertical
+	Vector2i(7, 4),    # fence post
+]
 
 
 func _create_tileset() -> TileSet:
@@ -239,6 +318,16 @@ func _create_tileset() -> TileSet:
 			for y in range(rows):
 				var atlas_coords := Vector2i(x, y)
 				overworld_source.create_tile(atlas_coords)
+
+		# Add collision polygons to non-walkable tiles (water, trees, buildings)
+		var collision_rect := PackedVector2Array([
+			Vector2(-8, -8), Vector2(8, -8), Vector2(8, 8), Vector2(-8, 8)])
+		for coords: Vector2i in _COLLISION_ATLAS_COORDS:
+			if coords.x < cols and coords.y < rows:
+				var tile_data: TileData = overworld_source.get_tile_data(coords, 0)
+				if tile_data:
+					tile_data.add_collision_polygon(0)
+					tile_data.set_collision_polygon_points(0, 0, collision_rect)
 
 	# Source 1: Objects tileset
 	var objects_source := TileSetAtlasSource.new()
