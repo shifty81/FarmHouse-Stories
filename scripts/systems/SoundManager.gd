@@ -4,6 +4,7 @@ extends Node
 
 const SFX_POOL_SIZE: int = 8
 const FADE_DURATION: float = 1.0
+const MIN_VOLUME_DB: float = -80.0
 
 var _bgm_player_a: AudioStreamPlayer
 var _bgm_player_b: AudioStreamPlayer
@@ -23,7 +24,7 @@ func _ready() -> void:
 
 	_bgm_player_b = AudioStreamPlayer.new()
 	_bgm_player_b.bus = "Music"
-	_bgm_player_b.volume_db = -80.0
+	_bgm_player_b.volume_db = MIN_VOLUME_DB
 	add_child(_bgm_player_b)
 
 	for i: int in range(SFX_POOL_SIZE):
@@ -39,9 +40,9 @@ func _process(delta: float) -> void:
 	_fade_time += delta
 	var t: float = clampf(_fade_time / FADE_DURATION, 0.0, 1.0)
 	if _fade_from:
-		_fade_from.volume_db = lerpf(0.0, -80.0, t)
+		_fade_from.volume_db = lerpf(0.0, MIN_VOLUME_DB, t)
 	if _fade_to:
-		_fade_to.volume_db = lerpf(-80.0, 0.0, t)
+		_fade_to.volume_db = lerpf(MIN_VOLUME_DB, 0.0, t)
 	if t >= 1.0:
 		_fading = false
 		if _fade_from:
@@ -63,7 +64,7 @@ func play_bgm(stream: AudioStream, track_id: String = "") -> void:
 		_fade_from = _bgm_player_b
 
 	next.stream = stream
-	next.volume_db = -80.0
+	next.volume_db = MIN_VOLUME_DB
 	next.play()
 	_fade_to = next
 	_fade_time = 0.0

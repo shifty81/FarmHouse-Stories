@@ -8,8 +8,8 @@ enum QuestState { NOT_STARTED, ACTIVE, COMPLETED }
 var quests: Dictionary = {}
 
 ## Lists for quick lookup
-var active_quests: Array = []
-var completed_quests: Array = []
+var active_quests: Array[String] = []
+var completed_quests: Array[String] = []
 
 
 func _ready() -> void:
