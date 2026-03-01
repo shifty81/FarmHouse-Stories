@@ -143,7 +143,8 @@ func generate_chunk(chunk_pos: Vector2i) -> Dictionary:
 	# Layer 6: Structure placement
 	var structures := _place_structures(chunk_pos, origin, biome_map)
 
-	# Layer 7: Village generation - expand village structures into full layouts
+	# Layer 7: Village generation - expand village structures into full layouts.
+	# Only one structure is placed per chunk, so at most one village is generated.
 	var village_data: Dictionary = {}
 	for struct: Dictionary in structures:
 		if struct.get("type", "") == "village" and village_gen:
@@ -167,6 +168,7 @@ func generate_chunk(chunk_pos: Vector2i) -> Dictionary:
 				var ly := pos.y - origin.y
 				if lx >= 0 and lx < CHUNK_SIZE and ly >= 0 and ly < CHUNK_SIZE:
 					object_tiles[Vector2i(lx, ly)] = v_data.object_tiles[pos]
+			break
 
 	return {
 		"chunk_pos": chunk_pos,

@@ -52,11 +52,6 @@ const _OBJECT_ATLAS_MAP: Dictionary = {
 	"fern": Vector2i(2, 3),
 }
 
-## Object types that should block player movement.
-const _COLLISION_OBJECTS: Array = [
-	"tree", "rock", "wall", "wall_dark", "roof", "well", "fence",
-]
-
 var world_generator: Node
 var _spawn_positions: Array[Vector2] = []
 

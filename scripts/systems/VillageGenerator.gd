@@ -65,7 +65,6 @@ func generate_village(center: Vector2i, biome: String, seed_value: int) -> Dicti
 			house_size = HOUSE_SMALL
 
 		# Try to place building at a valid position
-		var placed := false
 		for _attempt in range(20):
 			var angle: float = _rng.randf() * TAU
 			var dist: float = _rng.randf_range(plaza_radius + BUILDING_GAP + 1, VILLAGE_RADIUS - 2)
@@ -89,8 +88,6 @@ func generate_village(center: Vector2i, biome: String, seed_value: int) -> Dicti
 			var door_x := bx + house_size.x / 2
 			var door_y := by + house_size.y
 			_place_path(Vector2i(door_x, door_y), center, ground)
-
-			placed = true
 			break
 
 	# --- Perimeter fence with gaps at paths ---
