@@ -3,7 +3,7 @@ extends RefCounted
 ## Uses DungeonTilesetBuilder atlas coordinates to create
 ## procedural room layouts with walls, floors, and features.
 
-const TB = preload(
+const TilesetBuilder = preload(
 	"res://scripts/dungeon/DungeonTilesetBuilder.gd")
 
 ## Room dimensions in tiles
@@ -17,7 +17,7 @@ static func generate_room(
 		doors: Dictionary,
 		seed_val: int) -> void:
 	tilemap.clear()
-	var tileset := TB.build_tileset()
+	var tileset := TilesetBuilder.build_tileset()
 	tilemap.tile_set = tileset
 
 	var rng := RandomNumberGenerator.new()
@@ -34,11 +34,11 @@ static func _fill_floor(tilemap: TileMap) -> void:
 		for y in range(1, ROOM_HEIGHT - 1):
 			var tile: Vector2i
 			if (x + y) % 7 == 0:
-				tile = TB.FLOOR_ALT
+				tile = TilesetBuilder.FLOOR_ALT
 			else:
-				tile = TB.FLOOR_CENTER
+				tile = TilesetBuilder.FLOOR_CENTER
 			tilemap.set_cell(0, Vector2i(x, y),
-				TB.CAVE_SOURCE, tile)
+				TilesetBuilder.CAVE_SOURCE, tile)
 
 
 static func _build_walls(tilemap: TileMap) -> void:
@@ -46,33 +46,33 @@ static func _build_walls(tilemap: TileMap) -> void:
 	for x in range(ROOM_WIDTH):
 		tilemap.set_cell(
 			0, Vector2i(x, 0),
-			TB.CAVE_SOURCE, TB.WALL_TOP)
+			TilesetBuilder.CAVE_SOURCE, TilesetBuilder.WALL_TOP)
 		tilemap.set_cell(
 			0, Vector2i(x, ROOM_HEIGHT - 1),
-			TB.CAVE_SOURCE, TB.WALL_BOTTOM)
+			TilesetBuilder.CAVE_SOURCE, TilesetBuilder.WALL_BOTTOM)
 
 	# Left and right walls
 	for y in range(ROOM_HEIGHT):
 		tilemap.set_cell(
 			0, Vector2i(0, y),
-			TB.CAVE_SOURCE, TB.WALL_LEFT)
+			TilesetBuilder.CAVE_SOURCE, TilesetBuilder.WALL_LEFT)
 		tilemap.set_cell(
 			0, Vector2i(ROOM_WIDTH - 1, y),
-			TB.CAVE_SOURCE, TB.WALL_RIGHT)
+			TilesetBuilder.CAVE_SOURCE, TilesetBuilder.WALL_RIGHT)
 
 	# Corners
 	tilemap.set_cell(
 		0, Vector2i(0, 0),
-		TB.CAVE_SOURCE, TB.WALL_TL)
+		TilesetBuilder.CAVE_SOURCE, TilesetBuilder.WALL_TL)
 	tilemap.set_cell(
 		0, Vector2i(ROOM_WIDTH - 1, 0),
-		TB.CAVE_SOURCE, TB.WALL_TR)
+		TilesetBuilder.CAVE_SOURCE, TilesetBuilder.WALL_TR)
 	tilemap.set_cell(
 		0, Vector2i(0, ROOM_HEIGHT - 1),
-		TB.CAVE_SOURCE, TB.WALL_BL)
+		TilesetBuilder.CAVE_SOURCE, TilesetBuilder.WALL_BL)
 	tilemap.set_cell(
 		0, Vector2i(ROOM_WIDTH - 1, ROOM_HEIGHT - 1),
-		TB.CAVE_SOURCE, TB.WALL_BR)
+		TilesetBuilder.CAVE_SOURCE, TilesetBuilder.WALL_BR)
 
 
 static func _place_doors(
@@ -83,31 +83,31 @@ static func _place_doors(
 	if doors.get("north", false):
 		tilemap.set_cell(
 			0, Vector2i(mid_x, 0),
-			TB.CAVE_SOURCE, TB.DOOR_H)
+			TilesetBuilder.CAVE_SOURCE, TilesetBuilder.DOOR_H)
 		tilemap.set_cell(
 			0, Vector2i(mid_x - 1, 0),
-			TB.CAVE_SOURCE, TB.DOOR_H)
+			TilesetBuilder.CAVE_SOURCE, TilesetBuilder.DOOR_H)
 	if doors.get("south", false):
 		tilemap.set_cell(
 			0, Vector2i(mid_x, ROOM_HEIGHT - 1),
-			TB.CAVE_SOURCE, TB.DOOR_H)
+			TilesetBuilder.CAVE_SOURCE, TilesetBuilder.DOOR_H)
 		tilemap.set_cell(
 			0, Vector2i(mid_x - 1, ROOM_HEIGHT - 1),
-			TB.CAVE_SOURCE, TB.DOOR_H)
+			TilesetBuilder.CAVE_SOURCE, TilesetBuilder.DOOR_H)
 	if doors.get("west", false):
 		tilemap.set_cell(
 			0, Vector2i(0, mid_y),
-			TB.CAVE_SOURCE, TB.DOOR_V)
+			TilesetBuilder.CAVE_SOURCE, TilesetBuilder.DOOR_V)
 		tilemap.set_cell(
 			0, Vector2i(0, mid_y - 1),
-			TB.CAVE_SOURCE, TB.DOOR_V)
+			TilesetBuilder.CAVE_SOURCE, TilesetBuilder.DOOR_V)
 	if doors.get("east", false):
 		tilemap.set_cell(
 			0, Vector2i(ROOM_WIDTH - 1, mid_y),
-			TB.CAVE_SOURCE, TB.DOOR_V)
+			TilesetBuilder.CAVE_SOURCE, TilesetBuilder.DOOR_V)
 		tilemap.set_cell(
 			0, Vector2i(ROOM_WIDTH - 1, mid_y - 1),
-			TB.CAVE_SOURCE, TB.DOOR_V)
+			TilesetBuilder.CAVE_SOURCE, TilesetBuilder.DOOR_V)
 
 
 static func _place_features(
@@ -121,12 +121,12 @@ static func _place_features(
 			tilemap.set_cell(
 				0, Vector2i(ROOM_WIDTH / 2,
 					ROOM_HEIGHT / 2),
-				TB.CAVE_SOURCE, TB.CHEST)
+				TilesetBuilder.CAVE_SOURCE, TilesetBuilder.CHEST)
 		0:  # ENTRANCE
 			tilemap.set_cell(
 				0, Vector2i(ROOM_WIDTH / 2,
 					ROOM_HEIGHT / 2),
-				TB.CAVE_SOURCE, TB.STAIRS)
+				TilesetBuilder.CAVE_SOURCE, TilesetBuilder.STAIRS)
 		_:
 			_scatter_rocks(tilemap, room_type, rng)
 
@@ -134,10 +134,10 @@ static func _place_features(
 	if room_type != 6:  # Not corridors
 		tilemap.set_cell(
 			0, Vector2i(2, 1),
-			TB.CAVE_SOURCE, TB.TORCH)
+			TilesetBuilder.CAVE_SOURCE, TilesetBuilder.TORCH)
 		tilemap.set_cell(
 			0, Vector2i(ROOM_WIDTH - 3, 1),
-			TB.CAVE_SOURCE, TB.TORCH)
+			TilesetBuilder.CAVE_SOURCE, TilesetBuilder.TORCH)
 
 
 static func _scatter_rocks(
@@ -157,4 +157,4 @@ static func _scatter_rocks(
 		var ry := rng.randi_range(3, ROOM_HEIGHT - 4)
 		tilemap.set_cell(
 			0, Vector2i(rx, ry),
-			TB.CAVE_SOURCE, TB.ROCK)
+			TilesetBuilder.CAVE_SOURCE, TilesetBuilder.ROCK)

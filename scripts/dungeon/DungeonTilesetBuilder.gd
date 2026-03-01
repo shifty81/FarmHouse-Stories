@@ -65,7 +65,7 @@ static func build_tileset() -> TileSet:
 		for y in range(rows):
 			source.create_tile(Vector2i(x, y))
 
-	var rect := PackedVector2Array([
+	var collision_points := PackedVector2Array([
 		Vector2(-8, -8), Vector2(8, -8),
 		Vector2(8, 8), Vector2(-8, 8)])
 	for coords: Vector2i in COLLISION_COORDS:
@@ -75,6 +75,6 @@ static func build_tileset() -> TileSet:
 			if tile_data:
 				tile_data.add_collision_polygon(0)
 				tile_data.set_collision_polygon_points(
-					0, 0, rect)
+					0, 0, collision_points)
 
 	return tileset

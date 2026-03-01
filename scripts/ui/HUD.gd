@@ -73,14 +73,14 @@ func _on_hotbar_changed(_slot_index):
 func _update_tool_display():
 	if not tool_label:
 		return
-	var selected = InventorySystem.get_selected_item()
-	if selected:
+	var selected_item = InventorySystem.get_selected_item()
+	if selected_item:
 		var info = InventorySystem.get_item_info(
-			selected.get("item_id", ""))
+			selected_item.get("item_id", ""))
 		if info:
 			tool_label.text = info.get("name", "Unknown")
 		else:
-			tool_label.text = selected.get(
+			tool_label.text = selected_item.get(
 				"item_id", "").capitalize()
 	else:
 		tool_label.text = "No tool"
