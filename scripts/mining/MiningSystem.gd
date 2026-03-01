@@ -22,6 +22,12 @@ func _register_ores():
 	_register_ore("iron_ore", "Iron Ore", 2, 0.30, 25)
 	_register_ore("gold_ore", "Gold Ore", 3, 0.15, 50)
 	_register_ore("crystal_shard", "Crystal Shard", 4, 0.08, 80)
+	_register_ore("mithril_ore", "Mithril Ore", 5, 0.06, 120)
+	_register_ore("adamantite_ore", "Adamantite Ore", 6, 0.04, 200)
+	_register_ore("moonstone", "Moonstone", 4, 0.05, 150)
+	_register_ore("ruby", "Ruby", 5, 0.03, 250)
+	_register_ore("sapphire", "Sapphire", 5, 0.03, 250)
+	_register_ore("emerald", "Emerald", 6, 0.02, 250)
 
 
 func _register_ore(id: String, display_name: String, min_pickaxe_level: int,

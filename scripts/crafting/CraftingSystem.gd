@@ -55,6 +55,107 @@ func _register_recipes():
 		{"item_id": "iron_bar", "quantity": 1}
 	], "void_charm", 1, 8.0)
 
+	# Advanced cooking
+	_register_recipe("strawberry_jam", "Strawberry Jam", [
+		{"item_id": "strawberry", "quantity": 3}
+	], "strawberry_jam", 2, 2.0)
+
+	_register_recipe("melon_smoothie", "Melon Smoothie", [
+		{"item_id": "melon", "quantity": 1}
+	], "melon_smoothie", 1, 1.5)
+
+	_register_recipe("corn_chowder", "Corn Chowder", [
+		{"item_id": "corn", "quantity": 2},
+		{"item_id": "potato", "quantity": 1}
+	], "corn_chowder", 1, 3.0)
+
+	_register_recipe("mega_health_potion", "Mega Health Potion", [
+		{"item_id": "health_potion", "quantity": 2},
+		{"item_id": "medicinal_herb", "quantity": 2},
+		{"item_id": "moonstone", "quantity": 1}
+	], "mega_health_potion", 1, 5.0)
+
+	_register_recipe("stamina_elixir", "Stamina Elixir", [
+		{"item_id": "energy_tonic", "quantity": 2},
+		{"item_id": "medicinal_herb", "quantity": 3}
+	], "stamina_elixir", 1, 5.0)
+
+	_register_recipe("fire_resist_potion", "Fire Resistance Potion", [
+		{"item_id": "health_potion", "quantity": 1},
+		{"item_id": "ruby", "quantity": 1}
+	], "fire_resist_potion", 1, 4.0)
+
+	_register_recipe("frost_shield_potion", "Frost Shield Potion", [
+		{"item_id": "health_potion", "quantity": 1},
+		{"item_id": "sapphire", "quantity": 1}
+	], "frost_shield_potion", 1, 4.0)
+
+	# Material refinement (additional)
+	_register_recipe("gold_bar", "Gold Bar", [
+		{"item_id": "gold_ore", "quantity": 5}
+	], "gold_bar", 1, 6.0)
+
+	_register_recipe("mithril_bar", "Mithril Bar", [
+		{"item_id": "mithril_ore", "quantity": 5}
+	], "mithril_bar", 1, 8.0)
+
+	_register_recipe("adamantite_bar", "Adamantite Bar", [
+		{"item_id": "adamantite_ore", "quantity": 5}
+	], "adamantite_bar", 1, 10.0)
+
+	# Gear crafting
+	_register_recipe("iron_helm", "Iron Helm", [
+		{"item_id": "iron_bar", "quantity": 3}
+	], "iron_helm", 1, 6.0)
+
+	_register_recipe("chain_leggings", "Chain Leggings", [
+		{"item_id": "iron_bar", "quantity": 4}
+	], "chain_leggings", 1, 7.0)
+
+	_register_recipe("echo_pendant", "Echo Pendant", [
+		{"item_id": "echo_crystal", "quantity": 3},
+		{"item_id": "gold_bar", "quantity": 1}
+	], "echo_pendant", 1, 8.0)
+
+	_register_recipe("mithril_armor", "Mithril Armor", [
+		{"item_id": "mithril_bar", "quantity": 5},
+		{"item_id": "moonstone", "quantity": 2}
+	], "mithril_armor", 1, 12.0)
+
+	_register_recipe("mithril_helm", "Mithril Helm", [
+		{"item_id": "mithril_bar", "quantity": 3},
+		{"item_id": "moonstone", "quantity": 1}
+	], "mithril_helm", 1, 10.0)
+
+	_register_recipe("adamantite_armor", "Adamantite Armor", [
+		{"item_id": "adamantite_bar", "quantity": 5},
+		{"item_id": "ruby", "quantity": 1},
+		{"item_id": "sapphire", "quantity": 1}
+	], "adamantite_armor", 1, 15.0)
+
+	_register_recipe("void_cloak", "Void Cloak", [
+		{"item_id": "void_fragment", "quantity": 4},
+		{"item_id": "mithril_bar", "quantity": 2},
+		{"item_id": "emerald", "quantity": 1}
+	], "void_cloak", 1, 14.0)
+
+	# Bait crafting
+	_register_recipe("quality_bait_craft", "Quality Bait", [
+		{"item_id": "basic_bait", "quantity": 3},
+		{"item_id": "medicinal_herb", "quantity": 1}
+	], "quality_bait", 5, 1.0)
+
+	_register_recipe("rift_bait_craft", "Rift Bait", [
+		{"item_id": "quality_bait", "quantity": 3},
+		{"item_id": "void_fragment", "quantity": 1}
+	], "rift_bait", 3, 2.0)
+
+	# Fertilizer
+	_register_recipe("fertilizer_craft", "Fertilizer", [
+		{"item_id": "medicinal_herb", "quantity": 1},
+		{"item_id": "copper_ore", "quantity": 2}
+	], "fertilizer", 3, 1.5)
+
 
 func _register_recipe(id: String, display_name: String, ingredients: Array,
 		result_item_id: String, result_quantity: int, craft_time: float):

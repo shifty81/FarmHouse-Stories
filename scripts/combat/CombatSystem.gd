@@ -67,6 +67,51 @@ func _register_enemies():
 		"xp": 40, "drops": [{"item_id": "echo_crystal", "chance": 0.5}]
 	})
 
+	# Ancient Aqueducts enemies (Difficulty 2)
+	_register_enemy("water_serpent", "Water Serpent", 28, 7, 3, {
+		"xp": 12, "drops": [{"item_id": "moonstone", "chance": 0.10}],
+		"element": "water"
+	})
+	_register_enemy("tide_crab", "Tide Crab", 32, 5, 8, {
+		"xp": 11, "drops": [{"item_id": "copper_ore", "chance": 0.4}],
+		"element": "water"
+	})
+
+	# Additional Echo Caverns enemies
+	_register_enemy("mushroom_sprite", "Mushroom Sprite", 18, 5, 1, {
+		"xp": 6, "drops": [{"item_id": "medicinal_herb", "chance": 0.35}],
+		"status_effect": "poison"
+	})
+
+	# Additional Crystal Sanctum enemies
+	_register_enemy("crystal_spider", "Crystal Spider", 45, 11, 6, {
+		"xp": 22, "drops": [{"item_id": "crystal_shard", "chance": 0.3}]
+	})
+
+	# Additional Ember Forge enemies
+	_register_enemy("magma_slime", "Magma Slime", 50, 13, 6, {
+		"xp": 26, "drops": [{"item_id": "ruby", "chance": 0.08}],
+		"element": "fire", "status_effect": "burn"
+	})
+	_register_enemy("forge_golem", "Forge Golem", 75, 12, 14, {
+		"xp": 35, "drops": [
+			{"item_id": "iron_ore", "chance": 0.6},
+			{"item_id": "mithril_ore", "chance": 0.10}
+		]
+	})
+
+	# Additional Void Fortress enemies
+	_register_enemy("void_weaver", "Void Weaver", 65, 20, 6, {
+		"xp": 38, "drops": [{"item_id": "void_fragment", "chance": 0.3}],
+		"element": "void", "status_effect": "stun"
+	})
+	_register_enemy("rift_walker", "Rift Walker", 90, 15, 14, {
+		"xp": 50, "drops": [
+			{"item_id": "void_fragment", "chance": 0.5},
+			{"item_id": "adamantite_ore", "chance": 0.05}
+		]
+	})
+
 	# Dungeon bosses
 	_register_enemy("stone_sentinel", "Stone Sentinel", 120, 12, 15, {
 		"xp": 100, "is_boss": true,
@@ -102,6 +147,22 @@ func _register_enemies():
 			{"item_id": "chronos_shard", "chance": 1.0, "quantity": 2},
 			{"item_id": "ethereal_token", "chance": 1.0, "quantity": 5},
 			{"item_id": "void_fragment", "chance": 1.0, "quantity": 3}
+		]
+	})
+	_register_enemy("tide_serpent", "Tide Serpent", 160, 14, 14, {
+		"xp": 160, "is_boss": true, "element": "water",
+		"drops": [
+			{"item_id": "chronos_shard", "chance": 1.0},
+			{"item_id": "sapphire", "chance": 0.5},
+			{"item_id": "moonstone", "chance": 1.0, "quantity": 2}
+		]
+	})
+	_register_enemy("forge_titan", "Forge Titan", 280, 24, 20, {
+		"xp": 280, "is_boss": true, "element": "fire",
+		"drops": [
+			{"item_id": "chronos_shard", "chance": 1.0},
+			{"item_id": "ruby", "chance": 0.5},
+			{"item_id": "ethereal_token", "chance": 1.0, "quantity": 4}
 		]
 	})
 

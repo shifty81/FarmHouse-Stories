@@ -23,6 +23,14 @@ func _register_fish():
 	_register_fish_type("ice_pike", "Ice Pike", ["Winter"], 90, 0.10)
 	_register_fish_type("sunfish", "Sunfish", ["Summer"], 40, 0.25)
 	_register_fish_type("rift_eel", "Rift Eel", ["Spring", "Summer", "Fall", "Winter"], 150, 0.03)
+	_register_fish_type("carp", "Carp", ["Spring", "Summer", "Fall"], 25, 0.35)
+	_register_fish_type("perch", "Perch", ["Spring", "Summer"], 35, 0.28)
+	_register_fish_type("sturgeon", "Sturgeon", ["Summer", "Fall"], 120, 0.08)
+	_register_fish_type("ghost_fish", "Ghost Fish", ["Fall", "Winter"], 100, 0.06)
+	_register_fish_type("lava_eel", "Lava Eel", ["Summer"], 180, 0.04)
+	_register_fish_type("frost_trout", "Frost Trout", ["Winter"], 95, 0.12)
+	_register_fish_type("void_salmon", "Void Salmon", ["Fall", "Winter"], 160, 0.04)
+	_register_fish_type("crystal_koi", "Crystal Koi", ["Spring"], 220, 0.03)
 
 
 func _register_fish_type(id: String, display_name: String, seasons: Array,
@@ -38,10 +46,10 @@ func _register_fish_type(id: String, display_name: String, seasons: Array,
 
 func _setup_seasonal_fish():
 	seasonal_fish = {
-		"Spring": ["bass", "trout", "golden_fish", "rift_eel"],
-		"Summer": ["bass", "catfish", "sunfish", "golden_fish", "rift_eel"],
-		"Fall": ["bass", "trout", "catfish", "salmon", "golden_fish", "rift_eel"],
-		"Winter": ["ice_pike", "golden_fish", "rift_eel"]
+		"Spring": ["bass", "trout", "golden_fish", "rift_eel", "carp", "perch", "crystal_koi"],
+		"Summer": ["bass", "catfish", "sunfish", "golden_fish", "rift_eel", "carp", "perch", "sturgeon", "lava_eel"],
+		"Fall": ["bass", "trout", "catfish", "salmon", "golden_fish", "rift_eel", "carp", "sturgeon", "ghost_fish", "void_salmon"],
+		"Winter": ["ice_pike", "golden_fish", "rift_eel", "ghost_fish", "frost_trout", "void_salmon"]
 	}
 
 
