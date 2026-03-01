@@ -69,3 +69,16 @@ layout_mode = 2
 size_flags_horizontal = 3
 max_value = 100.0
 value = 100.0
+
+[node name="ToolRow" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="ToolIcon" type="TextureRect" parent="MarginContainer/VBoxContainer/ToolRow"]
+layout_mode = 2
+texture = ExtResource("3_coin")
+stretch_mode = 2
+
+[node name="ToolLabel" type="Label" parent="MarginContainer/VBoxContainer/ToolRow"]
+layout_mode = 2
+text = "No tool"

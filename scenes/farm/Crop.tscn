@@ -1,8 +1,10 @@
-[gd_scene load_steps=2 format=3 uid="uid://bcrop001"]
+[gd_scene load_steps=3 format=3 uid="uid://bcrop001"]
 
 [ext_resource type="Script" path="res://scripts/farm/Crop.gd" id="1_crop"]
+[ext_resource type="Material" path="res://resources/materials/cell_shader_material.tres" id="2_cellshader"]
 
 [node name="Crop" type="Node2D"]
 script = ExtResource("1_crop")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+material = ExtResource("2_cellshader")
